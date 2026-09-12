@@ -11,8 +11,90 @@
   --color-brand-500: #2563eb;
   --color-brand-600: #1d4ed8;
   --color-brand-700: #1e40af;
+
+  /* Paleta de la landing de Juan Ignacio Riccardi — tokens aparte de brand-*
+     para no tocar la paleta provisional general del sitio. Playfair Display
+     se carga como <link> con preconnect en Base.astro (no @import aquí: un
+     @import de fuente bloquea la carga en cadena y retrasa el LCP). */
+  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+
+  --color-navy-900: #1e2c4a;
+  --color-navy-800: #2a3f6a;
+  --color-navy-600: #4c6fa0;
+  --color-navy-100: #e4e9f2;
+  --color-cream-50: #f5f3ee;
+  --color-ink: #2b2a28;
+  --color-gold-400: #c9a66b;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 body {
   font-family: var(--font-sans);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Entrada del hero en la primera carga. `both` fija el estado "from" antes de
+   que arranque la animación, evitando un flash del contenido ya visible. */
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .animate-hero-in {
+    animation: hero-in 450ms var(--ease-out) both;
+  }
+}
+
+/* Reveal al hacer scroll — solo con JS activo (ver el script en Base.astro que
+   añade `.js` a <html>): sin JS o con motion reducida, el contenido es
+   visible desde el primer render.
+   - [data-reveal]: el propio elemento se revela.
+   - [data-reveal-group]: se revela cada hijo directo, con stagger. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal],
+  .js [data-reveal-group] > * {
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity 500ms var(--ease-out),
+      transform 500ms var(--ease-out);
+  }
+
+  .js [data-reveal][data-visible],
+  .js [data-reveal-group][data-visible] > * {
+    opacity: 1;
+    transform: none;
+  }
+
+  .js [data-reveal-group] > *:nth-child(2) {
+    transition-delay: 60ms;
+  }
+  .js [data-reveal-group] > *:nth-child(3) {
+    transition-delay: 120ms;
+  }
+  .js [data-reveal-group] > *:nth-child(4) {
+    transition-delay: 180ms;
+  }
+}
+
+/* Menú móvil (Header.astro): con motion reducida sigue abriendo/cerrando vía
+   visibility/opacity, pero de golpe, sin desplazamiento ni transición. */
+@media (prefers-reduced-motion: reduce) {
+  #menu-mobile {
+    transition-duration: 0ms;
+    transform: none;
+  }
 }

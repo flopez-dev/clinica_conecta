@@ -1,0 +1,256 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import WhatsAppFloat from './WhatsAppFloat.astro';
+
+interface Props {
+  basePath?: string;
+  noindex?: boolean;
+  titlePrefix?: string;
+}
+
+const { basePath = '/', noindex = false, titlePrefix = '' } = Astro.props;
+
+const title = `${titlePrefix}Terapia online en español para adultos — Clínica Conecta`;
+const description =
+  'Sesiones de psicología online para adultos hispanohablantes. Ansiedad, estrés, duelo y depresión, con EMDR. Agenda tu sesión por WhatsApp.';
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+
+const whatsappMessage = encodeURIComponent('Hola, me gustaría agendar una sesión');
+const whatsappHref = `https://wa.me/34644751041?text=${whatsappMessage}`;
+const mailtoHref = 'mailto:riccardi.juanpsi@gmail.com?subject=Consulta%20desde%20la%20web';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'Clínica Conecta',
+  description,
+  url: canonical,
+  image: new URL('og-image.png', canonical).toString(),
+  telephone: '+34644751041',
+  email: 'riccardi.juanpsi@gmail.com',
+  areaServed: 'Comunidad hispanohablante',
+  availableLanguage: 'es',
+  founder: {
+    '@type': 'Person',
+    name: 'Juan Ignacio Riccardi',
+    jobTitle: 'Psicólogo General Sanitario',
+  },
+};
+
+const servicios = [
+  {
+    titulo: 'Ansiedad',
+    texto: 'Herramientas para gestionar la preocupación excesiva, el malestar físico y los pensamientos que se repiten sin descanso.',
+  },
+  {
+    titulo: 'Estrés',
+    texto: 'Recursos prácticos para recuperar el equilibrio cuando las exigencias del día a día desbordan tu capacidad de respuesta.',
+  },
+  {
+    titulo: 'Duelo',
+    texto: 'Acompañamiento en procesos de pérdida, a tu ritmo, con espacio para todo lo que sientas.',
+  },
+  {
+    titulo: 'Depresión',
+    texto: 'Trabajo conjunto para entender el origen del malestar y recuperar motivación, energía y sentido.',
+  },
+];
+
+const paraQuienEs = [
+  'Sientes ansiedad o estrés que no consigues gestionar solo/a.',
+  'Atraviesas un duelo o una pérdida reciente.',
+  'Notas síntomas de depresión o desmotivación persistente.',
+  'Buscas un enfoque con herramientas basadas en evidencia, incluido EMDR.',
+  'Prefieres la comodidad y la privacidad de la terapia online.',
+  'Hablas español, vivas donde vivas.',
+];
+
+const pasos = [
+  {
+    numero: '1',
+    titulo: 'Escríbeme',
+    texto: 'Cuéntame por WhatsApp, en pocas palabras, qué te trae a terapia. Acordamos día y hora.',
+  },
+  {
+    numero: '2',
+    titulo: 'Sesión online',
+    texto: 'Videollamada individual de 50-60 minutos, en un espacio privado y confidencial, desde donde estés.',
+  },
+  {
+    numero: '3',
+    titulo: 'Seguimiento',
+    texto: 'Avanzamos sesión a sesión, ajustando el enfoque y las herramientas a tu proceso y tu ritmo.',
+  },
+];
+---
+
+<Base title={title} description={description} noindex={noindex}>
+  <script type="application/ld+json" slot="head" is:inline set:html={JSON.stringify(jsonLd)} />
+
+  <Header basePath={basePath} />
+
+  <main class="text-ink">
+    <!-- Hero -->
+    <section id="inicio" class="bg-navy-800 px-6 py-24 text-center text-cream-50 sm:py-28">
+      <div class="mx-auto max-w-3xl">
+        <p class="animate-hero-in font-serif text-sm tracking-[0.2em] text-gold-400 uppercase">
+          Juan Ignacio Riccardi · Psicólogo General Sanitario
+        </p>
+        <h1 class="animate-hero-in mt-4 font-serif text-4xl font-semibold tracking-tight sm:text-5xl">
+          Terapia online para adultos, en español, estés donde estés
+        </h1>
+        <p class="animate-hero-in mx-auto mt-5 max-w-xl text-lg text-cream-50/85 [animation-delay:80ms]">
+          Casi 14 años de experiencia clínica acompañando procesos de ansiedad, estrés, duelo y
+          depresión, con herramientas integradas y EMDR.
+        </p>
+        <div class="animate-hero-in mt-8 flex flex-col items-center gap-3 [animation-delay:160ms] sm:flex-row sm:justify-center">
+          <a
+            href={whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block rounded-md bg-cream-50 px-6 py-3 font-medium text-navy-800 transition-transform duration-150 ease-[var(--ease-out)] hover:scale-[1.02] active:scale-[0.98]"
+          >
+            Agendar una sesión por WhatsApp
+          </a>
+          <a
+            href="#como-funciona"
+            class="text-sm text-cream-50/80 underline decoration-gold-400 underline-offset-4 hover:text-cream-50"
+          >
+            ¿Cómo funciona una sesión online?
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sobre mí -->
+    <section id="sobre-mi" class="px-6 py-16 sm:py-20">
+      <div data-reveal class="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-2">
+        <div
+          class="flex aspect-[4/5] items-center justify-center rounded-lg border border-navy-100 bg-navy-100 text-center text-sm text-navy-600"
+        >
+          Foto profesional de Juan Ignacio — reemplazar por foto real
+        </div>
+        <div>
+          <h2 class="font-serif text-2xl font-semibold text-navy-800 sm:text-3xl">Sobre mí</h2>
+          <p class="mt-4 leading-relaxed text-ink/80">
+            Soy Juan Ignacio Riccardi, Psicólogo General Sanitario. Llevo casi 14 años de
+            experiencia clínica, ejerciendo profesionalmente desde 2017, acompañando a personas
+            adultas en procesos de ansiedad, estrés, duelo y depresión.
+          </p>
+          <p class="mt-4 leading-relaxed text-ink/80">
+            Trabajo con un enfoque integrador: combino herramientas psicológicas basadas en
+            evidencia con EMDR (Eye Movement Desensitization and Reprocessing) para el abordaje
+            del trauma y las experiencias difíciles.
+          </p>
+          <p class="mt-4 leading-relaxed text-ink/80">
+            Todo el proceso ocurre online, en un espacio cercano, confidencial y sin juicios, para
+            cualquier persona hispanohablante, viva donde viva.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Servicios -->
+    <section id="servicios" class="bg-cream-50 px-6 py-16 sm:py-20">
+      <div class="mx-auto max-w-5xl">
+        <div data-reveal class="max-w-2xl">
+          <h2 class="font-serif text-2xl font-semibold text-navy-800 sm:text-3xl">Servicios</h2>
+          <p class="mt-3 text-ink/80">
+            Sesiones individuales online para adultos, adaptadas a tu proceso.
+          </p>
+        </div>
+
+        <div data-reveal-group class="mt-10 grid gap-6 sm:grid-cols-2">
+          {servicios.map((servicio) => (
+            <div class="rounded-lg border border-navy-100 bg-white p-6">
+              <h3 class="font-serif text-lg font-semibold text-navy-800">{servicio.titulo}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-ink/70">{servicio.texto}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Cómo funciona / Para quién es -->
+    <section id="como-funciona" class="px-6 py-16 sm:py-20">
+      <div class="mx-auto max-w-5xl">
+        <div data-reveal>
+          <h2 class="font-serif text-2xl font-semibold text-navy-800 sm:text-3xl">¿Es esto para ti?</h2>
+
+          <ul class="mt-6 grid gap-3 sm:grid-cols-2">
+            {paraQuienEs.map((item) => (
+              <li class="flex items-start gap-3 text-ink/80">
+                <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-400"></span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <h3 data-reveal class="mt-14 font-serif text-xl font-semibold text-navy-800">
+          Qué esperar de una sesión online
+        </h3>
+
+        <div data-reveal-group class="mt-6 grid gap-8 sm:grid-cols-3">
+          {pasos.map((paso) => (
+            <div>
+              <span class="font-serif text-3xl font-semibold text-navy-600">{paso.numero}</span>
+              <h4 class="mt-2 font-medium text-navy-800">{paso.titulo}</h4>
+              <p class="mt-1 text-sm leading-relaxed text-ink/70">{paso.texto}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contacto" class="bg-navy-800 px-6 py-16 text-cream-50 sm:py-20">
+      <div data-reveal class="mx-auto max-w-2xl text-center">
+        <h2 class="font-serif text-2xl font-semibold sm:text-3xl">Contacto</h2>
+        <p class="mt-3 text-cream-50/85">Escríbeme y agendamos tu primera sesión.</p>
+
+        <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+          <a
+            href={whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block rounded-md bg-cream-50 px-6 py-3 font-medium text-navy-800 transition-transform duration-150 ease-[var(--ease-out)] hover:scale-[1.02] active:scale-[0.98]"
+          >
+            Escribir por WhatsApp
+          </a>
+          <a
+            href={mailtoHref}
+            class="text-sm text-cream-50/80 underline decoration-gold-400 underline-offset-4 hover:text-cream-50"
+          >
+            riccardi.juanpsi@gmail.com
+          </a>
+        </div>
+
+        <p class="mt-6 text-sm text-cream-50/60">+34 644 75 10 41</p>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <WhatsAppFloat href={whatsappHref} />
+
+  <script>
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            entry.target.setAttribute('data-visible', '');
+            io.unobserve(entry.target);
+          }
+        },
+        { rootMargin: '-80px 0px' }
+      );
+
+      document.querySelectorAll('[data-reveal], [data-reveal-group]').forEach((el) => io.observe(el));
+    }
+  </script>
+</Base>
