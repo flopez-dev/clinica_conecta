@@ -1,0 +1,37 @@
+name: CI
+
+# Los dos workflows de despliegue solo se disparan en develop y main, así que
+# esto corre en cualquier otra rama y en cada pull request para detectar un
+# build roto antes de llegar a esas ramas.
+on:
+  pull_request:
+  push:
+    branches-ignore: [develop, main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Tipos
+        run: npm run check
+
+      # Con el base path de GitHub Pages, que es el que de verdad ejercita
+      # withBase() en los enlaces internos.
+      - name: Build
+        run: npm run build
+        env:
+          SITE_URL: https://flopez-dev.github.io
+          BASE_PATH: /clinica_conecta/

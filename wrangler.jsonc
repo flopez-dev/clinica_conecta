@@ -1,0 +1,14 @@
+{
+  // El sitio como Worker en workers.dev, sin dominio propio todavía.
+  // Cuando el cliente tenga dominio: añadir "routes" con custom_domain y
+  // opcionalmente "workers_dev": false.
+  "name": "clinica-conecta",
+  "compatibility_date": "2026-09-12",
+  "workers_dev": true,
+
+  // dist/ se construye en CI y no se versiona.
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}

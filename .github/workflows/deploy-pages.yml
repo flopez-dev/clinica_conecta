@@ -1,0 +1,50 @@
+name: Deploy site to GitHub Pages
+
+on:
+  push:
+    branches: [develop]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Pages sirve este repositorio desde /clinica_conecta/, así que el
+      # artefacto se construye con un base distinto de raíz.
+      - run: npm run build
+        env:
+          SITE_URL: https://flopez-dev.github.io
+          BASE_PATH: /clinica_conecta/
+
+      # El deploy por artefacto no ejecuta Jekyll, pero por si acaso: evita
+      # que se descarten ficheros que empiecen por "_" (p. ej. _astro/).
+      - run: touch dist/.nojekyll
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
