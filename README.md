@@ -15,6 +15,8 @@ Todos los comandos se ejecutan desde la raíz del proyecto:
 | `npm run preview`   | Sirve localmente el build de producción                    |
 | `npm run check`     | Comprueba tipos con `astro check`                           |
 
+Convenciones del repo (base path, Tailwind v4, maquetación) están en [`CLAUDE.md`](./CLAUDE.md).
+
 ## Ramas y despliegue
 
 | Rama      | Destino                                                                 |
