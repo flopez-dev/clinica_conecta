@@ -25,6 +25,12 @@ jobs:
 
       - run: npm ci
 
+      - name: Formato
+        run: npm run format:check
+
+      - name: Lint
+        run: npm run lint
+
       - name: Tipos
         run: npm run check
 
@@ -32,6 +38,19 @@ jobs:
       # withBase() en los enlaces internos.
       - name: Build
         run: npm run build
+        env:
+          SITE_URL: https://flopez-dev.github.io
+          BASE_PATH: /clinica_conecta/
+
+      - name: Instalar navegador de Playwright
+        run: npx playwright install --with-deps chromium
+
+      # test:e2e vuelve a construir (mismo comando que el paso Build, con los
+      # mismos env — los defaults de astro.config.mjs ya coinciden, pero se
+      # fijan explícitos para no depender de que sigan coincidiendo) y
+      # levanta/para el preview server de Astro alrededor de los tests.
+      - name: Tests e2e
+        run: npm run test:e2e
         env:
           SITE_URL: https://flopez-dev.github.io
           BASE_PATH: /clinica_conecta/

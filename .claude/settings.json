@@ -19,9 +19,6 @@
       "WebFetch(domain:tailwindcss.com)",
       "WebFetch(domain:developers.cloudflare.com)"
     ],
-    "deny": [
-      "Read(./.env)",
-      "Read(./.env.*)"
-    ]
+    "deny": ["Read(./.env)", "Read(./.env.*)"]
   }
 }

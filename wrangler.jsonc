@@ -9,6 +9,6 @@
   // dist/ se construye en CI y no se versiona.
   "assets": {
     "directory": "./dist",
-    "not_found_handling": "404-page"
-  }
+    "not_found_handling": "404-page",
+  },
 }
