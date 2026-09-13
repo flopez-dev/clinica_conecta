@@ -1,9 +1,15 @@
+---
+import { withBase } from '../../lib/withBase';
+
+const logo = withBase('/brand/conecta-1b-nodo-horizontal.svg');
+---
+
 <footer class="bg-white">
   <div class="mx-auto max-w-5xl px-6 py-10">
     <div class="h-px w-16 bg-gold-400"></div>
 
     <div class="mt-6 flex flex-col gap-2 font-v2-sans text-sm text-ink/70 sm:flex-row sm:items-center sm:justify-between">
-      <p class="font-v2-serif text-base italic text-navy-800">Clínica Conecta</p>
+      <img src={logo} alt="Clínica Conecta" width="153" height="48" class="h-9 w-auto" />
       <div class="flex flex-col gap-1 sm:flex-row sm:gap-6">
         <a href="mailto:riccardi.juanpsi@gmail.com" class="hover:text-navy-800">
           riccardi.juanpsi@gmail.com
