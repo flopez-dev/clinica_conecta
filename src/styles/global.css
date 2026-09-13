@@ -100,18 +100,18 @@ body {
   }
 }
 
-/* Propuesta 2 (/v2/) — misma familia navy/crema/dorado que la v1, aplicada al
-   revés (crema dominante, navy y dorado como acento) con una pareja
+/* Propuesta 2 (/v2/) — misma familia navy/crema/dorado que la home, aplicada
+   al revés (crema dominante, navy y dorado como acento) con una pareja
    tipográfica propia. Tokens namespaced para no mezclarse con --font-serif
-   de la v1. Las fuentes se cargan solo en v2/index.astro (slot "head" de
-   Base.astro), así que root/v1/404 no cargan este peso extra. */
+   de la home. Las fuentes se cargan solo en v2/index.astro (slot "head" de
+   Base.astro), así que root/404 no cargan este peso extra. */
 @theme {
   --font-v2-serif: 'Lora', Georgia, serif;
   --font-v2-sans: 'Karla', ui-sans-serif, system-ui, sans-serif;
 }
 
 /* Formas orgánicas para los placeholders de foto — border-radius asimétrico
-   en vez de las esquinas rectas de la v1. */
+   en vez de las esquinas rectas de la home. */
 .v2-blob-1 {
   border-radius: 62% 38% 55% 45% / 48% 42% 58% 52%;
 }

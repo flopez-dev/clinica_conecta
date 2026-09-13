@@ -1,12 +1,7 @@
 ---
 import { withBase } from '../lib/withBase';
 
-interface Props {
-  basePath?: string;
-}
-
-const { basePath = '/' } = Astro.props;
-const home = withBase(basePath);
+const home = withBase('/');
 const links = [
   { href: `${home}#inicio`, label: 'Inicio' },
   { href: `${home}#sobre-mi`, label: 'Sobre mí' },
@@ -24,7 +19,10 @@ const links = [
 
     <nav class="hidden gap-6 text-sm text-ink/80 md:flex">
       {links.map((link) => (
-        <a href={link.href} class="transition-colors duration-150 ease-[var(--ease-out)] hover:text-navy-600">
+        <a
+          href={link.href}
+          class="transition-colors duration-150 ease-[var(--ease-out)] hover:text-navy-600"
+        >
           {link.label}
         </a>
       ))}
@@ -38,7 +36,14 @@ const links = [
       class="flex h-9 w-9 items-center justify-center rounded-md text-navy-800 md:hidden"
       aria-label="Abrir menú"
     >
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-6 w-6" aria-hidden="true">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        class="h-6 w-6"
+        aria-hidden="true"
+      >
         <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round" />
       </svg>
     </button>
@@ -51,7 +56,9 @@ const links = [
     <ul class="flex flex-col gap-4 text-sm text-ink/80">
       {links.map((link) => (
         <li>
-          <a href={link.href} class="block">{link.label}</a>
+          <a href={link.href} class="block">
+            {link.label}
+          </a>
         </li>
       ))}
     </ul>
