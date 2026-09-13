@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+import { withBase } from '../lib/withBase';
 
 const title = 'Terapia online en español para adultos — Clínica Conecta';
 const description =
@@ -19,7 +20,7 @@ const jsonLd = {
   name: 'Clínica Conecta',
   description,
   url: canonical,
-  image: new URL('og-image.png', canonical).toString(),
+  image: new URL(withBase('/og-image.png'), Astro.site).toString(),
   telephone: '+34644751041',
   email: 'riccardi.juanpsi@gmail.com',
   areaServed: 'Comunidad hispanohablante',
