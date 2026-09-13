@@ -1,0 +1,95 @@
+---
+import { withBase } from '../../lib/withBase';
+
+const home = withBase('/v3/');
+const logo = withBase('/brand/conecta-1b-nodo-horizontal.svg');
+const links = [
+  { href: `${home}#inicio`, label: 'Inicio' },
+  { href: `${home}#sobre-mi`, label: 'Sobre mí' },
+  { href: `${home}#servicios`, label: 'Servicios' },
+  { href: `${home}#como-funciona`, label: 'Cómo funciona' },
+  { href: `${home}#contacto`, label: 'Contacto' },
+];
+---
+
+<header
+  id="v3-header"
+  class="sticky top-0 z-40 border-b border-transparent bg-transparent transition-colors duration-300 ease-[var(--ease-out)] data-scrolled:border-navy-100 data-scrolled:bg-cream-50/90 data-scrolled:backdrop-blur"
+>
+  <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-5">
+    <a href={home} class="block">
+      <img src={logo} alt="Clínica Conecta" width="153" height="48" class="h-10 w-auto" />
+    </a>
+
+    <nav class="hidden gap-6 font-v3-sans text-sm text-navy-900/70 md:flex">
+      {links.map((link) => (
+        <a
+          href={link.href}
+          class="transition-colors duration-150 ease-[var(--ease-out)] hover:text-navy-600"
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <button
+      type="button"
+      id="menu-toggle"
+      aria-expanded="false"
+      aria-controls="menu-mobile"
+      class="flex h-9 w-9 items-center justify-center rounded-full text-navy-900 transition-transform duration-150 ease-[var(--ease-out)] active:scale-90 md:hidden"
+      aria-label="Abrir menú"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        class="h-6 w-6"
+        aria-hidden="true"
+      >
+        <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round" />
+      </svg>
+    </button>
+  </div>
+
+  <nav
+    id="menu-mobile"
+    class="invisible absolute inset-x-0 top-full -translate-y-2 border-t border-navy-100 bg-cream-50 px-6 py-4 opacity-0 transition-[opacity,transform,visibility] duration-200 ease-[var(--ease-out)] md:hidden data-open:visible data-open:translate-y-0 data-open:opacity-100"
+  >
+    <ul class="flex flex-col gap-4 font-v3-sans text-sm text-navy-900/70">
+      {links.map((link) => (
+        <li>
+          <a href={link.href} class="block">
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('menu-mobile');
+  const header = document.getElementById('v3-header');
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = menu?.hasAttribute('data-open') === true;
+    menu?.toggleAttribute('data-open', !isOpen);
+    toggle.setAttribute('aria-expanded', String(!isOpen));
+  });
+
+  menu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      menu.removeAttribute('data-open');
+      toggle?.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  const onScroll = () => {
+    header?.toggleAttribute('data-scrolled', window.scrollY > 8);
+  };
+  onScroll();
+  addEventListener('scroll', onScroll, { passive: true });
+</script>

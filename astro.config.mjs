@@ -18,9 +18,9 @@ export default defineConfig({
 
   integrations: [
     sitemap({
-      // /v2/ es una propuesta de comparación para el cliente (noindex), no
-      // una ruta pública — fuera del sitemap además de fuera del índice.
-      filter: (page) => !/\/v2\/$/.test(page),
+      // /v2/ y /v3/ son propuestas de comparación para el cliente (noindex),
+      // no rutas públicas — fuera del sitemap además de fuera del índice.
+      filter: (page) => !/\/v[23]\/$/.test(page),
     }),
   ],
 

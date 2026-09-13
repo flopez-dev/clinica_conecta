@@ -21,12 +21,17 @@
   --color-navy-900: #1e2c4a;
   --color-navy-800: #2a3f6a;
   --color-navy-600: #4c6fa0;
+  /* navy-300/navy-200 vienen del logo (public/brand/): son los tonos del
+     lockup para fondo oscuro (círculo interior y texto "Clínica"). */
+  --color-navy-300: #8fa5c9;
+  --color-navy-200: #a8b8d4;
   --color-navy-100: #e4e9f2;
   --color-cream-50: #f5f3ee;
   --color-ink: #2b2a28;
   --color-gold-400: #c9a66b;
 
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 body {
@@ -118,4 +123,46 @@ body {
 
 .v2-blob-2 {
   border-radius: 45% 55% 40% 60% / 55% 45% 60% 40%;
+}
+
+/* Propuesta 3 (/v3/) — misma familia de marca que la home/v2 (navy/crema/
+   dorado, ver public/brand/), con su propia pareja tipográfica. Fuentes
+   cargadas solo en v3/index.astro (slot "head" de Base.astro). */
+@theme {
+  --font-v3-display: 'Newsreader', Georgia, serif;
+  --font-v3-sans: 'Work Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Firma "ir y venir": un punto que va y vuelve muy despacio, nunca parpadea.
+   Se elimina con motion reducida (el punto queda fijo en el centro). Recorrido
+   en px, pensado para la línea de 9rem (w-36) del hero de /v3/. */
+@keyframes v3-drift {
+  from {
+    transform: translateX(-60px);
+  }
+  to {
+    transform: translateX(60px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .v3-drift {
+    animation: v3-drift 5s ease-in-out infinite alternate;
+  }
+}
+
+/* Conector entre los pasos de "Así es el proceso": crece desde el círculo
+   del paso hacia el texto cuando el bloque se revela (mismo mecanismo de
+   [data-reveal-group] ya genérico) — el propio "ir y venir" contado también
+   en la línea que une los pasos, no solo en su disposición alterna.
+   origin-left/origin-right se fijan en el markup según el lado del paso. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal-group] .v3-connector {
+    transform: scaleX(0);
+    transition: transform 500ms var(--ease-in-out) 150ms;
+  }
+
+  .js [data-reveal-group][data-visible] .v3-connector {
+    transform: scaleX(1);
+  }
 }
