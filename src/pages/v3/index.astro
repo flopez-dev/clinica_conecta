@@ -7,7 +7,7 @@ import { withBase } from '../../lib/withBase';
 
 const title = 'Propuesta 3 · Ir y venir, hasta encontrar calma — Clínica Conecta';
 const description =
-  'Terapia online en español para adultos, con EMDR. Un espacio para procesar lo que pesa y avanzar a tu propio ritmo.';
+  'Terapia online en español para adultos, con EMDR: ansiedad, estrés, duelo y depresión. Un espacio para procesar lo que pesa y avanzar a tu propio ritmo.';
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 
 const whatsappMessage = encodeURIComponent('Hola, me gustaría agendar una sesión');
@@ -113,6 +113,11 @@ const faqs = [
     pendiente: true,
   },
   {
+    pregunta: '¿Y si no sé por dónde empezar?',
+    respuesta:
+      'No hace falta llegar con las palabras exactas. El primer paso también puede ser pequeño.',
+  },
+  {
     pregunta: '¿Qué pasa si tengo que cancelar una sesión?',
     respuesta: 'Política de cancelación — pendiente de publicar.',
     pendiente: true,
@@ -198,6 +203,9 @@ const faqJsonLd = {
             ¿Qué es una sesión EMDR?
           </a>
         </div>
+        <p class="animate-hero-in mt-6 text-xs text-navy-900/50 [animation-delay:220ms]">
+          Lo que compartas se queda aquí, protegido por el secreto profesional.
+        </p>
       </div>
     </section>
 
@@ -244,7 +252,7 @@ const faqJsonLd = {
         <div data-reveal class="max-w-xl">
           <h2 class="font-v3-display text-3xl italic">Cómo puedo ayudarte</h2>
           <p class="mt-3 text-navy-900/75">
-            Sesiones individuales online para adultos, adaptadas a tu proceso.
+            Cada malestar tiene su propio ritmo. Encontramos el tuyo.
           </p>
         </div>
 

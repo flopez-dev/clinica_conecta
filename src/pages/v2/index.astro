@@ -7,7 +7,7 @@ import { withBase } from '../../lib/withBase';
 
 const title = 'Propuesta 2 · Terapia online cercana, en español — Clínica Conecta';
 const description =
-  'Sesiones de psicología online para adultos hispanohablantes, con un enfoque cercano y humano. Ansiedad, estrés, duelo y depresión, con EMDR.';
+  'Sesiones de psicología online para adultos, con un enfoque cercano y humano: ansiedad, estrés, duelo y depresión, con EMDR. Escríbeme por WhatsApp.';
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 
 const whatsappMessage = encodeURIComponent('Hola, me gustaría agendar una sesión');
@@ -123,6 +123,11 @@ const faqs = [
     pendiente: true,
   },
   {
+    pregunta: '¿Y si no sé por dónde empezar?',
+    respuesta:
+      'Es de lo más habitual — a casi nadie le sale explicarlo bien a la primera. Empezamos por donde tú estés, sin prisas.',
+  },
+  {
     pregunta: '¿Qué pasa si tengo que cancelar una sesión?',
     respuesta: 'Política de cancelación — pendiente de publicar.',
     pendiente: true,
@@ -204,6 +209,9 @@ const faqJsonLd = {
               ¿Cómo es una primera sesión?
             </a>
           </div>
+          <p class="animate-hero-in mt-6 text-xs text-ink/50 [animation-delay:200ms]">
+            Todo lo que me cuentes queda entre nosotros, protegido por el secreto profesional.
+          </p>
         </div>
 
         <div class="animate-hero-in [animation-delay:120ms]">
@@ -261,7 +269,7 @@ const faqJsonLd = {
         <div data-reveal class="max-w-xl">
           <h2 class="font-v2-serif text-3xl text-navy-800">Cómo puedo ayudarte</h2>
           <p class="mt-3 text-ink/75">
-            Sesiones individuales online para adultos, adaptadas a tu proceso.
+            Cada proceso es distinto — por eso buscamos, juntos, lo que a ti te funciona.
           </p>
         </div>
 
