@@ -24,6 +24,11 @@ const jsonLd = {
   email: 'riccardi.juanpsi@gmail.com',
   areaServed: 'Comunidad hispanohablante',
   availableLanguage: 'es',
+  sameAs: [
+    'https://wa.me/34644751041',
+    'https://www.instagram.com/juanriccardi.conecta/',
+    'https://www.facebook.com/profile.php?id=61577424099534',
+  ],
   founder: {
     '@type': 'Person',
     name: 'Juan Ignacio Riccardi',
@@ -34,11 +39,13 @@ const jsonLd = {
 const servicios = [
   {
     titulo: 'Ansiedad',
-    texto: 'Para cuando la mente no para y el cuerpo lo nota. Trabajamos herramientas concretas para bajar la intensidad, poco a poco.',
+    texto:
+      'Para cuando la mente no para y el cuerpo lo nota. Trabajamos herramientas concretas para bajar la intensidad, poco a poco.',
   },
   {
     titulo: 'Estrés',
-    texto: 'Cuando el día a día pesa más de la cuenta, buscamos juntos formas realistas de recuperar el equilibrio.',
+    texto:
+      'Cuando el día a día pesa más de la cuenta, buscamos juntos formas realistas de recuperar el equilibrio.',
   },
   {
     titulo: 'Duelo',
@@ -46,7 +53,8 @@ const servicios = [
   },
   {
     titulo: 'Depresión',
-    texto: 'Para recuperar las ganas, un paso a la vez, entendiendo juntos qué hay detrás del malestar.',
+    texto:
+      'Para recuperar las ganas, un paso a la vez, entendiendo juntos qué hay detrás del malestar.',
   },
 ];
 
@@ -70,12 +78,14 @@ const pasos = [
   {
     numero: '1',
     titulo: 'Escríbeme',
-    texto: 'Cuéntame, con tus palabras, qué te gustaría trabajar. Buscamos juntos el mejor horario.',
+    texto:
+      'Cuéntame, con tus palabras, qué te gustaría trabajar. Buscamos juntos el mejor horario.',
   },
   {
     numero: '2',
     titulo: 'Nos vemos online',
-    texto: 'Una videollamada de 50-60 minutos, en un espacio privado, desde donde te sientas cómodo/a.',
+    texto:
+      'Una videollamada de 50-60 minutos, en un espacio privado, desde donde te sientas cómodo/a.',
   },
   {
     numero: '3',
@@ -86,7 +96,12 @@ const pasos = [
 ---
 
 <Base title={title} description={description} noindex image="/og-image-v2.png">
-  <script type="application/ld+json" slot="head" is:inline set:html={JSON.stringify(jsonLd)} />
+  <script
+    type="application/ld+json"
+    slot="head"
+    is:inline
+    set:html={JSON.stringify(jsonLd)}
+  ></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" slot="head" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin slot="head" />
   <link
@@ -99,12 +114,14 @@ const pasos = [
 
   <main class="font-v2-sans text-ink">
     <!-- Hero -->
-    <section id="inicio" class="relative overflow-hidden bg-cream-50 px-6 pb-20 pt-14 sm:pb-28 sm:pt-20">
+    <section
+      id="inicio"
+      class="relative overflow-hidden bg-cream-50 px-6 pb-20 pt-14 sm:pb-28 sm:pt-20"
+    >
       <div
         class="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-navy-100/70 blur-2xl"
         aria-hidden="true"
-      >
-      </div>
+      ></div>
 
       <div class="relative mx-auto grid max-w-5xl items-center gap-12 md:grid-cols-2">
         <div>
@@ -137,9 +154,7 @@ const pasos = [
         </div>
 
         <div class="animate-hero-in [animation-delay:120ms]">
-          <div
-            class="v2-blob-1 mx-auto flex aspect-square max-w-sm items-center justify-center border border-navy-100 bg-navy-100/60 p-8 text-center text-sm text-navy-600"
-          >
+          <div class="v2-blob-1 mx-auto flex aspect-square max-w-sm items-center justify-center border border-navy-100 bg-navy-100/60 p-8 text-center text-sm text-navy-600">
             Foto profesional de Juan Ignacio — reemplazar por foto real
           </div>
         </div>
@@ -153,9 +168,7 @@ const pasos = [
         class="mx-auto grid max-w-5xl items-center gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]"
       >
         <div class="mx-auto md:mx-0">
-          <div
-            class="v2-blob-2 flex aspect-square w-56 items-center justify-center border border-navy-100 bg-navy-100/50 p-6 text-center text-xs text-navy-600 sm:w-64"
-          >
+          <div class="v2-blob-2 flex aspect-square w-56 items-center justify-center border border-navy-100 bg-navy-100/50 p-6 text-center text-xs text-navy-600 sm:w-64">
             Foto de Juan Ignacio — reemplazar por foto real
           </div>
         </div>
@@ -165,8 +178,8 @@ const pasos = [
           </p>
           <div class="mt-6 space-y-4 text-ink/75">
             <p>
-              Soy Juan Ignacio Riccardi, Psicólogo General Sanitario. Llevo casi 14 años
-              acompañando a personas adultas que atraviesan ansiedad, estrés, duelo o depresión.
+              Soy Juan Ignacio Riccardi, Psicólogo General Sanitario. Llevo casi 14 años acompañando
+              a personas adultas que atraviesan ansiedad, estrés, duelo o depresión.
             </p>
             <p>
               Trabajo de forma integradora, combinando herramientas con base científica y EMDR,
@@ -210,7 +223,9 @@ const pasos = [
                   class="h-6 w-6 text-navy-800"
                   aria-hidden="true"
                 >
-                  {iconos[servicio.titulo].map((d) => <path d={d} />)}
+                  {iconos[servicio.titulo].map((d) => (
+                    <path d={d} />
+                  ))}
                 </svg>
               </div>
               <h3 class="mt-4 font-v2-serif text-lg text-navy-800">{servicio.titulo}</h3>
@@ -261,8 +276,7 @@ const pasos = [
                 <span
                   class="absolute top-6 right-full hidden w-10 border-t border-dashed border-navy-100 sm:block"
                   aria-hidden="true"
-                >
-                </span>
+                ></span>
               )}
               <div class="flex h-12 w-12 items-center justify-center rounded-full bg-navy-800 font-v2-serif text-lg text-cream-50">
                 {paso.numero}
@@ -322,10 +336,12 @@ const pasos = [
             io.unobserve(entry.target);
           }
         },
-        { rootMargin: '-80px 0px' }
+        { rootMargin: '-80px 0px' },
       );
 
-      document.querySelectorAll('[data-reveal], [data-reveal-group]').forEach((el) => io.observe(el));
+      document
+        .querySelectorAll('[data-reveal], [data-reveal-group]')
+        .forEach((el) => io.observe(el));
     }
   </script>
 </Base>
