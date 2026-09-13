@@ -2,6 +2,8 @@
 import { withBase } from '../../lib/withBase';
 
 const logo = withBase('/brand/conecta-1b-nodo-horizontal.svg');
+const avisoLegal = withBase('/aviso-legal/');
+const privacidad = withBase('/privacidad/');
 ---
 
 <footer class="bg-white">
@@ -71,10 +73,18 @@ const logo = withBase('/brand/conecta-1b-nodo-horizontal.svg');
     </div>
 
     <p class="mt-6 max-w-2xl font-v3-sans text-xs leading-relaxed text-navy-900/50">
-      Aviso legal: los contenidos de esta web tienen carácter informativo y no sustituyen una
-      valoración clínica individual. Datos fiscales y de colegiación profesional pendientes de
-      incorporar.
+      Los contenidos de esta web tienen carácter informativo y no sustituyen una valoración clínica
+      individual.
     </p>
+
+    <div class="mt-3 flex gap-4 font-v3-sans text-xs text-navy-900/50">
+      <a href={avisoLegal} class="hover:text-navy-600">
+        Aviso legal
+      </a>
+      <a href={privacidad} class="hover:text-navy-600">
+        Política de privacidad
+      </a>
+    </div>
 
     <p class="mt-4 font-v3-sans text-xs text-navy-900/40">
       &copy; {new Date().getFullYear()} Clínica Conecta. Todos los derechos reservados.

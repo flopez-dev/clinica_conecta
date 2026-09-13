@@ -95,6 +95,51 @@ const pasos = [
     texto: 'Cada sesión se ajusta a cómo vas llegando. Vamos a tu ritmo, sin prisas.',
   },
 ];
+
+const faqs = [
+  {
+    pregunta: '¿Cómo son las sesiones?',
+    respuesta:
+      'Sesiones individuales online, de 50 a 60 minutos, por videollamada en un espacio privado y confidencial. Están pensadas para personas adultas.',
+  },
+  {
+    pregunta: '¿Cuánto cuesta una sesión?',
+    respuesta: 'Precio por sesión — pendiente de publicar.',
+    pendiente: true,
+  },
+  {
+    pregunta: '¿Puedo hacer terapia contigo si no vivo en España?',
+    respuesta:
+      'Sí. Las sesiones son online y en español, así que puedes hacerlas desde cualquier país. Ten en cuenta la diferencia horaria al escribir, para encontrar un hueco que funcione para los dos.',
+  },
+  {
+    pregunta: '¿Qué es el EMDR?',
+    respuesta:
+      'Es una técnica psicoterapéutica reconocida internacionalmente para el trabajo con el trauma y las experiencias difíciles: ayuda a procesar recuerdos que quedan "atascados" y que siguen generando malestar. Aquí se usa como parte de un enfoque integrador, junto a otras herramientas con base científica.',
+  },
+  {
+    pregunta: '¿Con qué frecuencia son las sesiones y cuánto dura el proceso?',
+    respuesta: 'Frecuencia recomendada y duración media de un proceso — pendiente de publicar.',
+    pendiente: true,
+  },
+  {
+    pregunta: '¿Qué pasa si tengo que cancelar una sesión?',
+    respuesta: 'Política de cancelación — pendiente de publicar.',
+    pendiente: true,
+  },
+];
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs
+    .filter((faq) => !faq.pendiente)
+    .map((faq) => ({
+      '@type': 'Question',
+      name: faq.pregunta,
+      acceptedAnswer: { '@type': 'Answer', text: faq.respuesta },
+    })),
+};
 ---
 
 <Base title={title} description={description} noindex image="/og-image-v2.png">
@@ -103,6 +148,12 @@ const pasos = [
     slot="head"
     is:inline
     set:html={JSON.stringify(jsonLd)}
+  ></script>
+  <script
+    type="application/ld+json"
+    slot="head"
+    is:inline
+    set:html={JSON.stringify(faqJsonLd)}
   ></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" slot="head" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin slot="head" />
@@ -294,6 +345,44 @@ const pasos = [
               <h4 class="mt-4 font-semibold text-navy-800">{paso.titulo}</h4>
               <p class="mt-1 text-sm leading-relaxed text-ink/70">{paso.texto}</p>
             </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Preguntas frecuentes -->
+    <section id="faq" class="bg-white px-6 py-20 sm:py-24">
+      <div class="mx-auto max-w-3xl">
+        <h2 data-reveal class="font-v2-serif text-3xl text-navy-800">
+          Preguntas frecuentes
+        </h2>
+
+        <div data-reveal-group class="mt-8 space-y-3">
+          {faqs.map((faq) => (
+            <details class="group rounded-3xl border border-navy-100 bg-cream-50 p-6">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-v2-serif text-navy-800 marker:hidden">
+                {faq.pregunta}
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  class="h-4 w-4 shrink-0 text-navy-800 transition-transform duration-200 ease-[var(--ease-out)] group-open:rotate-45"
+                  aria-hidden="true"
+                >
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+              </summary>
+              <p
+                class:list={[
+                  'mt-3 text-sm leading-relaxed',
+                  faq.pendiente ? 'font-medium text-gold-400 italic' : 'text-ink/70',
+                ]}
+              >
+                {faq.respuesta}
+              </p>
+            </details>
           ))}
         </div>
       </div>

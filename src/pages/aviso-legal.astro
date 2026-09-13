@@ -1,0 +1,122 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { withBase } from '../lib/withBase';
+
+const title = 'Aviso legal — Clínica Conecta';
+const description =
+  'Información legal sobre la titularidad y las condiciones de uso de este sitio web.';
+
+const pendienteClass = 'rounded bg-gold-400/20 px-1.5 py-0.5 font-medium text-navy-800';
+---
+
+<Base title={title} description={description}>
+  <Header />
+
+  <main class="mx-auto max-w-2xl px-6 py-16 text-ink sm:py-20">
+    <h1 class="font-serif text-3xl font-semibold text-navy-800 sm:text-4xl">Aviso legal</h1>
+    <p class="mt-3 text-sm text-ink/60">
+      Algunos datos de esta página están marcados como{' '}
+      <span class={pendienteClass}>pendientes</span> a la espera de que el titular los facilite. Se
+      completarán antes de la publicación definitiva del sitio.
+    </p>
+
+    <div class="mt-10 space-y-10 leading-relaxed text-ink/85">
+      <section>
+        <h2 class="font-serif text-xl font-semibold text-navy-800">1. Titular del sitio web</h2>
+        <ul class="mt-3 space-y-1.5">
+          <li>Nombre comercial: Clínica Conecta</li>
+          <li>
+            Titular: <span class={pendienteClass}>nombre fiscal completo pendiente</span>
+          </li>
+          <li>
+            NIF: <span class={pendienteClass}>pendiente</span>
+          </li>
+          <li>
+            Colegiado nº <span class={pendienteClass}>pendiente</span> — Colegio Oficial de
+            Psicólogos de <span class={pendienteClass}>pendiente</span>
+          </li>
+          <li>
+            Domicilio a efectos de notificaciones: <span class={pendienteClass}>pendiente</span>
+          </li>
+          <li>
+            Contacto:{' '}
+            <a href="mailto:riccardi.juanpsi@gmail.com" class="underline hover:text-navy-600">
+              riccardi.juanpsi@gmail.com
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="font-serif text-xl font-semibold text-navy-800">2. Objeto</h2>
+        <p class="mt-3">
+          Este sitio web tiene como finalidad informar sobre los servicios de psicología ofrecidos
+          por el titular y facilitar el contacto con las personas interesadas. El acceso al sitio es
+          gratuito y no requiere registro.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-serif text-xl font-semibold text-navy-800">3. Condiciones de uso</h2>
+        <p class="mt-3">
+          El acceso y uso de este sitio web atribuye la condición de usuario e implica la aceptación
+          de las condiciones recogidas en este aviso legal. El usuario se compromete a hacer un uso
+          adecuado de los contenidos y servicios que se ofrecen, conforme a la legislación vigente,
+          la buena fe y el orden público.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-serif text-xl font-semibold text-navy-800">
+          4. Carácter informativo de los contenidos
+        </h2>
+        <p class="mt-3">
+          Los contenidos de este sitio web tienen carácter informativo general y no constituyen ni
+          sustituyen una valoración, diagnóstico o tratamiento clínico individualizado. Este sitio
+          no presta un servicio de atención a urgencias o emergencias sanitarias.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-serif text-xl font-semibold text-navy-800">
+          5. Propiedad intelectual e industrial
+        </h2>
+        <p class="mt-3">
+          Los textos, imágenes, logotipo y demás elementos de este sitio web son propiedad del
+          titular o se utilizan con la debida autorización. Queda prohibida su reproducción,
+          distribución o comunicación pública sin autorización expresa.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-serif text-xl font-semibold text-navy-800">6. Enlaces a terceros</h2>
+        <p class="mt-3">
+          Este sitio incluye enlaces a redes sociales y servicios de mensajería de terceros
+          (WhatsApp, Instagram, Facebook). El titular no tiene control sobre esos servicios ni
+          responsabilidad sobre sus contenidos o políticas.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-serif text-xl font-semibold text-navy-800">7. Legislación aplicable</h2>
+        <p class="mt-3">
+          Las presentes condiciones se rigen por la legislación española. Para la resolución de
+          cualquier controversia serán competentes los juzgados y tribunales que correspondan
+          conforme a la normativa vigente en materia de protección de consumidores y usuarios.
+        </p>
+      </section>
+    </div>
+
+    <p class="mt-12 text-sm text-ink/60">
+      Consulta también la{' '}
+      <a href={withBase('/privacidad/')} class="underline hover:text-navy-600">
+        política de privacidad
+      </a>
+      .
+    </p>
+  </main>
+
+  <Footer />
+</Base>
