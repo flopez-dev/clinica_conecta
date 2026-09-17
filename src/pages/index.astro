@@ -15,35 +15,54 @@ const whatsappHref = `https://wa.me/34644751041?text=${whatsappMessage}`;
 const mailtoHref = 'mailto:riccardi.juanpsi@gmail.com?subject=Consulta%20desde%20la%20web';
 const linkedinHref = 'https://www.linkedin.com/in/juaniriccardi';
 
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'ProfessionalService',
-  name: 'Clínica Conecta',
+// Juan es la entidad principal, no un negocio local. `ProfessionalService`
+// es un subtipo de LocalBusiness, o sea de Place, y daba a entender que hay
+// una sede física: no la hay, la consulta es solo online desde Argentina.
+// Se modela como Person que presta un Service, con la marca colgando del
+// servicio.
+const persona = {
+  '@type': 'Person',
+  '@id': `${canonical}#juan`,
+  name: 'Juan Ignacio Riccardi',
+  jobTitle: 'Psicólogo General Sanitario',
   description,
   url: canonical,
   image: new URL(withBase('/og-image.png'), Astro.site).toString(),
   telephone: '+34644751041',
   email: 'riccardi.juanpsi@gmail.com',
-  areaServed: 'Comunidad hispanohablante',
-  availableLanguage: 'es',
+  knowsLanguage: 'es',
   knowsAbout: ['EMDR', 'Ansiedad', 'Estrés', 'Duelo', 'Depresión', 'Terapia de pareja'],
+  alumniOf: [
+    { '@type': 'CollegeOrUniversity', name: 'Universidad del Salvador' },
+    { '@type': 'CollegeOrUniversity', name: 'Universidad de Belgrano' },
+    { '@type': 'CollegeOrUniversity', name: 'Universidad Aconcagua' },
+  ],
   sameAs: [
     'https://wa.me/34644751041',
     'https://www.instagram.com/juanriccardi.conecta/',
     'https://www.facebook.com/profile.php?id=61577424099534',
     linkedinHref,
   ],
-  founder: {
-    '@type': 'Person',
-    name: 'Juan Ignacio Riccardi',
-    jobTitle: 'Psicólogo General Sanitario',
-    url: linkedinHref,
-    alumniOf: [
-      { '@type': 'CollegeOrUniversity', name: 'Universidad del Salvador' },
-      { '@type': 'CollegeOrUniversity', name: 'Universidad de Belgrano' },
-      { '@type': 'CollegeOrUniversity', name: 'Universidad Aconcagua' },
-    ],
+};
+
+const servicio = {
+  '@type': 'Service',
+  name: 'Terapia psicológica online en español',
+  serviceType: 'Psicoterapia online',
+  provider: { '@id': `${canonical}#juan` },
+  brand: { '@type': 'Brand', name: 'Clínica Conecta' },
+  areaServed: 'Comunidad hispanohablante',
+  audience: { '@type': 'Audience', audienceType: 'Adolescentes, adultos y parejas' },
+  availableChannel: {
+    '@type': 'ServiceChannel',
+    serviceUrl: canonical,
+    availableLanguage: 'es',
   },
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [persona, servicio],
 };
 
 const servicios = [

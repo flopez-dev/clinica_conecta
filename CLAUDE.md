@@ -26,8 +26,10 @@ alternativas para que el cliente elija (ver [Propuestas de diseño](#propuestas-
   `v2/`, `v3/` — Header/Footer propios de cada propuesta, no compartidos con la home a propósito
   (ver [Propuestas de diseño](#propuestas-de-diseño-v2-v3)).
 - `src/lib/withBase.ts` — helper obligatorio para enlaces internos (ver abajo).
-- `src/styles/global.css` — tokens de Tailwind v4 (`@theme`) y reglas de animación, todo en un
-  único fichero (no crear otros `.css`).
+- `src/styles/global.css` — `@font-face` de las tipografías autoalojadas, tokens de Tailwind v4
+  (`@theme`) y reglas de animación, todo en un único fichero (no crear otros `.css`).
+- `src/fonts/` — WOFF2 de las cinco familias (subconjunto latino). Viven en `src/`, no en
+  `public/`, para que Vite reescriba sus URLs con el base path del despliegue.
 - `public/brand/` — logo real del cliente (SVG, variantes claro/oscuro/icono/horizontal/apilado),
   usado hoy solo en `/v3/`.
 - `tests/` — smoke tests de Playwright.
@@ -47,6 +49,11 @@ alternativas para que el cliente elija (ver [Propuestas de diseño](#propuestas-
   (`--font-v2-*`, `--font-v3-*`) en el mismo fichero — no crear ficheros CSS nuevos.
 - `trailingSlash: 'always'` + `build.format: 'directory'` (`astro.config.mjs`): los
   enlaces internos llevan barra final.
+- **Tipografías autoalojadas, nunca `<link>` a Google Fonts.** Al añadir un peso o una familia,
+  se descarga el WOFF2 a `src/fonts/` y se declara su `@font-face` en `global.css`. Declararlas
+  ahí (y no con `<link>`) hace que el navegador baje solo las familias que la página pinta, y
+  evita comunicar la IP de cada visitante a un tercero. La política de privacidad afirma que no
+  hay peticiones externas: si eso cambia, hay que actualizar `/privacidad/`.
 - El sitio es `lang="es"`: copy, comentarios de código y mensajes de commit en español.
 - Prettier ordena las clases de Tailwind automáticamente (`prettier-plugin-tailwindcss`) — no
   reordenarlas a mano, `npm run format` ya lo hace.

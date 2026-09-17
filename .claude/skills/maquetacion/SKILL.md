@@ -14,8 +14,9 @@ común a las tres de lo que es propio de cada una.
 
 - **Marca real, no provisional**: los tonos `navy-900/800/600/300/200/100`, `cream-50`, `gold-400`
   e `ink`, definidos en el `@theme` de `src/styles/global.css`. `navy-300`/`navy-200` vienen del
-  logo real (`public/brand/`) — son los tonos de su variante para fondo oscuro. No usar `brand-*`
-  ni la escala `slate` de Tailwind — son del scaffold inicial y no reflejan la marca real.
+  logo real (`public/brand/`) — son los tonos de su variante para fondo oscuro. La escala `brand-*`
+  del scaffold inicial ya no existe; no usar tampoco la escala `slate` de Tailwind, que no
+  refleja la marca real.
 - Nunca un color hexadecimal suelto en una clase o en CSS — si hace falta un tono nuevo, añadirlo
   al `@theme`, no inventarlo inline. Excepción explícita ya existente: el verde de marca de
   WhatsApp (`bg-[#25D366]` en `WhatsAppFloat.astro`) — es el color oficial del servicio, no de

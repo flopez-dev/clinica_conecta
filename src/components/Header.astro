@@ -2,6 +2,7 @@
 import { withBase } from '../lib/withBase';
 
 const home = withBase('/');
+const logo = withBase('/brand/conecta-1b-nodo-horizontal.svg');
 const links = [
   { href: `${home}#inicio`, label: 'Inicio' },
   { href: `${home}#sobre-mi`, label: 'Sobre mí' },
@@ -14,8 +15,8 @@ const links = [
 
 <header class="sticky top-0 z-40 border-b border-navy-100 bg-cream-50/95 backdrop-blur">
   <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-    <a href={home} class="font-serif text-lg font-semibold tracking-tight text-navy-800">
-      Clínica Conecta
+    <a href={home} class="block">
+      <img src={logo} alt="Clínica Conecta" width="153" height="48" class="h-9 w-auto" />
     </a>
 
     <nav class="hidden gap-6 text-sm text-ink/80 md:flex">

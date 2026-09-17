@@ -43,16 +43,9 @@ const ogImage = new URL(withBase(image), Astro.site);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap"
-    />
-
     <slot name="head" />
   </head>
-  <body class="min-h-screen bg-white text-slate-900">
+  <body class="min-h-screen bg-white text-ink">
     <slot />
   </body>
 </html>
