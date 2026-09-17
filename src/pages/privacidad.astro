@@ -1,0 +1,362 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { withBase } from '../lib/withBase';
+
+const title = 'Política de privacidad · Clínica Conecta';
+const description =
+  'Qué datos personales y de salud se tratan al contactar o recibir terapia online, con qué base jurídica, durante cuánto tiempo, quién más accede a ellos y cómo ejercer tus derechos.';
+
+const actualizado = '17 de septiembre de 2026';
+
+const PENDIENTE = 'Pendiente de facilitar';
+
+const responsable = [
+  { clave: 'Responsable', valor: 'Juan Ignacio Riccardi' },
+  { clave: 'NIF o NIE', valor: PENDIENTE },
+  { clave: 'Domicilio profesional', valor: PENDIENTE },
+  { clave: 'Correo electrónico', valor: 'riccardi.juanpsi@gmail.com' },
+  { clave: 'Teléfono', valor: '+34 644 751 041' },
+];
+
+const tratamientos = [
+  {
+    finalidad: 'Responder a quien escribe por WhatsApp o por correo y acordar una primera cita.',
+    datos: 'Nombre, teléfono o correo y lo que la persona cuente en su mensaje.',
+    base: 'Aplicación de medidas precontractuales a petición de la persona interesada (artículo 6.1.b del RGPD).',
+  },
+  {
+    finalidad: 'Prestar la asistencia psicológica y llevar la historia clínica.',
+    datos: 'Datos identificativos y de contacto, y datos de salud recogidos durante el proceso.',
+    base: 'Ejecución del contrato de servicios (artículo 6.1.b) y, al tratarse de datos de salud, la prestación de asistencia sanitaria por un profesional sujeto a secreto (artículos 9.2.h y 9.3 del RGPD, en relación con la Ley 41/2002).',
+  },
+  {
+    finalidad: 'Cobrar las sesiones y cumplir con las obligaciones fiscales y contables.',
+    datos: 'Nombre, NIF, datos de facturación y justificantes de pago.',
+    base: 'Cumplimiento de obligaciones legales del responsable (artículo 6.1.c del RGPD).',
+  },
+  {
+    finalidad: 'Servir la web y mantenerla disponible y protegida frente a ataques.',
+    datos:
+      'Dirección IP y datos técnicos de la conexión, tratados por el proveedor de alojamiento.',
+    base: 'Interés legítimo en que el sitio funcione y sea seguro (artículo 6.1.f del RGPD).',
+  },
+];
+
+const plazos = [
+  {
+    clave: 'Historia clínica',
+    valor:
+      'Cinco años desde el alta de cada proceso asistencial, que es el mínimo que fija el artículo 17 de la Ley 41/2002. Algunas comunidades autónomas exigen plazos mayores.',
+  },
+  {
+    clave: 'Facturación y contabilidad',
+    valor:
+      'Cuatro años por la normativa tributaria y seis por el Código de Comercio, contados desde el último asiento.',
+  },
+  {
+    clave: 'Mensajes de quien pregunta y no llega a ser paciente',
+    valor: 'Un año desde el último contacto, salvo que la persona pida antes su supresión.',
+  },
+  {
+    clave: 'Registros técnicos del servidor',
+    valor:
+      'El plazo que aplique el proveedor de alojamiento, siempre limitado y con fines de seguridad.',
+  },
+];
+
+const destinatarios = [
+  {
+    nombre: 'Cloudflare, Inc.',
+    papel:
+      'Alojamiento del sitio web y protección frente a ataques. Recibe la dirección IP de quien visita la web.',
+  },
+  {
+    nombre: 'Google Ireland Limited y Google LLC',
+    papel:
+      'Tipografías servidas desde Google Fonts al cargar la web, y videollamadas cuando la sesión se hace por Google Meet.',
+  },
+  {
+    nombre: 'Zoom Communications, Inc.',
+    papel: 'Videollamadas cuando la sesión se hace por Zoom.',
+  },
+  {
+    nombre: 'WhatsApp Ireland Limited',
+    papel: 'Mensajería y videollamadas cuando el contacto o la sesión se hacen por WhatsApp.',
+  },
+  {
+    nombre: 'Entidad bancaria y asesoría fiscal',
+    papel: 'Cobro de las sesiones y cumplimiento de las obligaciones contables y tributarias.',
+  },
+];
+
+const derechos = [
+  'Acceder a los datos que se tratan sobre ti y obtener una copia.',
+  'Rectificar los que sean inexactos o estén incompletos.',
+  'Solicitar su supresión, con los límites que impone la obligación legal de conservar la historia clínica.',
+  'Pedir la limitación del tratamiento mientras se resuelve una impugnación.',
+  'Oponerte a un tratamiento basado en el interés legítimo.',
+  'Recibir en formato portable los datos que hayas facilitado tú.',
+];
+---
+
+<Base title={title} description={description}>
+  <Header />
+
+  <main class="text-ink">
+    <section class="bg-navy-800 px-6 py-16 text-cream-50 sm:py-20">
+      <div class="mx-auto max-w-3xl">
+        <p class="font-serif text-sm tracking-[0.2em] text-gold-400 uppercase">Información legal</p>
+        <h1 class="mt-4 font-serif text-3xl font-semibold tracking-tight sm:text-4xl">
+          Política de privacidad
+        </h1>
+        <p class="mt-4 text-cream-50/85">
+          Qué datos se tratan al visitar esta web, al escribir para pedir cita y durante el proceso
+          de terapia, con qué base jurídica, durante cuánto tiempo y cómo ejercer tus derechos.
+        </p>
+        <p class="mt-4 text-sm text-cream-50/70">Última actualización: {actualizado}</p>
+      </div>
+    </section>
+
+    <div class="mx-auto max-w-3xl px-6 py-16 sm:py-20">
+      <div class="rounded-lg border border-gold-400/40 bg-cream-50 p-5 text-sm leading-relaxed text-ink/80">
+        <strong class="font-medium text-navy-800">Borrador pendiente de revisión.</strong> Este
+        texto es una base de trabajo redactada a partir de la información disponible. Al tratar
+        datos de salud conviene que lo revise un profesional del derecho antes de publicarlo, y hay
+        que completar los datos marcados como pendientes.
+      </div>
+
+      <section class="mt-12">
+        <h2 class="font-serif text-xl font-semibold text-navy-800 sm:text-2xl">
+          1. Quién trata tus datos
+        </h2>
+        <dl class="mt-6 divide-y divide-navy-100 border-t border-b border-navy-100 text-sm">
+          {responsable.map((dato) => (
+            <div class="flex flex-col gap-1 py-4 sm:flex-row sm:gap-8">
+              <dt class="text-navy-600 sm:w-52 sm:shrink-0">{dato.clave}</dt>
+              <dd class="text-ink/80 sm:flex-1">
+                {dato.valor === PENDIENTE ? (
+                  <span class="inline-block rounded-md border border-dashed border-navy-100 px-2 py-1 text-navy-600">
+                    {dato.valor}
+                  </span>
+                ) : (
+                  dato.valor
+                )}
+              </dd>
+            </div>
+          ))}
+        </dl>
+        <p class="mt-6 leading-relaxed text-ink/80">
+          Por el volumen y el tipo de actividad no es obligatorio designar un delegado de protección
+          de datos. Para cualquier cuestión sobre privacidad puedes escribir directamente a la
+          dirección de correo indicada.
+        </p>
+      </section>
+
+      <section class="mt-12">
+        <h2 class="font-serif text-xl font-semibold text-navy-800 sm:text-2xl">
+          2. Qué datos se tratan y para qué
+        </h2>
+        <p class="mt-4 leading-relaxed text-ink/80">
+          Esta web no tiene formularios ni zona privada. Los datos llegan porque tú escribes o
+          porque se generan durante el proceso de terapia.
+        </p>
+
+        <div class="mt-8 space-y-6">
+          {tratamientos.map((t, i) => (
+            <div class="rounded-lg border border-navy-100 bg-cream-50 p-6">
+              <p class="font-serif text-base font-semibold text-navy-800">
+                {i + 1}. {t.finalidad}
+              </p>
+              <p class="mt-3 text-sm leading-relaxed text-ink/75">
+                <span class="text-navy-600">Datos. </span>
+                {t.datos}
+              </p>
+              <p class="mt-2 text-sm leading-relaxed text-ink/75">
+                <span class="text-navy-600">Base jurídica. </span>
+                {t.base}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <p class="mt-6 leading-relaxed text-ink/80">
+          Los datos de salud son una categoría especial. Se tratan solo para prestar la asistencia,
+          nunca con fines comerciales, y quedan cubiertos por el secreto profesional.
+        </p>
+      </section>
+
+      <section class="mt-12">
+        <h2 class="font-serif text-xl font-semibold text-navy-800 sm:text-2xl">
+          3. Cuánto tiempo se conservan
+        </h2>
+        <dl class="mt-6 divide-y divide-navy-100 border-t border-b border-navy-100 text-sm">
+          {plazos.map((plazo) => (
+            <div class="flex flex-col gap-1 py-4 sm:flex-row sm:gap-8">
+              <dt class="text-navy-600 sm:w-52 sm:shrink-0">{plazo.clave}</dt>
+              <dd class="leading-relaxed text-ink/80 sm:flex-1">{plazo.valor}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <section class="mt-12">
+        <h2 class="font-serif text-xl font-semibold text-navy-800 sm:text-2xl">
+          4. Personas menores de edad
+        </h2>
+        <p class="mt-4 leading-relaxed text-ink/80">
+          Parte de la consulta atiende a adolescentes, así que este punto importa. Con carácter
+          general, quien tenga menos de catorce años necesita que su madre, padre o tutor autorice
+          el tratamiento de sus datos.
+        </p>
+        <p class="mt-4 leading-relaxed text-ink/80">
+          En el ámbito sanitario se aplica además la Ley 41/2002. A partir de los dieciséis años, o
+          antes si la persona menor es capaz de comprender el alcance de la intervención, el
+          consentimiento lo presta ella misma, y la información clínica se maneja con esa misma
+          regla. Antes de empezar un proceso con una persona menor de edad se acuerda por escrito
+          quién autoriza qué y qué se comparte con la familia.
+        </p>
+      </section>
+
+      <section class="mt-12">
+        <h2 class="font-serif text-xl font-semibold text-navy-800 sm:text-2xl">
+          5. Quién más accede a los datos
+        </h2>
+        <p class="mt-4 leading-relaxed text-ink/80">
+          No se venden ni se ceden datos a terceros. Solo acceden los prestadores necesarios para
+          dar el servicio, que actúan como encargados del tratamiento con el contrato que exige el
+          artículo 28 del RGPD.
+        </p>
+        <dl class="mt-6 divide-y divide-navy-100 border-t border-b border-navy-100 text-sm">
+          {destinatarios.map((d) => (
+            <div class="flex flex-col gap-1 py-4 sm:flex-row sm:gap-8">
+              <dt class="text-navy-600 sm:w-52 sm:shrink-0">{d.nombre}</dt>
+              <dd class="leading-relaxed text-ink/80 sm:flex-1">{d.papel}</dd>
+            </div>
+          ))}
+        </dl>
+        <p class="mt-6 leading-relaxed text-ink/80">
+          Algunos de estos prestadores tratan datos fuera del Espacio Económico Europeo, sobre todo
+          en Estados Unidos. Esas transferencias se amparan en la decisión de adecuación del Marco
+          de Privacidad de Datos entre la Unión Europea y Estados Unidos o, en su defecto, en las
+          cláusulas contractuales tipo aprobadas por la Comisión Europea.
+        </p>
+        <p class="mt-4 leading-relaxed text-ink/80">
+          Los datos también pueden comunicarse a las administraciones públicas y a los juzgados
+          cuando una norma lo exija.
+        </p>
+      </section>
+
+      <section class="mt-12">
+        <h2 class="font-serif text-xl font-semibold text-navy-800 sm:text-2xl">
+          6. Videollamadas y mensajería
+        </h2>
+        <p class="mt-4 leading-relaxed text-ink/80">
+          Las sesiones se hacen por Google Meet, Zoom o WhatsApp, según lo que resulte más cómodo.
+          Las sesiones no se graban. Si en algún caso hiciera falta grabar, se pediría antes tu
+          consentimiento por escrito y podrías retirarlo cuando quisieras.
+        </p>
+        <p class="mt-4 leading-relaxed text-ink/80">
+          La mensajería se usa para cuestiones de organización, como acordar o mover una cita. Para
+          contenido clínico el espacio es la sesión. Conviene que sepas que esas plataformas son
+          empresas ajenas a la consulta y que tratan datos de conexión con sus propias políticas.
+        </p>
+      </section>
+
+      <section class="mt-12">
+        <h2 class="font-serif text-xl font-semibold text-navy-800 sm:text-2xl">
+          7. Cookies y datos de navegación
+        </h2>
+        <p class="mt-4 leading-relaxed text-ink/80">
+          Esta web no instala cookies propias ni de terceros, no usa herramientas de analítica y no
+          guarda nada en tu navegador. Por eso no aparece ningún aviso de cookies.
+        </p>
+        <p class="mt-4 leading-relaxed text-ink/80">
+          Sí hay dos conexiones a servidores ajenos al cargar la página. El alojamiento corre a
+          cargo de Cloudflare, que registra la dirección IP por motivos de seguridad, y las
+          tipografías se descargan de Google Fonts, lo que comunica tu dirección IP a Google. Los
+          enlaces a WhatsApp, Instagram, Facebook y LinkedIn solo se activan si haces clic en ellos.
+        </p>
+      </section>
+
+      <section class="mt-12">
+        <h2 class="font-serif text-xl font-semibold text-navy-800 sm:text-2xl">
+          8. Seguridad y secreto profesional
+        </h2>
+        <p class="mt-4 leading-relaxed text-ink/80">
+          La actividad de un profesional de la psicología está sujeta al secreto profesional, que se
+          mantiene también después de terminar el proceso. Se aplican medidas técnicas y
+          organizativas adecuadas al riesgo, como el acceso restringido a la historia clínica, el
+          cifrado de los dispositivos y las copias de seguridad.
+        </p>
+      </section>
+
+      <section class="mt-12">
+        <h2 class="font-serif text-xl font-semibold text-navy-800 sm:text-2xl">9. Tus derechos</h2>
+        <p class="mt-4 leading-relaxed text-ink/80">Puedes, en cualquier momento:</p>
+        <ul class="mt-4 grid gap-3">
+          {derechos.map((derecho) => (
+            <li class="flex items-start gap-3 text-ink/80">
+              <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-400"></span>
+              <span class="leading-relaxed">{derecho}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="mt-6 leading-relaxed text-ink/80">
+          Para ejercerlos basta con escribir a
+          <a
+            href="mailto:riccardi.juanpsi@gmail.com?subject=Derechos%20de%20protecci%C3%B3n%20de%20datos"
+            class="underline decoration-gold-400 underline-offset-4 hover:text-navy-600"
+          >
+            riccardi.juanpsi@gmail.com
+          </a>
+          indicando qué derecho quieres ejercer y adjuntando un documento que acredite tu identidad.
+          La respuesta llega en el plazo de un mes.
+        </p>
+        <p class="mt-4 leading-relaxed text-ink/80">
+          Si consideras que el tratamiento no se ajusta a la normativa, puedes reclamar ante la
+          Agencia Española de Protección de Datos,
+          <a
+            href="https://www.aepd.es"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="underline decoration-gold-400 underline-offset-4 hover:text-navy-600"
+          >
+            www.aepd.es
+          </a>
+          .
+        </p>
+      </section>
+
+      <section class="mt-12">
+        <h2 class="font-serif text-xl font-semibold text-navy-800 sm:text-2xl">
+          10. Cambios en esta política
+        </h2>
+        <p class="mt-4 leading-relaxed text-ink/80">
+          Este texto puede actualizarse si cambian los servicios, los prestadores o la normativa. La
+          fecha que aparece arriba indica la última revisión. Las condiciones de uso del sitio están
+          en el
+          <a
+            href={withBase('/aviso-legal/')}
+            class="underline decoration-gold-400 underline-offset-4 hover:text-navy-600"
+          >
+            aviso legal
+          </a>
+          .
+        </p>
+      </section>
+
+      <p class="mt-14 text-sm text-ink/60">
+        <a
+          href={withBase('/')}
+          class="underline decoration-gold-400 underline-offset-4 hover:text-navy-600"
+        >
+          Volver al inicio
+        </a>
+      </p>
+    </div>
+  </main>
+
+  <Footer />
+</Base>

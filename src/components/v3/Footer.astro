@@ -84,9 +84,23 @@ const logo = withBase('/brand/conecta-1b-nodo-horizontal.svg');
     <p class="mt-6 max-w-2xl font-v3-sans text-xs leading-relaxed text-navy-900/50">
       Juan Ignacio Riccardi, Psicólogo General Sanitario en España por título homologado. Colegiado
       nº 68849 en Argentina, con la colegiación en España pendiente de tramitar. Los contenidos de
-      esta web tienen carácter informativo y no sustituyen una valoración clínica individual. Aviso
-      legal y política de privacidad pendientes de incorporar.
+      esta web tienen carácter informativo y no sustituyen una valoración clínica individual.
     </p>
+
+    <div class="mt-4 flex flex-col gap-1 font-v3-sans text-xs sm:flex-row sm:gap-6">
+      <a
+        href={withBase('/aviso-legal/')}
+        class="text-navy-900/50 underline underline-offset-4 hover:text-navy-600"
+      >
+        Aviso legal
+      </a>
+      <a
+        href={withBase('/privacidad/')}
+        class="text-navy-900/50 underline underline-offset-4 hover:text-navy-600"
+      >
+        Política de privacidad
+      </a>
+    </div>
 
     <p class="mt-4 font-v3-sans text-xs text-navy-900/40">
       &copy; {new Date().getFullYear()} Clínica Conecta. Todos los derechos reservados.
