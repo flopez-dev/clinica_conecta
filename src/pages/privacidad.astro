@@ -10,12 +10,15 @@ const description =
 
 const actualizado = '17 de septiembre de 2026';
 
-const PENDIENTE = 'Pendiente de facilitar';
-
+// El responsable reside y ejerce en Argentina. No hay NIF ni domicilio
+// profesional en España que consignar, así que la identificación se apoya en
+// el nombre, el lugar de establecimiento y las vías de contacto.
 const responsable = [
   { clave: 'Responsable', valor: 'Juan Ignacio Riccardi' },
-  { clave: 'NIF o NIE', valor: PENDIENTE },
-  { clave: 'Domicilio profesional', valor: PENDIENTE },
+  {
+    clave: 'Lugar de establecimiento',
+    valor: 'Argentina. La atención es siempre online, sin consulta física en España.',
+  },
   { clave: 'Correo electrónico', valor: 'riccardi.juanpsi@gmail.com' },
   { clave: 'Teléfono', valor: '+34 644 751 041' },
 ];
@@ -33,7 +36,7 @@ const tratamientos = [
   },
   {
     finalidad: 'Cobrar las sesiones y cumplir con las obligaciones fiscales y contables.',
-    datos: 'Nombre, NIF, datos de facturación y justificantes de pago.',
+    datos: 'Nombre, documento de identidad, datos de facturación y justificantes de pago.',
     base: 'Cumplimiento de obligaciones legales del responsable (artículo 6.1.c del RGPD).',
   },
   {
@@ -122,9 +125,9 @@ const derechos = [
     <div class="mx-auto max-w-3xl px-6 py-16 sm:py-20">
       <div class="rounded-lg border border-gold-400/40 bg-cream-50 p-5 text-sm leading-relaxed text-ink/80">
         <strong class="font-medium text-navy-800">Borrador pendiente de revisión.</strong> Este
-        texto es una base de trabajo redactada a partir de la información disponible. Al tratar
-        datos de salud conviene que lo revise un profesional del derecho antes de publicarlo, y hay
-        que completar los datos marcados como pendientes.
+        texto es una base de trabajo redactada a partir de la información disponible. Conviene que
+        lo revise un profesional del derecho antes de publicarlo, porque se tratan datos de salud y
+        porque la atención se presta desde Argentina a personas que están en España.
       </div>
 
       <section class="mt-12">
@@ -135,19 +138,18 @@ const derechos = [
           {responsable.map((dato) => (
             <div class="flex flex-col gap-1 py-4 sm:flex-row sm:gap-8">
               <dt class="text-navy-600 sm:w-52 sm:shrink-0">{dato.clave}</dt>
-              <dd class="text-ink/80 sm:flex-1">
-                {dato.valor === PENDIENTE ? (
-                  <span class="inline-block rounded-md border border-dashed border-navy-100 px-2 py-1 text-navy-600">
-                    {dato.valor}
-                  </span>
-                ) : (
-                  dato.valor
-                )}
-              </dd>
+              <dd class="leading-relaxed text-ink/80 sm:flex-1">{dato.valor}</dd>
             </div>
           ))}
         </dl>
         <p class="mt-6 leading-relaxed text-ink/80">
+          La actividad se desarrolla desde Argentina. Como está dirigida a personas que se
+          encuentran en España y en otros países de la Unión Europea, se aplica igualmente el
+          Reglamento General de Protección de Datos, según su artículo 3.2. La Comisión Europea
+          reconoce a Argentina como país con un nivel de protección adecuado en su Decisión
+          2003/490/CE, de modo que los datos que se tratan allí no necesitan garantías adicionales.
+        </p>
+        <p class="mt-4 leading-relaxed text-ink/80">
           Por el volumen y el tipo de actividad no es obligatorio designar un delegado de protección
           de datos. Para cualquier cuestión sobre privacidad puedes escribir directamente a la
           dirección de correo indicada.

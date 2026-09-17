@@ -12,15 +12,15 @@ const description =
 // contenido, no en cada despliegue.
 const actualizado = '17 de septiembre de 2026';
 
-// Datos que el cliente todavía no ha facilitado. Se pintan con marca visible
-// en vez de inventarse: un aviso legal con datos falsos es peor que uno
-// incompleto (art. 10 de la LSSI-CE).
-const PENDIENTE = 'Pendiente de facilitar';
-
+// El titular reside y ejerce en Argentina, así que no hay NIF ni domicilio
+// profesional en España que consignar. La identificación se apoya en el
+// nombre, el lugar de ejercicio, las vías de contacto y las credenciales.
 const identificacion = [
   { clave: 'Titular', valor: 'Juan Ignacio Riccardi' },
-  { clave: 'NIF o NIE', valor: PENDIENTE },
-  { clave: 'Domicilio profesional', valor: PENDIENTE },
+  {
+    clave: 'Lugar de ejercicio',
+    valor: 'Ejerce desde Argentina y atiende exclusivamente online, sin consulta física en España.',
+  },
   { clave: 'Correo electrónico', valor: 'riccardi.juanpsi@gmail.com' },
   { clave: 'Teléfono', valor: '+34 644 751 041' },
   { clave: 'Sitio web', valor: 'juanriccardiconecta.com' },
@@ -33,7 +33,6 @@ const identificacion = [
     clave: 'Colegiación',
     valor: 'Colegiado nº 68849 en Argentina. La colegiación en España está pendiente de tramitar.',
   },
-  { clave: 'Registro sanitario', valor: PENDIENTE },
 ];
 ---
 
@@ -60,8 +59,8 @@ const identificacion = [
       <div class="rounded-lg border border-gold-400/40 bg-cream-50 p-5 text-sm leading-relaxed text-ink/80">
         <strong class="font-medium text-navy-800">Borrador pendiente de revisión.</strong> Este
         texto es una base de trabajo redactada a partir de la información disponible. Antes de
-        publicarlo conviene que lo revise un profesional del derecho, y hay que completar los datos
-        marcados como pendientes.
+        publicarlo conviene que lo revise un profesional del derecho, sobre todo por atenderse desde
+        Argentina a personas que están en España.
       </div>
 
       <section class="mt-12">
@@ -72,15 +71,7 @@ const identificacion = [
           {identificacion.map((dato) => (
             <div class="flex flex-col gap-1 py-4 sm:flex-row sm:gap-8">
               <dt class="text-navy-600 sm:w-52 sm:shrink-0">{dato.clave}</dt>
-              <dd class="text-ink/80 sm:flex-1">
-                {dato.valor === PENDIENTE ? (
-                  <span class="inline-block rounded-md border border-dashed border-navy-100 px-2 py-1 text-navy-600">
-                    {dato.valor}
-                  </span>
-                ) : (
-                  dato.valor
-                )}
-              </dd>
+              <dd class="leading-relaxed text-ink/80 sm:flex-1">{dato.valor}</dd>
             </div>
           ))}
         </dl>

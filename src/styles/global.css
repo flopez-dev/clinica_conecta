@@ -121,14 +121,11 @@ body {
   --font-v2-sans: 'Karla', ui-sans-serif, system-ui, sans-serif;
 }
 
-/* Formas orgánicas para los placeholders de foto — border-radius asimétrico
-   en vez de las esquinas rectas de la home. */
+/* Forma orgánica del retrato del hero — border-radius asimétrico en vez de
+   las esquinas rectas de la home. La foto aparece una sola vez en /v2/, así
+   que basta con una variante. */
 .v2-blob-1 {
   border-radius: 62% 38% 55% 45% / 48% 42% 58% 52%;
-}
-
-.v2-blob-2 {
-  border-radius: 45% 55% 40% 60% / 55% 45% 60% 40%;
 }
 
 /* Propuesta 3 (/v3/) — misma familia de marca que la home/v2 (navy/crema/
