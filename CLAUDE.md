@@ -77,7 +77,7 @@ que se pida explícitamente.
 | Rama       | Destino                                                |
 | :--------- | :------------------------------------------------------ |
 | `develop`  | GitHub Pages, bajo `/clinica_conecta/`                  |
-| `main`     | Cloudflare Workers, bajo `/`                            |
+| `main`     | Cloudflare Workers, en `juanriccardiconecta.com`, bajo `/` |
 | otras / PR | Solo CI (tipos, build, formato, lint, tests)            |
 
 `astro.config.mjs` lee `SITE_URL`/`BASE_PATH` de variables de entorno; cada workflow
@@ -88,8 +88,10 @@ pasa las suyas.
 - `deploy-cloudflare.yml` falla en el último paso hasta que se añadan los secretos
   `CLOUDFLARE_API_TOKEN` y `CLOUDFLARE_ACCOUNT_ID` en GitHub. No lo trates como algo que
   "arreglar" en el código.
-- El dominio propio del cliente está pendiente — hay TODOs en
-  `.github/workflows/deploy-cloudflare.yml` y `wrangler.jsonc` para cuando exista.
+- El dominio del cliente es `juanriccardiconecta.com` y ya está escrito en `wrangler.jsonc`
+  (ruta con `custom_domain`) y en `SITE_URL` de `.github/workflows/deploy-cloudflare.yml`. El
+  deploy a Cloudflare falla mientras la zona no exista en la misma cuenta de Cloudflare: es
+  configuración pendiente fuera del repo, no código que arreglar.
 
 ## Antes de dar algo por terminado
 

@@ -1,10 +1,24 @@
 {
-  // El sitio como Worker en workers.dev, sin dominio propio todavía.
-  // Cuando el cliente tenga dominio: añadir "routes" con custom_domain y
-  // opcionalmente "workers_dev": false.
+  // El sitio como Worker, servido en el dominio propio del cliente.
+  // `workers_dev` sigue activo a propósito: el subdominio de workers.dev es
+  // la red de seguridad mientras el DNS de juanriccardiconecta.com no esté
+  // apuntando a Cloudflare. Las páginas llevan `canonical` al dominio real
+  // (SITE_URL en deploy-cloudflare.yml), así que las dos URLs vivas no
+  // compiten en buscadores. Ponerlo a false cuando el dominio lleve un
+  // tiempo sirviendo bien.
   "name": "clinica-conecta",
   "compatibility_date": "2026-09-12",
   "workers_dev": true,
+
+  // `custom_domain` hace que Cloudflare cree y gestione el registro DNS, pero
+  // la zona juanriccardiconecta.com tiene que existir ya en la misma cuenta
+  // de Cloudflare — si no, el deploy falla aquí.
+  "routes": [
+    {
+      "pattern": "juanriccardiconecta.com",
+      "custom_domain": true,
+    },
+  ],
 
   // dist/ se construye en CI y no se versiona.
   "assets": {
