@@ -93,6 +93,12 @@ body {
   .js [data-reveal-group] > *:nth-child(4) {
     transition-delay: 180ms;
   }
+  .js [data-reveal-group] > *:nth-child(5) {
+    transition-delay: 240ms;
+  }
+  .js [data-reveal-group] > *:nth-child(6) {
+    transition-delay: 300ms;
+  }
 }
 
 /* Menú móvil (Header.astro): con motion reducida sigue abriendo/cerrando vía
