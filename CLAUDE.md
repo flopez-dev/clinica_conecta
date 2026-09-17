@@ -88,6 +88,11 @@ pasa las suyas.
 - `deploy-cloudflare.yml` falla en el último paso hasta que se añadan los secretos
   `CLOUDFLARE_API_TOKEN` y `CLOUDFLARE_ACCOUNT_ID` en GitHub. No lo trates como algo que
   "arreglar" en el código.
+- El cliente reside y ejerce en Argentina, y atiende solo online: **no hay consulta física en
+  España**. Por eso `/aviso-legal/` y `/privacidad/` no llevan NIF, domicilio profesional ni
+  registro sanitario, y en su lugar declaran el lugar de ejercicio. No son huecos por rellenar,
+  no los repongas. La política de privacidad se apoya en el art. 3.2 del RGPD (aplica por
+  dirigirse a personas en la UE) y en la decisión de adecuación de Argentina (2003/490/CE).
 - El dominio del cliente es `juanriccardiconecta.com` y ya está escrito en `wrangler.jsonc`
   (ruta con `custom_domain`) y en `SITE_URL` de `.github/workflows/deploy-cloudflare.yml`. El
   deploy a Cloudflare falla mientras la zona no exista en la misma cuenta de Cloudflare: es
