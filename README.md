@@ -30,12 +30,16 @@ Convenciones del repo (base path, Tailwind v4, maquetación, propuestas de dise�
 | Rama      | Destino                                                                 |
 | :-------- | :----------------------------------------------------------------------- |
 | `develop` | [GitHub Pages](https://flopez-dev.github.io/clinica_conecta/) — preview para el cliente |
-| `main`    | Cloudflare Workers (`workers.dev`) — producción                          |
+| `main`    | Cloudflare Workers, en [juanriccardiconecta.com](https://juanriccardiconecta.com) — producción |
 | otras / PR | Solo CI: tipos + build                                                   |
 
 `astro.config.mjs` lee `SITE_URL` y `BASE_PATH` de variables de entorno para que el
-mismo build funcione bajo `/clinica_conecta/` (Pages) o bajo `/` (Cloudflare, dominio
-propio cuando exista).
+mismo build funcione bajo `/clinica_conecta/` (Pages) o bajo `/` (Cloudflare, en el
+dominio propio).
+
+El dominio `juanriccardiconecta.com` tiene que estar dado de alta como zona en la misma
+cuenta de Cloudflare que recibe el deploy. Wrangler crea el registro DNS por su cuenta
+(`custom_domain` en `wrangler.jsonc`), pero la zona no la crea.
 
 ## Secretos necesarios en GitHub
 

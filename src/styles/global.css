@@ -1,21 +1,106 @@
 @import 'tailwindcss';
 
-/* Tokens de marca provisionales — a ajustar cuando llegue la identidad
-   visual definitiva del cliente. Tailwind v4 los lee directamente de aquí,
-   sin tailwind.config.js. */
+/* Tipografías autoalojadas. Antes se pedían a fonts.googleapis.com con un
+   <link> por página, lo que comunicaba la IP de cada visitante a Google en
+   cada carga (fricción conocida con el RGPD) y encadenaba dos conexiones más
+   antes de poder pintar texto.
+
+   Se sirve solo el subconjunto latino: el copy es español y entra entero en
+   U+0000-00FF más los signos de U+2000-206F. Google entrega fuentes
+   variables, así que un fichero cubre todo el rango de pesos de su familia y
+   por eso cada @font-face declara un rango y no un peso suelto.
+
+   Las rutas son relativas a propósito: Vite las reescribe con el base path
+   del despliegue, así que aquí no hace falta withBase(). Declararlas en CSS
+   (y no con <link>) hace además que el navegador descargue solo las familias
+   que la página pinta de verdad, de modo que /v2/ y /v3/ ya no se bajan la
+   Playfair de la home. */
+
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 600 700;
+  font-display: swap;
+  src: url('../fonts/playfair-display.woff2') format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/lora-italic.woff2') format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 500 600;
+  font-display: swap;
+  src: url('../fonts/lora.woff2') format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Karla';
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url('../fonts/karla.woff2') format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Newsreader';
+  font-style: italic;
+  font-weight: 500 600;
+  font-display: swap;
+  src: url('../fonts/newsreader-italic.woff2') format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/newsreader.woff2') format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url('../fonts/work-sans.woff2') format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Tokens de marca. Tailwind v4 los lee directamente de aquí, sin
+   tailwind.config.js. La escala brand-* azul del scaffold inicial ya no
+   existe: no la usaba nada y no era la marca real. */
 @theme {
   --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 
-  --color-brand-50: #eff6ff;
-  --color-brand-100: #dbeafe;
-  --color-brand-500: #2563eb;
-  --color-brand-600: #1d4ed8;
-  --color-brand-700: #1e40af;
-
-  /* Paleta de la landing de Juan Ignacio Riccardi — tokens aparte de brand-*
-     para no tocar la paleta provisional general del sitio. Playfair Display
-     se carga como <link> con preconnect en Base.astro (no @import aquí: un
-     @import de fuente bloquea la carga en cadena y retrasa el LCP). */
+  /* Paleta real de la landing de Juan Ignacio Riccardi. Playfair Display se
+     autoaloja: los @font-face están arriba, en este mismo fichero. */
   --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
 
   --color-navy-900: #1e2c4a;
@@ -93,6 +178,12 @@ body {
   .js [data-reveal-group] > *:nth-child(4) {
     transition-delay: 180ms;
   }
+  .js [data-reveal-group] > *:nth-child(5) {
+    transition-delay: 240ms;
+  }
+  .js [data-reveal-group] > *:nth-child(6) {
+    transition-delay: 300ms;
+  }
 }
 
 /* Menú móvil (Header.astro): con motion reducida sigue abriendo/cerrando vía
@@ -115,14 +206,11 @@ body {
   --font-v2-sans: 'Karla', ui-sans-serif, system-ui, sans-serif;
 }
 
-/* Formas orgánicas para los placeholders de foto — border-radius asimétrico
-   en vez de las esquinas rectas de la home. */
+/* Forma orgánica del retrato del hero — border-radius asimétrico en vez de
+   las esquinas rectas de la home. La foto aparece una sola vez en /v2/, así
+   que basta con una variante. */
 .v2-blob-1 {
   border-radius: 62% 38% 55% 45% / 48% 42% 58% 52%;
-}
-
-.v2-blob-2 {
-  border-radius: 45% 55% 40% 60% / 55% 45% 60% 40%;
 }
 
 /* Propuesta 3 (/v3/) — misma familia de marca que la home/v2 (navy/crema/

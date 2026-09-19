@@ -5,37 +5,65 @@ import Footer from '../../components/v2/Footer.astro';
 import WhatsAppFloat from '../../components/WhatsAppFloat.astro';
 import { withBase } from '../../lib/withBase';
 
-const title = 'Propuesta 2 · Terapia online cercana, en español · Clínica Conecta';
+const title = 'Propuesta 2 · Juan Ignacio Riccardi, psicólogo online · Clínica Conecta';
 const description =
-  'Sesiones de psicología online para adultos, con un enfoque cercano y humano: ansiedad, estrés, duelo y depresión, con EMDR. Escríbeme por WhatsApp.';
+  'Sesiones de psicología online en español, con un enfoque cercano y humano. Adolescentes, adultos y parejas. Ansiedad, estrés, duelo y depresión, con EMDR.';
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 
 const whatsappMessage = encodeURIComponent('Hola, me gustaría agendar una sesión');
 const whatsappHref = `https://wa.me/34644751041?text=${whatsappMessage}`;
 const mailtoHref = 'mailto:riccardi.juanpsi@gmail.com?subject=Consulta%20desde%20la%20web';
+const linkedinHref = 'https://www.linkedin.com/in/juaniriccardi';
 const fotoCuadrada = withBase('/foto/juan-ignacio-cuadrada.webp');
 
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'ProfessionalService',
-  name: 'Clínica Conecta',
+// Juan es la entidad principal, no un negocio local. `ProfessionalService`
+// es un subtipo de LocalBusiness, o sea de Place, y daba a entender que hay
+// una sede física: no la hay, la consulta es solo online desde Argentina.
+// Se modela como Person que presta un Service, con la marca colgando del
+// servicio.
+const persona = {
+  '@type': 'Person',
+  '@id': `${canonical}#juan`,
+  name: 'Juan Ignacio Riccardi',
+  jobTitle: 'Psicólogo General Sanitario',
   description,
   url: canonical,
   image: new URL(withBase('/og-image-v2.png'), Astro.site).toString(),
   telephone: '+34644751041',
   email: 'riccardi.juanpsi@gmail.com',
-  areaServed: 'Comunidad hispanohablante',
-  availableLanguage: 'es',
+  knowsLanguage: 'es',
+  knowsAbout: ['EMDR', 'Ansiedad', 'Estrés', 'Duelo', 'Depresión', 'Terapia de pareja'],
+  alumniOf: [
+    { '@type': 'CollegeOrUniversity', name: 'Universidad del Salvador' },
+    { '@type': 'CollegeOrUniversity', name: 'Universidad de Belgrano' },
+    { '@type': 'CollegeOrUniversity', name: 'Universidad Aconcagua' },
+  ],
   sameAs: [
     'https://wa.me/34644751041',
     'https://www.instagram.com/juanriccardi.conecta/',
     'https://www.facebook.com/profile.php?id=61577424099534',
+    linkedinHref,
   ],
-  founder: {
-    '@type': 'Person',
-    name: 'Juan Ignacio Riccardi',
-    jobTitle: 'Psicólogo General Sanitario',
+};
+
+const servicio = {
+  '@type': 'Service',
+  name: 'Terapia psicológica online en español',
+  serviceType: 'Psicoterapia online',
+  provider: { '@id': `${canonical}#juan` },
+  brand: { '@type': 'Brand', name: 'Clínica Conecta' },
+  areaServed: 'Comunidad hispanohablante',
+  audience: { '@type': 'Audience', audienceType: 'Adolescentes, adultos y parejas' },
+  availableChannel: {
+    '@type': 'ServiceChannel',
+    serviceUrl: canonical,
+    availableLanguage: 'es',
   },
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [persona, servicio],
 };
 
 const servicios = [
@@ -58,6 +86,16 @@ const servicios = [
     texto:
       'Para recuperar las ganas, un paso a la vez, entendiendo juntos qué hay detrás del malestar.',
   },
+  {
+    titulo: 'Adolescentes',
+    texto:
+      'Un lugar propio donde poder hablar sin sentirse juzgado, con la experiencia de años trabajando en orientación escolar.',
+  },
+  {
+    titulo: 'Parejas',
+    texto:
+      'Sesiones para los dos, con espacio para lo que cuesta decirse y para volver a entenderse.',
+  },
 ];
 
 const iconos: Record<string, string[]> = {
@@ -65,15 +103,53 @@ const iconos: Record<string, string[]> = {
   Estrés: ['M4 8.5c4-2.5 8-2.5 12 0', 'M4 12.5c5-3 10-3 15 0', 'M4 16.5c3.5-2 7-2 10.5 0'],
   Duelo: ['M12 3.5C8 6.5 5 10.3 5 14a7 7 0 0 0 14 0c0-3.7-3-7.5-7-10.5Z', 'M12 7v13'],
   Depresión: ['M4.5 17h15', 'M7 17a5 5 0 0 1 10 0', 'M12 8.5V6', 'M8 9.5 6.8 8', 'M16 9.5 17.2 8'],
+  Adolescentes: [
+    'M12 3.4a2.7 2.7 0 1 1 0 5.4 2.7 2.7 0 0 1 0-5.4Z',
+    'M5.5 20.5a6.5 6.5 0 0 1 13 0',
+  ],
+  Parejas: [
+    'M9.2 4.2a2.4 2.4 0 1 1 0 4.8 2.4 2.4 0 0 1 0-4.8Z',
+    'M16.4 6.4a2.1 2.1 0 1 1 0 4.2 2.1 2.1 0 0 1 0-4.2Z',
+    'M3.6 19.5a5.6 5.6 0 0 1 11.2 0',
+    'M16.6 14a4.8 4.8 0 0 1 3.8 5.5',
+  ],
 };
+
+const formacion = [
+  {
+    anio: '2013 a 2017',
+    titulo: 'Licenciatura en Psicología',
+    detalle: 'Universidad del Salvador, Argentina.',
+  },
+  {
+    anio: '2024',
+    titulo: 'Máster en Psicología General Sanitaria',
+    detalle: 'Título homologado en España.',
+  },
+  {
+    anio: 'Formación clínica',
+    titulo: 'EMDR Nivel 1',
+    detalle: 'Instituto Español de EMDR, Barcelona.',
+  },
+  {
+    anio: 'Posgrado',
+    titulo: 'Terapia Cognitivo Conductual y Terapia Dialéctico Conductual',
+    detalle: 'Universidad de Belgrano y Universidad Aconcagua, Argentina.',
+  },
+  {
+    anio: 'En paralelo',
+    titulo: 'Docencia',
+    detalle: 'Clases de psicología y salud mental en nivel secundario y superior.',
+  },
+];
 
 const paraQuienEs = [
   'Sientes que la ansiedad o el estrés te superan casi todos los días.',
   'Estás atravesando un duelo o una pérdida reciente.',
   'Notas que te falta motivación o ánimo desde hace tiempo.',
-  'Buscas un enfoque serio, con herramientas como EMDR.',
+  'Tienes un hijo o una hija adolescente que necesita su propio espacio.',
+  'Como pareja, os cuesta hablar sin que la conversación acabe mal.',
   'Prefieres la privacidad y comodidad de hacerlo desde casa.',
-  'Hablas español, no importa en qué país estés.',
 ];
 
 const pasos = [
@@ -87,13 +163,33 @@ const pasos = [
     numero: '2',
     titulo: 'Nos vemos online',
     texto:
-      'Una videollamada de 50-60 minutos, en un espacio privado, desde donde te sientas cómodo/a.',
+      'Una videollamada de 50 minutos por Google Meet, Zoom o WhatsApp, desde donde te sientas cómodo o cómoda.',
   },
   {
     numero: '3',
     titulo: 'Seguimos a tu lado',
     texto: 'Cada sesión se ajusta a cómo vas llegando. Vamos a tu ritmo, sin prisas.',
   },
+];
+
+const tarifas = [
+  {
+    titulo: 'Sesión individual',
+    publico: 'Para adolescentes y adultos',
+    duracion: '50 minutos por videollamada',
+  },
+  {
+    titulo: 'Sesión de pareja',
+    publico: 'Para los dos, en la misma llamada',
+    duracion: '50 minutos por videollamada',
+  },
+];
+
+const condiciones = [
+  'Puedes pagar por Bizum o por transferencia bancaria.',
+  'Si necesitas cancelar, avísame con 48 horas de antelación.',
+  'La llamada se hace por Google Meet, Zoom o WhatsApp, lo que te resulte más fácil.',
+  'Tengo amplia disponibilidad horaria, estés en el país que estés.',
 ];
 
 const enfoques = [
@@ -113,17 +209,17 @@ const faqs = [
   {
     pregunta: '¿Cómo son las sesiones?',
     respuesta:
-      'Sesiones individuales online, de 50 a 60 minutos, por videollamada en un espacio privado y confidencial. Están pensadas para personas adultas.',
+      'Sesiones individuales o de pareja de 50 minutos, por videollamada en Google Meet, Zoom o WhatsApp, en un espacio privado y confidencial.',
   },
   {
     pregunta: '¿Cuánto cuesta una sesión?',
-    respuesta: 'Todavía no he publicado el precio por sesión.',
-    pendiente: true,
+    respuesta:
+      'El precio depende de si la sesión es individual o de pareja. Te lo paso por WhatsApp antes de reservar.',
   },
   {
     pregunta: '¿Puedo hacer terapia contigo si no vivo en España?',
     respuesta:
-      'Sí. Las sesiones son online y en español, así que puedes hacerlas desde cualquier país. Ten en cuenta la diferencia horaria al escribir, para encontrar un hueco que funcione para los dos.',
+      'Sí. Atiendo online y en español, con amplia disponibilidad horaria, vivas en el huso horario que vivas.',
   },
   {
     pregunta: '¿Con qué frecuencia son las sesiones y cuánto dura el proceso?',
@@ -138,8 +234,7 @@ const faqs = [
   },
   {
     pregunta: '¿Qué pasa si tengo que cancelar una sesión?',
-    respuesta: 'Todavía no he publicado la política de cancelación.',
-    pendiente: true,
+    respuesta: 'Avísame con 48 horas de antelación.',
   },
 ];
 
@@ -169,14 +264,6 @@ const faqJsonLd = {
     is:inline
     set:html={JSON.stringify(faqJsonLd)}
   ></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" slot="head" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin slot="head" />
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500&family=Karla:wght@400;500;600&display=swap"
-    slot="head"
-  />
-
   <Header />
 
   <main class="font-v2-sans text-ink">
@@ -199,8 +286,9 @@ const faqJsonLd = {
             Un espacio tranquilo para poner en orden lo que sientes
           </h1>
           <p class="animate-hero-in mt-5 max-w-lg text-lg text-ink/75 [animation-delay:80ms]">
-            Sesiones online en español para adultos, con casi 14 años de experiencia y herramientas
-            como EMDR, para acompañarte con ansiedad, estrés, duelo o depresión.
+            Sesiones online en español para adolescentes, adultos y parejas. Cincuenta minutos por
+            videollamada para acompañarte con ansiedad, estrés, duelo o depresión, con herramientas
+            como EMDR.
           </p>
           <div class="animate-hero-in mt-8 flex flex-wrap items-center gap-4 [animation-delay:160ms]">
             <a
@@ -241,28 +329,29 @@ const faqJsonLd = {
         data-reveal
         class="mx-auto grid max-w-5xl items-center gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]"
       >
-        <div class="mx-auto md:mx-0">
-          <img
-            src={fotoCuadrada}
-            alt="Juan Ignacio Riccardi, Psicólogo General Sanitario"
-            width="900"
-            height="900"
-            class="v2-blob-2 aspect-square w-56 border border-navy-100 object-cover sm:w-64"
-          />
-        </div>
-        <div>
-          <p class="font-v2-serif text-2xl leading-snug text-navy-800 italic sm:text-3xl">
+        <div class="rounded-3xl border border-navy-100 bg-cream-50 p-8 shadow-[0_16px_40px_-28px_rgba(42,63,106,0.35)] sm:p-10">
+          <span class="block h-px w-12 bg-gold-400" aria-hidden="true"></span>
+          <p class="mt-6 font-v2-serif text-2xl leading-snug text-navy-800 italic sm:text-3xl">
             "Creo en la terapia como un espacio para sentirte acompañado, no juzgado."
           </p>
+        </div>
+        <div>
+          <h2 class="font-v2-serif text-3xl text-navy-800">Sobre mí</h2>
           <div class="mt-6 space-y-4 text-ink/75">
             <p>
-              Soy Juan Ignacio Riccardi, Psicólogo General Sanitario. Llevo casi 14 años acompañando
-              a personas adultas que atraviesan ansiedad, estrés, duelo o depresión.
+              Soy Juan Ignacio Riccardi, Licenciado en Psicología y Psicólogo General Sanitario.
+              Ejerzo desde 2017 y acompaño a adolescentes, adultos y parejas que atraviesan
+              ansiedad, estrés, duelo o depresión.
             </p>
             <p>
               Combino dos enfoques con base científica: la Terapia Cognitivo-Conductual (TCC), para
               trabajar los pensamientos y comportamientos que mantienen el malestar, y EMDR, para
               procesar los recuerdos difíciles. Me adapto a lo que cada proceso necesita.
+            </p>
+            <p>
+              Mi trabajo se reparte entre la consulta privada y la educación. He acompañado a
+              personas con discapacidad, he formado parte de equipos de orientación escolar y doy
+              clase de psicología y salud mental.
             </p>
             <p>
               Todo ocurre online, en un espacio privado y cercano, para cualquier persona de habla
@@ -273,13 +362,56 @@ const faqJsonLd = {
       </div>
     </section>
 
+    <!-- Formación -->
+    <section id="formacion" class="bg-cream-50 px-6 py-20 sm:py-24">
+      <div class="mx-auto max-w-5xl">
+        <div data-reveal class="max-w-xl">
+          <h2 class="font-v2-serif text-3xl text-navy-800">Mi formación</h2>
+          <p class="mt-3 text-ink/75">
+            Grado y posgrado en Argentina, formación clínica en EMDR en España y una práctica que
+            sigue en marcha.
+          </p>
+        </div>
+
+        <ol data-reveal-group class="mt-12 space-y-4">
+          {formacion.map((item) => (
+            <li class="flex flex-col gap-2 rounded-3xl border border-navy-100 bg-white p-6 shadow-[0_16px_40px_-28px_rgba(42,63,106,0.35)] sm:flex-row sm:items-baseline sm:gap-8">
+              <span class="text-sm tracking-[0.12em] text-navy-600 uppercase sm:w-44 sm:shrink-0">
+                {item.anio}
+              </span>
+              <div>
+                <h3 class="font-v2-serif text-lg text-navy-800">{item.titulo}</h3>
+                <p class="mt-1 text-sm text-ink/70">{item.detalle}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+
+        <p data-reveal class="mt-8 max-w-3xl text-sm leading-relaxed text-ink/70">
+          Soy colegiado nº 68849 en Argentina. En España ejerzo como Psicólogo General Sanitario por
+          título homologado y tengo la colegiación pendiente de tramitar. Si quieres ver la
+          trayectoria completa, está en
+          <a
+            href={linkedinHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="underline decoration-gold-400 underline-offset-4 hover:text-navy-800"
+          >
+            LinkedIn
+          </a>
+          .
+        </p>
+      </div>
+    </section>
+
     <!-- Servicios -->
-    <section id="servicios" class="bg-cream-50 px-6 py-20 sm:py-24">
+    <section id="servicios" class="bg-white px-6 py-20 sm:py-24">
       <div class="mx-auto max-w-5xl">
         <div data-reveal class="max-w-xl">
           <h2 class="font-v2-serif text-3xl text-navy-800">Cómo puedo ayudarte</h2>
           <p class="mt-3 text-ink/75">
-            Cada proceso es distinto, así que buscamos juntos lo que a ti te funciona.
+            Sesiones online para adolescentes, adultos y parejas. Cada proceso es distinto, así que
+            buscamos juntos lo que a ti te funciona.
           </p>
         </div>
 
@@ -287,7 +419,7 @@ const faqJsonLd = {
           {servicios.map((servicio, i) => (
             <div
               class:list={[
-                'rounded-3xl border border-navy-100 bg-white p-7 shadow-[0_16px_40px_-24px_rgba(42,63,106,0.35)]',
+                'rounded-3xl border border-navy-100 bg-cream-50 p-7 shadow-[0_16px_40px_-24px_rgba(42,63,106,0.35)]',
                 { 'sm:mt-6': i % 2 === 1 },
               ]}
             >
@@ -329,7 +461,7 @@ const faqJsonLd = {
     </section>
 
     <!-- Cómo funciona / Para quién es -->
-    <section id="como-funciona" class="bg-white px-6 py-20 sm:py-24">
+    <section id="como-funciona" class="bg-cream-50 px-6 py-20 sm:py-24">
       <div class="mx-auto max-w-5xl">
         <div data-reveal>
           <h2 class="font-v2-serif text-3xl text-navy-800">¿Te reconoces aquí?</h2>
@@ -381,6 +513,51 @@ const faqJsonLd = {
       </div>
     </section>
 
+    <!-- Tarifas -->
+    <section id="tarifas" class="bg-white px-6 py-20 sm:py-24">
+      <div class="mx-auto max-w-5xl">
+        <div data-reveal class="max-w-xl">
+          <h2 class="font-v2-serif text-3xl text-navy-800">Tarifas</h2>
+          <p class="mt-3 text-ink/75">
+            Hay una tarifa para sesión individual y otra para sesión de pareja. Las dos duran 50
+            minutos y se hacen por videollamada. Escríbeme y te paso el precio antes de reservar.
+          </p>
+        </div>
+
+        <div data-reveal-group class="mt-12 grid gap-6 sm:grid-cols-2">
+          {tarifas.map((tarifa) => (
+            <div class="rounded-3xl border border-navy-100 bg-cream-50 p-7 shadow-[0_16px_40px_-24px_rgba(42,63,106,0.35)]">
+              <h3 class="font-v2-serif text-xl text-navy-800">{tarifa.titulo}</h3>
+              <p class="mt-2 text-sm text-ink/70">{tarifa.publico}</p>
+              <p class="mt-1 text-sm text-ink/70">{tarifa.duracion}</p>
+            </div>
+          ))}
+        </div>
+
+        <ul data-reveal class="mt-10 grid max-w-3xl gap-4">
+          {condiciones.map((condicion) => (
+            <li class="flex items-start gap-3 text-sm text-ink/75">
+              <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gold-400/20 text-gold-400">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-3 w-3"
+                  aria-hidden="true"
+                >
+                  <path d="M5 13l4 4L19 7" />
+                </svg>
+              </span>
+              <span>{condicion}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
     <!-- Preguntas frecuentes -->
     <section id="faq" class="bg-white px-6 py-20 sm:py-24">
       <div class="mx-auto max-w-3xl">
@@ -427,7 +604,8 @@ const faqJsonLd = {
       >
         <h2 class="font-v2-serif text-3xl text-navy-800">Hablemos</h2>
         <p class="mt-3 text-ink/75">
-          Cuéntame qué te gustaría trabajar y buscamos juntos el mejor momento para empezar.
+          Cuéntame qué te gustaría trabajar y buscamos juntos el mejor momento para empezar. Tengo
+          amplia disponibilidad horaria.
         </p>
 
         <div class="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">

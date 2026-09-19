@@ -26,8 +26,10 @@ alternativas para que el cliente elija (ver [Propuestas de diseño](#propuestas-
   `v2/`, `v3/` — Header/Footer propios de cada propuesta, no compartidos con la home a propósito
   (ver [Propuestas de diseño](#propuestas-de-diseño-v2-v3)).
 - `src/lib/withBase.ts` — helper obligatorio para enlaces internos (ver abajo).
-- `src/styles/global.css` — tokens de Tailwind v4 (`@theme`) y reglas de animación, todo en un
-  único fichero (no crear otros `.css`).
+- `src/styles/global.css` — `@font-face` de las tipografías autoalojadas, tokens de Tailwind v4
+  (`@theme`) y reglas de animación, todo en un único fichero (no crear otros `.css`).
+- `src/fonts/` — WOFF2 de las cinco familias (subconjunto latino). Viven en `src/`, no en
+  `public/`, para que Vite reescriba sus URLs con el base path del despliegue.
 - `public/brand/` — logo real del cliente (SVG, variantes claro/oscuro/icono/horizontal/apilado),
   usado hoy solo en `/v3/`.
 - `tests/` — smoke tests de Playwright.
@@ -47,6 +49,11 @@ alternativas para que el cliente elija (ver [Propuestas de diseño](#propuestas-
   (`--font-v2-*`, `--font-v3-*`) en el mismo fichero — no crear ficheros CSS nuevos.
 - `trailingSlash: 'always'` + `build.format: 'directory'` (`astro.config.mjs`): los
   enlaces internos llevan barra final.
+- **Tipografías autoalojadas, nunca `<link>` a Google Fonts.** Al añadir un peso o una familia,
+  se descarga el WOFF2 a `src/fonts/` y se declara su `@font-face` en `global.css`. Declararlas
+  ahí (y no con `<link>`) hace que el navegador baje solo las familias que la página pinta, y
+  evita comunicar la IP de cada visitante a un tercero. La política de privacidad afirma que no
+  hay peticiones externas: si eso cambia, hay que actualizar `/privacidad/`.
 - El sitio es `lang="es"`: copy, comentarios de código y mensajes de commit en español.
 - Prettier ordena las clases de Tailwind automáticamente (`prettier-plugin-tailwindcss`) — no
   reordenarlas a mano, `npm run format` ya lo hace.
@@ -77,7 +84,7 @@ que se pida explícitamente.
 | Rama       | Destino                                                |
 | :--------- | :------------------------------------------------------ |
 | `develop`  | GitHub Pages, bajo `/clinica_conecta/`                  |
-| `main`     | Cloudflare Workers, bajo `/`                            |
+| `main`     | Cloudflare Workers, en `juanriccardiconecta.com`, bajo `/` |
 | otras / PR | Solo CI (tipos, build, formato, lint, tests)            |
 
 `astro.config.mjs` lee `SITE_URL`/`BASE_PATH` de variables de entorno; cada workflow
@@ -88,8 +95,18 @@ pasa las suyas.
 - `deploy-cloudflare.yml` falla en el último paso hasta que se añadan los secretos
   `CLOUDFLARE_API_TOKEN` y `CLOUDFLARE_ACCOUNT_ID` en GitHub. No lo trates como algo que
   "arreglar" en el código.
-- El dominio propio del cliente está pendiente — hay TODOs en
-  `.github/workflows/deploy-cloudflare.yml` y `wrangler.jsonc` para cuando exista.
+- El cliente reside y ejerce en Argentina, y atiende solo online: **no hay consulta física en
+  España**. Por eso `/aviso-legal/` y `/privacidad/` no llevan NIF, domicilio profesional ni
+  registro sanitario, y en su lugar declaran el lugar de ejercicio. No son huecos por rellenar,
+  no los repongas. La política de privacidad se apoya en el art. 3.2 del RGPD (aplica por
+  dirigirse a personas en la UE) y en la decisión de adecuación de Argentina (2003/490/CE).
+- **En la web no se muestran precios**, por decisión del cliente. El apartado `#tarifas` de las
+  tres versiones dice que hay tarifa individual y de pareja, con la duración y las condiciones,
+  y remite a WhatsApp para el importe. No es un hueco por rellenar, no añadas cifras.
+- El dominio del cliente es `juanriccardiconecta.com` y ya está escrito en `wrangler.jsonc`
+  (ruta con `custom_domain`) y en `SITE_URL` de `.github/workflows/deploy-cloudflare.yml`. El
+  deploy a Cloudflare falla mientras la zona no exista en la misma cuenta de Cloudflare: es
+  configuración pendiente fuera del repo, no código que arreglar.
 
 ## Antes de dar algo por terminado
 
