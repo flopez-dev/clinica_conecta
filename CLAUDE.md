@@ -1,7 +1,7 @@
 # Clínica Conecta
 
 Web estática del cliente Clínica Conecta. Astro 7 + Tailwind v4, TypeScript strict.
-La home (`/`) es la landing real del negocio; `/v2/` y `/v3/` son propuestas de diseño
+La home (`/`) es la landing real del negocio; `/v2/`, `/v3/` y `/v4/` son propuestas de diseño
 alternativas para que el cliente elija (ver [Propuestas de diseño](#propuestas-de-diseño-v2-v3)).
 
 ## Comandos
@@ -19,11 +19,11 @@ alternativas para que el cliente elija (ver [Propuestas de diseño](#propuestas-
 
 ## Estructura
 
-- `src/pages/` — rutas del sitio: `index.astro` (home), `v2/`, `v3/` (propuestas), `404.astro`,
+- `src/pages/` — rutas del sitio: `index.astro` (home), `v2/`, `v3/`, `v4/` (propuestas), `404.astro`,
   `robots.txt.ts` (dinámico, ver más abajo).
 - `src/layouts/Base.astro` — layout único; toda página lo envuelve.
 - `src/components/` — `Header.astro`/`Footer.astro`/`WhatsAppFloat.astro` (usados por la home);
-  `v2/`, `v3/` — Header/Footer propios de cada propuesta, no compartidos con la home a propósito
+  `v2/`, `v3/`, `v4/` — Header/Footer propios de cada propuesta, no compartidos con la home a propósito
   (ver [Propuestas de diseño](#propuestas-de-diseño-v2-v3)).
 - `src/lib/withBase.ts` — helper obligatorio para enlaces internos (ver abajo).
 - `src/styles/global.css` — `@font-face` de las tipografías autoalojadas, tokens de Tailwind v4
@@ -58,7 +58,7 @@ alternativas para que el cliente elija (ver [Propuestas de diseño](#propuestas-
 - Prettier ordena las clases de Tailwind automáticamente (`prettier-plugin-tailwindcss`) — no
   reordenarlas a mano, `npm run format` ya lo hace.
 
-## Propuestas de diseño (`/v2/`, `/v3/`)
+## Propuestas de diseño (`/v2/`, `/v3/`, `/v4/`)
 
 `/` es la landing original; `/v2/` y `/v3/` son direcciones visuales alternativas del mismo
 contenido factual, pensadas para que el cliente compare y elija antes de que el sitio se
@@ -73,6 +73,11 @@ considere terminado. Cada propuesta:
   bloque `jsonLd` en el frontmatter de la página.
 - Reutiliza sin cambios `Base.astro`, `WhatsAppFloat.astro`, `withBase.ts` y el mecanismo de
   reveal-al-scroll de `global.css` (`.js`, `[data-reveal]`, `[data-reveal-group]`).
+
+`/v4/` no es una dirección visual nueva sino una composición de las otras tres: menú de la home
+(con relevo crema→azul al salir del hero), hero con la maquetación de `/v2/`, Servicios de `/v2/`,
+formación, tarifas, FAQ y contacto de `/v3/`. Usa solo la pareja tipográfica de la home y no
+tiene imagen OG propia (usa la de la home).
 
 **Pendiente de decidir (no es un bug, es un cabo operativo):** qué pasa cuando el cliente elija
 una propuesta — si se borran las otras dos (páginas, componentes, bloques de `global.css`, imagen

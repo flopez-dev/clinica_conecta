@@ -6,7 +6,7 @@ import { test, expect } from '@playwright/test';
 // '' (no '/') para la home: con baseURL terminando en `/clinica_conecta/`,
 // un path que empiece por '/' resuelve contra el origen y se sale del base
 // path (bug real que se detectó escribiendo este mismo test).
-const PAGES = ['', 'v2/', 'v3/'];
+const PAGES = ['', 'v2/', 'v3/', 'v4/'];
 
 for (const path of PAGES) {
   test.describe(`${path || '/'}`, () => {

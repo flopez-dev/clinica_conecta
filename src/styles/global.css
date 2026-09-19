@@ -254,3 +254,30 @@ body {
     transform: scaleX(1);
   }
 }
+
+/* Propuesta 4 (/v4/) — entrada de la sección de contacto: sube, se desenfoca y
+   aparece con una curva de masa y 800 ms. Solo con JS (.js) y sin motion
+   reducida, así que sin ellos el contenido se ve desde el primer render. El
+   segundo hijo entra con un pequeño retardo. La activación reutiliza el
+   IntersectionObserver de la página (atributo data-visible). */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-v4-reveal] {
+    opacity: 0;
+    transform: translateY(64px);
+    filter: blur(12px);
+    transition:
+      opacity 800ms cubic-bezier(0.32, 0.72, 0, 1),
+      transform 800ms cubic-bezier(0.32, 0.72, 0, 1),
+      filter 800ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  .js [data-v4-reveal][data-visible] {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  .js [data-v4-reveal]:nth-child(2) {
+    transition-delay: 150ms;
+  }
+}
