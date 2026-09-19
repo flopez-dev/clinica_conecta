@@ -14,6 +14,7 @@ const whatsappMessage = encodeURIComponent('Hola, me gustaría agendar una sesi�
 const whatsappHref = `https://wa.me/34644751041?text=${whatsappMessage}`;
 const mailtoHref = 'mailto:riccardi.juanpsi@gmail.com?subject=Consulta%20desde%20la%20web';
 const linkedinHref = 'https://www.linkedin.com/in/juaniriccardi';
+const fotoVertical = withBase('/foto/juan-ignacio-vertical.webp');
 
 // Juan es la entidad principal, no un negocio local. `ProfessionalService`
 // es un subtipo de LocalBusiness, o sea de Place, y daba a entender que hay
@@ -69,12 +70,11 @@ const servicios = [
   {
     titulo: 'Ansiedad',
     texto:
-      'Herramientas para gestionar la preocupación excesiva, el malestar físico y los pensamientos que se repiten sin descanso.',
+      'Herramientas para gestionar la preocupación excesiva, el malestar físico y los pensamientos que no paran.',
   },
   {
     titulo: 'Estrés',
-    texto:
-      'Recursos prácticos para recuperar el equilibrio cuando las exigencias del día a día desbordan tu capacidad de respuesta.',
+    texto: 'Recursos prácticos para recuperar el equilibrio cuando el día a día te desborda.',
   },
   {
     titulo: 'Duelo',
@@ -173,6 +173,64 @@ const condiciones = [
   'La videollamada se hace por Google Meet, Zoom o WhatsApp, lo que te resulte más cómodo.',
   'Amplia disponibilidad horaria, vivas en el huso horario que vivas.',
 ];
+
+const enfoques = [
+  {
+    titulo: 'TCC (Terapia Cognitivo-Conductual)',
+    texto:
+      'Parte de una idea sencilla: no son los hechos los que nos hacen sufrir, sino cómo los interpretamos y lo que hacemos a partir de ahí. Es un enfoque práctico y estructurado: identificamos juntos esos pensamientos que no te ayudan, como pensar "todo me va a salir mal" tras un solo contratiempo, y los sustituimos por formas de pensar más realistas. También vamos cambiando, poco a poco, los comportamientos que mantienen tu malestar, como evitar situaciones por miedo. Es especialmente eficaz para la ansiedad, la depresión y el estrés, y suele dar resultados visibles en relativamente poco tiempo.',
+  },
+  {
+    titulo: 'EMDR',
+    texto:
+      'Es una terapia que ayuda a tu cerebro a "digerir" recuerdos o experiencias difíciles que se han quedado atascados y te siguen afectando en el presente, aunque haya pasado tiempo: ansiedad, pesadillas o reacciones desproporcionadas ante ciertas situaciones. Durante la sesión, mientras recuerdas brevemente esa experiencia, te guío a través de un tipo de estimulación (normalmente con movimientos oculares) que ayuda a tu cerebro a procesar ese recuerdo de una forma más sana. No se trata de olvidar lo ocurrido, sino de que deje de doler y de condicionar tu día a día.',
+  },
+];
+
+const faqs = [
+  {
+    pregunta: '¿Cómo son las sesiones?',
+    respuesta:
+      'Sesiones individuales o de pareja de 50 minutos, por videollamada en Google Meet, Zoom o WhatsApp, en un espacio privado y confidencial.',
+  },
+  {
+    pregunta: '¿Cuánto cuesta una sesión?',
+    respuesta:
+      'El precio depende de si la sesión es individual o de pareja. Te lo paso por WhatsApp antes de reservar.',
+  },
+  {
+    pregunta: '¿Puedo hacer terapia contigo si no vivo en España?',
+    respuesta:
+      'Sí. Atiendo online y en español, con amplia disponibilidad horaria, vivas en el huso horario que vivas.',
+  },
+  {
+    pregunta: '¿Con qué frecuencia son las sesiones y cuánto dura el proceso?',
+    respuesta:
+      'Todavía no he publicado la frecuencia recomendada ni la duración media de un proceso.',
+    pendiente: true,
+  },
+  {
+    pregunta: '¿Y si no sé por dónde empezar?',
+    respuesta:
+      'Es de lo más habitual. No hace falta que llegues con todo claro ni bien explicado: de eso hablamos en la primera sesión.',
+  },
+  {
+    pregunta: '¿Qué pasa si tengo que cancelar una sesión?',
+    respuesta: 'Avísame con 48 horas de antelación.',
+  },
+];
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs
+    .filter((faq) => !faq.pendiente)
+    .map((faq) => ({
+      '@type': 'Question',
+      name: faq.pregunta,
+      acceptedAnswer: { '@type': 'Answer', text: faq.respuesta },
+    })),
+};
 ---
 
 <Base title={title} description={description}>
@@ -181,6 +239,12 @@ const condiciones = [
     slot="head"
     is:inline
     set:html={JSON.stringify(jsonLd)}
+  ></script>
+  <script
+    type="application/ld+json"
+    slot="head"
+    is:inline
+    set:html={JSON.stringify(faqJsonLd)}
   ></script>
   <Header />
 
@@ -215,15 +279,22 @@ const condiciones = [
             ¿Cómo funciona una sesión online?
           </a>
         </div>
+        <p class="animate-hero-in mt-6 text-xs text-cream-50/60 [animation-delay:200ms]">
+          Todo lo que compartas queda protegido por el secreto profesional.
+        </p>
       </div>
     </section>
 
     <!-- Sobre mí -->
     <section id="sobre-mi" class="px-6 py-16 sm:py-20">
       <div data-reveal class="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-2">
-        <div class="flex aspect-[4/5] items-center justify-center rounded-lg border border-navy-100 bg-navy-100 text-center text-sm text-navy-600">
-          Foto profesional de Juan Ignacio. Reemplazar por foto real.
-        </div>
+        <img
+          src={fotoVertical}
+          alt="Juan Ignacio Riccardi, Psicólogo General Sanitario"
+          width="900"
+          height="1125"
+          class="aspect-[4/5] w-full rounded-lg border border-navy-100 object-cover"
+        />
         <div>
           <h2 class="font-serif text-2xl font-semibold text-navy-800 sm:text-3xl">Sobre mí</h2>
           <p class="mt-4 leading-relaxed text-ink/80">
@@ -232,9 +303,9 @@ const condiciones = [
             estrés, duelo y depresión.
           </p>
           <p class="mt-4 leading-relaxed text-ink/80">
-            Trabajo con un enfoque integrador. Combino herramientas psicológicas basadas en
-            evidencia con EMDR (Eye Movement Desensitization and Reprocessing) para el abordaje del
-            trauma y de las experiencias que siguen doliendo tiempo después.
+            Combino dos enfoques con base científica: la Terapia Cognitivo-Conductual (TCC), para
+            trabajar los pensamientos y comportamientos que mantienen el malestar, y EMDR, para
+            procesar traumas y experiencias difíciles.
           </p>
           <p class="mt-4 leading-relaxed text-ink/80">
             Mi trayectoria une la clínica y la educación. Llevo consulta privada, he acompañado a
@@ -294,7 +365,8 @@ const condiciones = [
         <div data-reveal class="max-w-2xl">
           <h2 class="font-serif text-2xl font-semibold text-navy-800 sm:text-3xl">Servicios</h2>
           <p class="mt-3 text-ink/80">
-            Sesiones online para adolescentes, adultos y parejas, adaptadas a cada proceso.
+            Sesiones online para adolescentes, adultos y parejas. Sea cual sea tu proceso,
+            trabajamos con herramientas con base científica, como la TCC y el EMDR.
           </p>
         </div>
 
@@ -303,6 +375,19 @@ const condiciones = [
             <div class="rounded-lg border border-navy-100 bg-white p-6">
               <h3 class="font-serif text-lg font-semibold text-navy-800">{servicio.titulo}</h3>
               <p class="mt-2 text-sm leading-relaxed text-ink/70">{servicio.texto}</p>
+            </div>
+          ))}
+        </div>
+
+        <h3 data-reveal class="mt-14 font-serif text-xl font-semibold text-navy-800">
+          ¿Bajo qué enfoque trabajo?
+        </h3>
+
+        <div data-reveal-group class="mt-6 grid gap-6 sm:grid-cols-2">
+          {enfoques.map((enfoque) => (
+            <div class="rounded-lg border border-navy-100 bg-white p-6">
+              <h4 class="font-serif text-lg font-semibold text-navy-800">{enfoque.titulo}</h4>
+              <p class="mt-2 text-sm leading-relaxed text-ink/70">{enfoque.texto}</p>
             </div>
           ))}
         </div>
@@ -372,6 +457,44 @@ const condiciones = [
             </li>
           ))}
         </ul>
+      </div>
+    </section>
+
+    <!-- Preguntas frecuentes -->
+    <section id="faq" class="bg-cream-50 px-6 py-16 sm:py-20">
+      <div class="mx-auto max-w-3xl">
+        <h2 data-reveal class="font-serif text-2xl font-semibold text-navy-800 sm:text-3xl">
+          Preguntas frecuentes
+        </h2>
+
+        <div data-reveal-group class="mt-8 space-y-3">
+          {faqs.map((faq) => (
+            <details class="group rounded-lg border border-navy-100 bg-white p-5">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-serif font-semibold text-navy-800 marker:hidden">
+                {faq.pregunta}
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  class="h-4 w-4 shrink-0 text-navy-600 transition-transform duration-200 ease-[var(--ease-out)] group-open:rotate-45"
+                  aria-hidden="true"
+                >
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+              </summary>
+              <p
+                class:list={[
+                  'mt-3 text-sm leading-relaxed',
+                  faq.pendiente ? 'font-medium text-gold-400 italic' : 'text-ink/75',
+                ]}
+              >
+                {faq.respuesta}
+              </p>
+            </details>
+          ))}
+        </div>
       </div>
     </section>
 
