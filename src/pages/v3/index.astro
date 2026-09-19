@@ -5,7 +5,7 @@ import Footer from '../../components/v3/Footer.astro';
 import WhatsAppFloat from '../../components/WhatsAppFloat.astro';
 import { withBase } from '../../lib/withBase';
 
-const title = 'Propuesta 3 · Ir y venir, hasta encontrar calma — Clínica Conecta';
+const title = 'Propuesta 3 · Ir y venir, hasta encontrar calma · Clínica Conecta';
 const description =
   'Terapia online en español para adultos, con EMDR: ansiedad, estrés, duelo y depresión. Un espacio para procesar lo que pesa y avanzar a tu propio ritmo.';
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
@@ -86,6 +86,19 @@ const pasos = [
   },
 ];
 
+const enfoques = [
+  {
+    titulo: 'TCC (Terapia Cognitivo-Conductual)',
+    texto:
+      'Parte de una idea sencilla: no son los hechos los que nos hacen sufrir, sino cómo los interpretamos y lo que hacemos a partir de ahí. Es un enfoque práctico y estructurado: identificamos juntos esos pensamientos que no te ayudan, como pensar "todo me va a salir mal" tras un solo contratiempo, y los sustituimos por formas de pensar más realistas. También vamos cambiando, poco a poco, los comportamientos que mantienen tu malestar, como evitar situaciones por miedo. Es especialmente eficaz para la ansiedad, la depresión y el estrés, y suele dar resultados visibles en relativamente poco tiempo.',
+  },
+  {
+    titulo: 'EMDR',
+    texto:
+      'Es una terapia que ayuda a tu cerebro a "digerir" recuerdos o experiencias difíciles que se han quedado atascados y te siguen afectando en el presente, aunque haya pasado tiempo: ansiedad, pesadillas o reacciones desproporcionadas ante ciertas situaciones. Durante la sesión, mientras recuerdas brevemente esa experiencia, te guío a través de un tipo de estimulación (normalmente con movimientos oculares) que ayuda a tu cerebro a procesar ese recuerdo de una forma más sana. No se trata de olvidar lo ocurrido, sino de que deje de doler y de condicionar tu día a día.',
+  },
+];
+
 const faqs = [
   {
     pregunta: '¿Cómo son las sesiones?',
@@ -94,7 +107,7 @@ const faqs = [
   },
   {
     pregunta: '¿Cuánto cuesta una sesión?',
-    respuesta: 'Precio por sesión — pendiente de publicar.',
+    respuesta: 'Todavía no he publicado el precio por sesión.',
     pendiente: true,
   },
   {
@@ -103,13 +116,9 @@ const faqs = [
       'Sí. Las sesiones son online y en español, así que puedes hacerlas desde cualquier país. Ten en cuenta la diferencia horaria al escribir, para encontrar un hueco que funcione para los dos.',
   },
   {
-    pregunta: '¿Qué es el EMDR?',
-    respuesta:
-      'Es una técnica psicoterapéutica reconocida internacionalmente para el trabajo con el trauma y las experiencias difíciles: ayuda a procesar recuerdos que quedan "atascados" y que siguen generando malestar. Aquí se usa como parte de un enfoque integrador, junto a otras herramientas con base científica.',
-  },
-  {
     pregunta: '¿Con qué frecuencia son las sesiones y cuánto dura el proceso?',
-    respuesta: 'Frecuencia recomendada y duración media de un proceso — pendiente de publicar.',
+    respuesta:
+      'Todavía no he publicado la frecuencia recomendada ni la duración media de un proceso.',
     pendiente: true,
   },
   {
@@ -119,7 +128,7 @@ const faqs = [
   },
   {
     pregunta: '¿Qué pasa si tengo que cancelar una sesión?',
-    respuesta: 'Política de cancelación — pendiente de publicar.',
+    respuesta: 'Todavía no he publicado la política de cancelación.',
     pendiente: true,
   },
 ];
@@ -223,12 +232,12 @@ const faqJsonLd = {
               experiencia clínica, ejerciendo profesionalmente desde 2017.
             </p>
             <p>
-              Combino herramientas psicológicas con base científica y EMDR (Eye Movement
-              Desensitization and Reprocessing) para el trabajo con ansiedad, estrés, duelo y
-              depresión.
+              Combino dos enfoques con base científica: la Terapia Cognitivo-Conductual (TCC) y EMDR
+              (Eye Movement Desensitization and Reprocessing), cada uno según lo que el proceso
+              pida.
             </p>
             <p>
-              Todo ocurre online, en español, para cualquier persona hispanohablante — sin importar
+              Todo ocurre online, en español, para cualquier persona hispanohablante, sin importar
               dónde vivas.
             </p>
           </div>
@@ -264,6 +273,22 @@ const faqJsonLd = {
             <div class="flex flex-col gap-2 py-6 sm:flex-row sm:items-baseline sm:gap-8">
               <h3 class="font-v3-display text-xl italic sm:w-48 sm:shrink-0">{servicio.titulo}</h3>
               <p class="text-navy-900/75 sm:flex-1">{servicio.texto}</p>
+            </div>
+          ))}
+        </div>
+
+        <h3 data-reveal class="mt-16 font-v3-display text-2xl italic">
+          ¿Bajo qué enfoque trabajo?
+        </h3>
+
+        <div
+          data-reveal-group
+          class="mt-10 divide-y divide-navy-100 border-t border-b border-navy-100"
+        >
+          {enfoques.map((enfoque) => (
+            <div class="flex flex-col gap-2 py-6 sm:flex-row sm:items-baseline sm:gap-8">
+              <h4 class="font-v3-display text-xl italic sm:w-48 sm:shrink-0">{enfoque.titulo}</h4>
+              <p class="text-navy-900/75 sm:flex-1">{enfoque.texto}</p>
             </div>
           ))}
         </div>
