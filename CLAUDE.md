@@ -118,11 +118,11 @@ pasa las suyas.
   registro sanitario, y en su lugar declaran el lugar de ejercicio. No son huecos por rellenar,
   no los repongas. La política de privacidad se apoya en el art. 3.2 del RGPD (aplica por
   dirigirse a personas en la UE) y en la decisión de adecuación de Argentina (2003/490/CE).
-- **En la web no se muestran precios**, por decisión del cliente. El apartado `#tarifas` de las
-  tres versiones dice que hay tarifa individual y de pareja, con la duración y las condiciones,
-  y remite a WhatsApp para el importe. No es un hueco por rellenar, no añadas cifras. En `/v4/`
-  no hay apartado propio: Tarifas está fundida en Sesiones (`#como-funciona`), donde el botón
-  "Consultar tarifa" (con el icono de WhatsApp) remite a WhatsApp para el importe.
+- **En la web no se muestran precios**, por decisión del cliente. El apartado `#tarifas` de la
+  home y de `/v2/` dice que hay tarifa individual y de pareja, con la duración y las condiciones,
+  y remite a WhatsApp para el importe. No es un hueco por rellenar, no añadas cifras. En `/v3/` y
+  `/v4/` no hay apartado propio: Tarifas está fundida en Sesiones (`#como-funciona`), donde el
+  botón "Consultar tarifa" (con el icono de WhatsApp) remite a WhatsApp para el importe.
 - El dominio del cliente es `juanriccardiconecta.com` y ya está escrito en `wrangler.jsonc`
   (ruta con `custom_domain`) y en `SITE_URL` de `.github/workflows/deploy-cloudflare.yml`. La
   zona ya existe en la cuenta de Cloudflare del cliente; lo único que impide el despliegue son
