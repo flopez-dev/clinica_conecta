@@ -73,6 +73,10 @@ const curva = 'ease-[cubic-bezier(0.32,0.72,0,1)]';
 const foco =
   'focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-400';
 
+// Icono de sobre (Phosphor) del correo: va entre las redes y en el enlace de la tarjeta.
+const iconoEmail =
+  'M224 48H32a8 8 0 0 0-8 8v136a16 16 0 0 0 16 16h176a16 16 0 0 0 16-16V56a8 8 0 0 0-8-8m-20.57 16L128 133.15L52.57 64ZM216 192H40V74.19l82.59 75.71a8 8 0 0 0 10.82 0L216 74.19z';
+
 // Iconos Phosphor (viewBox 256), en línea para no añadir dependencias.
 const redes = [
   {
@@ -94,6 +98,11 @@ const redes = [
     nombre: 'LinkedIn',
     href: linkedinHref,
     d: 'M216 24H40a16 16 0 0 0-16 16v176a16 16 0 0 0 16 16h176a16 16 0 0 0 16-16V40a16 16 0 0 0-16-16m0 192H40V40h176zM96 112v64a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0m88 28v36a8 8 0 0 1-16 0v-36a20 20 0 0 0-40 0v36a8 8 0 0 1-16 0v-64a8 8 0 0 1 15.79-1.78A36 36 0 0 1 184 140m-84-56a12 12 0 1 1-12-12a12 12 0 0 1 12 12',
+  },
+  {
+    nombre: 'Correo electrónico',
+    href: mailtoHref,
+    d: iconoEmail,
   },
 ];
 
@@ -693,40 +702,40 @@ const faqJsonLd = {
     </section>
 
     <!-- Contacto y pie en una sola sección azul. A la derecha, "Hablemos" (V3) como única tarjeta; a la izquierda, redes y texto legal sin cajas -->
-    <section id="contacto" class="bg-navy-900 px-6 pt-16 pb-24 text-cream-50 sm:py-20">
-      <div class="mx-auto grid max-w-4xl gap-12 md:grid-cols-2 md:items-start">
-        <div data-v4-reveal class="order-2 md:order-1 md:pr-12">
+    <section id="contacto" class="bg-navy-900 px-6 pt-16 pb-24 text-cream-50 sm:py-16">
+      <div class="mx-auto grid max-w-5xl gap-12 md:grid-cols-2">
+        <div
+          data-v4-reveal
+          class="order-2 flex flex-col justify-between gap-6 rounded-2xl border border-navy-600/40 p-6 md:order-1 md:p-8"
+        >
           <nav aria-label="Redes sociales">
-            <ul class="space-y-3">
+            <ul class="flex flex-wrap justify-between gap-y-3">
               {redes.map((red) => (
                 <li>
                   <a
                     href={red.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class={`group flex w-max items-center gap-3 rounded-md text-base text-cream-50/85 transition-colors duration-300 ${curva} hover:text-white ${foco}`}
+                    target={red.href.startsWith('mailto:') ? undefined : '_blank'}
+                    rel={red.href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
+                    aria-label={red.nombre}
+                    title={red.nombre}
+                    class={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-navy-800 sm:h-12 sm:w-12 text-cream-50/85 transition-colors duration-300 ${curva} hover:text-gold-400 ${foco}`}
                   >
-                    <span
-                      class={`flex h-10 w-10 items-center justify-center rounded-full bg-navy-800 transition-colors duration-300 ${curva} group-hover:text-gold-400`}
+                    <svg
+                      viewBox="0 0 256 256"
+                      fill="currentColor"
+                      class="h-6 w-6"
+                      aria-hidden="true"
                     >
-                      <svg
-                        viewBox="0 0 256 256"
-                        fill="currentColor"
-                        class="h-5 w-5"
-                        aria-hidden="true"
-                      >
-                        <path d={red.d} />
-                      </svg>
-                    </span>
-                    {red.nombre}
+                      <path d={red.d} />
+                    </svg>
                   </a>
                 </li>
               ))}
             </ul>
           </nav>
 
-          <div class="mt-10 text-xs text-navy-200">
-            <p class="max-w-md text-pretty">
+          <div class="text-sm text-navy-200">
+            <p class="text-pretty">
               Juan Ignacio Riccardi, Psicólogo General Sanitario en España por título homologado.
               Colegiado nº 68849 en Argentina. Los contenidos de esta web tienen carácter
               informativo y no sustituyen una valoración clínica individual.
@@ -753,7 +762,7 @@ const faqJsonLd = {
 
         <div
           data-v4-reveal
-          class="order-1 rounded-2xl border border-navy-600/40 bg-navy-800 p-8 md:order-2"
+          class="order-1 flex flex-col rounded-2xl border border-navy-600/40 bg-navy-800 p-8 md:order-2"
         >
           <h2 class="font-serif text-3xl font-semibold text-balance">Hablemos</h2>
           <p class="mt-3 text-base text-pretty text-navy-200">
@@ -761,27 +770,27 @@ const faqJsonLd = {
             primera llamada, de 15 minutos, es gratuita y sin compromiso.
           </p>
 
-          <div class="mt-8 flex flex-col items-start gap-4">
-            <a
-              href={whatsappHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              class={`inline-block rounded-md bg-cream-50 px-3 py-2 text-base font-semibold text-navy-900 transition-transform duration-300 ${curva} hover:scale-[1.02] active:scale-[0.98] ${foco}`}
-            >
-              Empezar por WhatsApp
-            </a>
+          <div class="mt-auto flex flex-col items-start gap-4 pt-8">
             <a
               href={llamadaHref}
               target="_blank"
               rel="noopener noreferrer"
-              class={`rounded-sm text-sm text-navy-200 underline decoration-gold-400 underline-offset-4 transition-colors duration-300 ${curva} hover:text-cream-50 ${foco}`}
+              class={`inline-block rounded-md bg-cream-50 px-3 py-2 text-center text-base font-semibold text-balance text-navy-900 transition-transform duration-300 ${curva} hover:scale-[1.02] active:scale-[0.98] ${foco}`}
             >
-              Pedir la llamada gratuita de 15 minutos
+              Pedir llamada gratuita de 15 minutos
             </a>
             <a
               href={mailtoHref}
-              class={`rounded-sm text-sm text-navy-200 underline decoration-gold-400 underline-offset-4 transition-colors duration-300 ${curva} hover:text-cream-50 ${foco}`}
+              class={`inline-flex items-center gap-2 rounded-sm text-sm text-navy-200 underline decoration-gold-400 underline-offset-4 transition-colors duration-300 ${curva} hover:text-cream-50 ${foco}`}
             >
+              <svg
+                viewBox="0 0 256 256"
+                fill="currentColor"
+                class="h-4 w-4 shrink-0"
+                aria-hidden="true"
+              >
+                <path d={iconoEmail} />
+              </svg>
               riccardi.juanpsi@gmail.com
             </a>
           </div>
