@@ -22,7 +22,9 @@ alternativas para que el cliente elija (ver [Propuestas de diseño](#propuestas-
 - `src/pages/` — rutas del sitio: `index.astro` (home), `v2/`, `v3/`, `v4/` (propuestas), `404.astro`,
   `robots.txt.ts` (dinámico, ver más abajo).
 - `src/layouts/Base.astro` — layout único; toda página lo envuelve.
-- `src/components/` — `Header.astro`/`Footer.astro`/`WhatsAppFloat.astro` (usados por la home);
+- `src/components/` — `Header.astro`/`Footer.astro`/`WhatsAppFloat.astro` (usados por la home; el
+  `Header` pasa de crema a azul al salir del hero `#inicio`, y se queda crema en las páginas sin hero:
+  aviso legal, privacidad y 404);
   `v2/`, `v3/`, `v4/` — Header/Footer propios de cada propuesta, no compartidos con la home a propósito
   (`/v2/` y `/v4/` ya no usan Footer: su sección `#contacto` hace de pie; `v2/Footer.astro` queda huérfano)
   (ver [Propuestas de diseño](#propuestas-de-diseño-v2-v3)).

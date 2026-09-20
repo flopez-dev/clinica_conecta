@@ -2,7 +2,8 @@
 import { withBase } from '../lib/withBase';
 
 const home = withBase('/');
-const logo = withBase('/brand/conecta-1b-nodo-horizontal.svg');
+const logoClaro = withBase('/brand/conecta-1b-nodo-horizontal.svg');
+const logoOscuro = withBase('/brand/conecta-1b-nodo-horizontal-oscuro.svg');
 const links = [
   { href: `${home}#inicio`, label: 'Inicio' },
   { href: `${home}#sobre-mi`, label: 'Sobre mí' },
@@ -12,20 +13,42 @@ const links = [
   { href: `${home}#faq`, label: 'Preguntas' },
   { href: `${home}#contacto`, label: 'Contacto' },
 ];
+
+const enlace =
+  'text-ink/80 transition-colors duration-300 hover:text-navy-600 motion-reduce:transition-none group-[.is-solid]:text-cream-50/85 group-[.is-solid]:hover:text-white';
 ---
 
-<header class="sticky top-0 z-40 border-b border-navy-100 bg-cream-50/95 backdrop-blur">
+<!--
+  Sobre el hero (azul) el header es crema. Al salir del hero el script de abajo
+  añade `.is-solid` y todo pasa a azul, para que nunca haya crema sobre secciones
+  claras. En las páginas sin hero (#inicio) se queda siempre crema.
+-->
+
+<header
+  id="site-header"
+  class="group sticky top-0 z-40 border-b border-navy-100 bg-cream-50/95 backdrop-blur transition-colors duration-300 motion-reduce:transition-none [&.is-solid]:border-navy-600/60 [&.is-solid]:bg-navy-800/95"
+>
   <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-    <a href={home} class="block">
-      <img src={logo} alt="Clínica Conecta" width="153" height="48" class="h-9 w-auto" />
+    <a href={home} class="relative block h-9 w-[115px]">
+      <img
+        src={logoClaro}
+        alt="Clínica Conecta"
+        width="153"
+        height="48"
+        class="absolute inset-0 h-9 w-auto transition-opacity duration-300 motion-reduce:transition-none group-[.is-solid]:opacity-0"
+      />
+      <img
+        src={logoOscuro}
+        alt=""
+        width="153"
+        height="48"
+        class="absolute inset-0 h-9 w-auto opacity-0 transition-opacity duration-300 motion-reduce:transition-none group-[.is-solid]:opacity-100"
+      />
     </a>
 
-    <nav class="hidden gap-6 text-sm text-ink/80 md:flex">
+    <nav class="hidden gap-6 text-sm md:flex">
       {links.map((link) => (
-        <a
-          href={link.href}
-          class="transition-colors duration-150 ease-[var(--ease-out)] hover:text-navy-600"
-        >
+        <a href={link.href} class={enlace}>
           {link.label}
         </a>
       ))}
@@ -36,7 +59,7 @@ const links = [
       id="menu-toggle"
       aria-expanded="false"
       aria-controls="menu-mobile"
-      class="flex h-9 w-9 items-center justify-center rounded-md text-navy-800 md:hidden"
+      class="flex h-9 w-9 items-center justify-center rounded-md text-navy-800 transition-colors duration-300 group-[.is-solid]:text-cream-50 motion-reduce:transition-none md:hidden"
       aria-label="Abrir menú"
     >
       <svg
@@ -54,12 +77,12 @@ const links = [
 
   <nav
     id="menu-mobile"
-    class="invisible absolute inset-x-0 top-full -translate-y-2 border-t border-navy-100 bg-cream-50 px-6 py-4 opacity-0 transition-[opacity,transform,visibility] duration-200 ease-[var(--ease-out)] md:hidden data-open:visible data-open:translate-y-0 data-open:opacity-100"
+    class="invisible absolute inset-x-0 top-full -translate-y-2 border-t border-navy-100 bg-cream-50 px-6 py-4 opacity-0 transition-[opacity,transform,visibility,background-color] duration-200 ease-[var(--ease-out)] group-[.is-solid]:border-navy-600/60 group-[.is-solid]:bg-navy-800 md:hidden data-open:visible data-open:translate-y-0 data-open:opacity-100"
   >
-    <ul class="flex flex-col gap-4 text-sm text-ink/80">
+    <ul class="flex flex-col gap-4 text-sm">
       {links.map((link) => (
         <li>
-          <a href={link.href} class="block">
+          <a href={link.href} class={`${enlace} block`}>
             {link.label}
           </a>
         </li>
@@ -84,4 +107,16 @@ const links = [
       toggle?.setAttribute('aria-expanded', 'false');
     });
   });
+
+  // El margen superior negativo es la altura del header: el hero "sale" en el
+  // momento en que ya no queda nada de él bajo la barra.
+  const header = document.getElementById('site-header');
+  const hero = document.getElementById('inicio');
+
+  if (header && hero) {
+    new IntersectionObserver(
+      ([entry]) => header.classList.toggle('is-solid', !entry.isIntersecting),
+      { rootMargin: `-${header.offsetHeight}px 0px 0px 0px` },
+    ).observe(hero);
+  }
 </script>
