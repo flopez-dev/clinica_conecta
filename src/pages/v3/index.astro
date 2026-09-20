@@ -372,11 +372,25 @@ const faqJsonLd = {
       </div>
     </section>
 
-    <!-- Sobre mí -->
-    <section id="sobre-mi" class="bg-cream-50 px-6 py-20 sm:py-24">
-      <div data-reveal class="mx-auto grid max-w-5xl items-center gap-12 md:grid-cols-[1.3fr_1fr]">
+    <!-- Sobre mí: banda azul con la foto a la izquierda y el texto a la derecha, para que no se lea como una prolongación del hero (crema, solo texto) -->
+    <section id="sobre-mi" class="bg-navy-900 px-6 py-20 text-cream-50 sm:py-24">
+      <div
+        data-reveal-group
+        class="mx-auto grid max-w-5xl items-center gap-12 md:grid-cols-[1fr_1.3fr] md:gap-16"
+      >
+        <div class="mx-auto md:mx-0">
+          <img
+            src={fotoCuadrada}
+            alt="Juan Ignacio Riccardi, Psicólogo General Sanitario"
+            width="900"
+            height="900"
+            class="aspect-square w-64 rounded-full border border-cream-50/20 object-cover sm:w-80"
+          />
+        </div>
+
         <div>
-          <div class="space-y-4 text-navy-900/75">
+          <h2 class="font-v3-display text-3xl text-balance italic sm:text-4xl">Sobre mí</h2>
+          <div class="mt-6 space-y-4 text-pretty text-cream-50/80">
             <p>
               Soy Juan Ignacio Riccardi, Licenciado en Psicología y Psicólogo General Sanitario.
               Ejerzo desde 2017, con adolescentes, adultos y parejas.
@@ -391,18 +405,14 @@ const faqJsonLd = {
               discapacidad, he integrado equipos de orientación escolar y programas de inclusión, y
               doy clase de psicología y salud mental.
             </p>
-            <p>Todo ocurre online, en español, desde donde te resulte más cómodo.</p>
           </div>
-        </div>
 
-        <div class="mx-auto md:mx-0">
-          <img
-            src={fotoCuadrada}
-            alt="Juan Ignacio Riccardi, Psicólogo General Sanitario"
-            width="900"
-            height="900"
-            class="aspect-square w-56 rounded-full border border-navy-100 object-cover sm:w-64"
-          />
+          <div class="relative mt-8 h-px w-36 bg-cream-50/20" aria-hidden="true">
+            <span class="v3-drift absolute top-1/2 left-1/2 -mt-1 -ml-1 h-2 w-2 rounded-full bg-gold-400"></span>
+          </div>
+          <p class="mt-6 font-v3-display text-xl text-pretty italic sm:text-2xl">
+            Todo ocurre online, en español, desde donde te resulte más cómodo.
+          </p>
         </div>
       </div>
     </section>
