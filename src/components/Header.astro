@@ -11,9 +11,11 @@ const links = [
   { href: `${home}#como-funciona`, label: 'Sesiones' },
   { href: `${home}#tarifas`, label: 'Tarifas' },
   { href: `${home}#faq`, label: 'Preguntas' },
-  { href: `${home}#contacto`, label: 'Contacto' },
+  { href: `${home}#contacto`, label: 'Contacto', destacado: true },
 ];
 
+const boton =
+  'rounded-md bg-gold-400 px-4 py-2 font-medium text-navy-900 transition-[filter,transform] duration-150 ease-[var(--ease-out)] hover:brightness-105 active:scale-[0.98]';
 const enlace =
   'text-ink/80 transition-colors duration-300 hover:text-navy-600 motion-reduce:transition-none group-[.is-solid]:text-cream-50/85 group-[.is-solid]:hover:text-white';
 ---
@@ -46,9 +48,9 @@ const enlace =
       />
     </a>
 
-    <nav class="hidden gap-6 text-sm md:flex">
+    <nav class="hidden items-center gap-6 text-sm md:flex">
       {links.map((link) => (
-        <a href={link.href} class={enlace}>
+        <a href={link.href} class={link.destacado ? boton : enlace}>
           {link.label}
         </a>
       ))}
@@ -79,10 +81,10 @@ const enlace =
     id="menu-mobile"
     class="invisible absolute inset-x-0 top-full -translate-y-2 border-t border-navy-100 bg-cream-50 px-6 py-4 opacity-0 transition-[opacity,transform,visibility,background-color] duration-200 ease-[var(--ease-out)] group-[.is-solid]:border-navy-600/60 group-[.is-solid]:bg-navy-800 md:hidden data-open:visible data-open:translate-y-0 data-open:opacity-100"
   >
-    <ul class="flex flex-col gap-4 text-sm">
+    <ul class="flex flex-col items-start gap-4 text-sm">
       {links.map((link) => (
         <li>
-          <a href={link.href} class={`${enlace} block`}>
+          <a href={link.href} class={`${link.destacado ? boton : enlace} inline-block`}>
             {link.label}
           </a>
         </li>

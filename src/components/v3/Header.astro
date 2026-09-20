@@ -9,8 +9,12 @@ const links = [
   { href: `${home}#servicios`, label: 'Servicios' },
   { href: `${home}#como-funciona`, label: 'Sesiones' },
   { href: `${home}#faq`, label: 'Preguntas' },
-  { href: `${home}#contacto`, label: 'Contacto' },
+  { href: `${home}#contacto`, label: 'Contacto', destacado: true },
 ];
+
+const enlace = 'transition-colors duration-150 ease-[var(--ease-out)] hover:text-navy-600';
+const boton =
+  'rounded-full bg-navy-900 px-5 py-2 font-medium text-cream-50 transition-transform duration-150 ease-[var(--ease-out)] hover:scale-[1.02] active:scale-[0.98]';
 ---
 
 <header
@@ -22,12 +26,9 @@ const links = [
       <img src={logo} alt="Clínica Conecta" width="153" height="48" class="h-10 w-auto" />
     </a>
 
-    <nav class="hidden gap-6 font-v3-sans text-sm text-navy-900/70 md:flex">
+    <nav class="hidden items-center gap-6 font-v3-sans text-sm text-navy-900/70 md:flex">
       {links.map((link) => (
-        <a
-          href={link.href}
-          class="transition-colors duration-150 ease-[var(--ease-out)] hover:text-navy-600"
-        >
+        <a href={link.href} class={link.destacado ? boton : enlace}>
           {link.label}
         </a>
       ))}
@@ -58,10 +59,10 @@ const links = [
     id="menu-mobile"
     class="invisible absolute inset-x-0 top-full -translate-y-2 border-t border-navy-100 bg-cream-50 px-6 py-4 opacity-0 transition-[opacity,transform,visibility] duration-200 ease-[var(--ease-out)] md:hidden data-open:visible data-open:translate-y-0 data-open:opacity-100"
   >
-    <ul class="flex flex-col gap-4 font-v3-sans text-sm text-navy-900/70">
+    <ul class="flex flex-col items-start gap-4 font-v3-sans text-sm text-navy-900/70">
       {links.map((link) => (
         <li>
-          <a href={link.href} class="block">
+          <a href={link.href} class={`${link.destacado ? boton : enlace} inline-block`}>
             {link.label}
           </a>
         </li>
