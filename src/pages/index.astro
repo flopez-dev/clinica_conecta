@@ -12,6 +12,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 
 const whatsappMessage = encodeURIComponent('Hola, me gustaría agendar una sesión');
 const whatsappHref = `https://wa.me/34644751041?text=${whatsappMessage}`;
+const llamadaMessage = encodeURIComponent(
+  'Hola, me gustaría pedir la primera llamada gratuita de 15 minutos',
+);
+const llamadaHref = `https://wa.me/34644751041?text=${llamadaMessage}`;
 const mailtoHref = 'mailto:riccardi.juanpsi@gmail.com?subject=Consulta%20desde%20la%20web';
 const linkedinHref = 'https://www.linkedin.com/in/juaniriccardi';
 const fotoVertical = withBase('/foto/juan-ignacio-vertical.webp');
@@ -52,7 +56,7 @@ const servicio = {
   serviceType: 'Psicoterapia online',
   provider: { '@id': `${canonical}#juan` },
   brand: { '@type': 'Brand', name: 'Clínica Conecta' },
-  areaServed: 'Comunidad hispanohablante',
+  areaServed: 'España',
   audience: { '@type': 'Audience', audienceType: 'Adolescentes, adultos y parejas' },
   availableChannel: {
     '@type': 'ServiceChannel',
@@ -66,36 +70,45 @@ const jsonLd = {
   '@graph': [persona, servicio],
 };
 
+// Cada tarjeta: una frase de reconocimiento (cómo se vive) + una de método (qué hacemos).
 const servicios = [
   {
     titulo: 'Ansiedad',
     texto:
-      'Herramientas para gestionar la preocupación excesiva, el malestar físico y los pensamientos que no paran.',
+      'Para dejar de repasar el día entero a las tres de la mañana. Trabajamos la preocupación que no para y lo que el cuerpo hace con ella.',
   },
   {
     titulo: 'Estrés',
-    texto: 'Recursos prácticos para recuperar el equilibrio cuando el día a día te desborda.',
+    texto:
+      'Cuando el día a día te desborda y no encuentras el botón de pausa. Vemos qué lo alimenta y practicamos recursos concretos para recuperar el equilibrio.',
   },
   {
     titulo: 'Duelo',
     texto:
-      'Acompañamiento en procesos de pérdida, a tu ritmo, con espacio para todo lo que sientas.',
+      'Cuando la vida sigue y tú todavía no. Te acompaño a tu ritmo, con espacio para todo lo que sientas.',
   },
   {
     titulo: 'Depresión',
     texto:
-      'Trabajo conjunto para entender el origen del malestar y recuperar motivación, energía y sentido.',
+      'Cuando levantarse ya es la tarea difícil del día. Empezamos por lo pequeño y recuperamos margen desde ahí.',
   },
   {
     titulo: 'Adolescentes',
     texto:
-      'Un espacio propio para quienes atraviesan cambios, presión académica o dificultades de convivencia, con la experiencia de años en equipos de orientación escolar.',
+      'Cuando en casa ya no se habla y hay más silencios que respuestas. Un espacio propio para el adolescente, con la experiencia de años en equipos de orientación escolar.',
   },
   {
     titulo: 'Terapia de pareja',
     texto:
-      'Sesiones conjuntas para revisar la forma de comunicarse, los acuerdos que ya no funcionan y lo que cada parte necesita.',
+      'Cuando hablar se ha convertido en discutir, o en no decir nada. Sesiones conjuntas para revisar cómo os comunicáis y lo que cada uno necesita.',
   },
+];
+
+const confianza = [
+  'Psicólogo General Sanitario',
+  'Ejerciendo desde 2017',
+  'Formación en EMDR, Instituto Español de EMDR',
+  'Primera llamada gratuita de 15 minutos',
 ];
 
 const formacion = [
@@ -126,7 +139,7 @@ const formacion = [
 ];
 
 const paraQuienEs = [
-  'Sientes ansiedad o estrés que no consigues gestionar solo/a.',
+  'Sientes ansiedad o estrés que no consigues gestionar por tu cuenta.',
   'Atraviesas un duelo o una pérdida reciente.',
   'Notas síntomas de depresión o desmotivación persistente.',
   'Eres madre, padre o tutor y buscas apoyo para un adolescente.',
@@ -138,7 +151,8 @@ const pasos = [
   {
     numero: '1',
     titulo: 'Escríbeme',
-    texto: 'Cuéntame por WhatsApp, en pocas palabras, qué te trae a terapia. Acordamos día y hora.',
+    texto:
+      'Cuéntame por WhatsApp, en pocas palabras, qué te trae a terapia. Si prefieres hablar antes, empezamos con una primera llamada gratuita de 15 minutos.',
   },
   {
     numero: '2',
@@ -171,7 +185,7 @@ const condiciones = [
   'Pago por Bizum o transferencia bancaria.',
   'Las cancelaciones se avisan con 48 horas de antelación.',
   'La videollamada se hace por Google Meet, Zoom o WhatsApp, lo que te resulte más cómodo.',
-  'Amplia disponibilidad horaria, vivas en el huso horario que vivas.',
+  'Amplia disponibilidad horaria.',
 ];
 
 const enfoques = [
@@ -199,15 +213,14 @@ const faqs = [
       'El precio depende de si la sesión es individual o de pareja. Te lo paso por WhatsApp antes de reservar.',
   },
   {
-    pregunta: '¿Puedo hacer terapia contigo si no vivo en España?',
+    pregunta: '¿La terapia online funciona igual que la presencial?',
     respuesta:
-      'Sí. Atiendo online y en español, con amplia disponibilidad horaria, vivas en el huso horario que vivas.',
+      'Sí. La investigación disponible muestra que la terapia por videollamada logra resultados comparables a la presencial en la mayoría de los casos, como la ansiedad, la depresión o el estrés. Solo necesitas una conexión estable y un sitio donde puedas hablar con tranquilidad.',
   },
   {
-    pregunta: '¿Con qué frecuencia son las sesiones y cuánto dura el proceso?',
+    pregunta: '¿Cómo sé si encajo contigo?',
     respuesta:
-      'Todavía no he publicado la frecuencia recomendada ni la duración media de un proceso.',
-    pendiente: true,
+      'En una primera llamada de 15 minutos, gratuita y sin compromiso. Me cuentas qué te trae y te digo con honestidad si puedo ayudarte o si te conviene otro profesional.',
   },
   {
     pregunta: '¿Y si no sé por dónde empezar?',
@@ -223,13 +236,11 @@ const faqs = [
 const faqJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: faqs
-    .filter((faq) => !faq.pendiente)
-    .map((faq) => ({
-      '@type': 'Question',
-      name: faq.pregunta,
-      acceptedAnswer: { '@type': 'Answer', text: faq.respuesta },
-    })),
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.pregunta,
+    acceptedAnswer: { '@type': 'Answer', text: faq.respuesta },
+  })),
 };
 ---
 
@@ -256,12 +267,12 @@ const faqJsonLd = {
           Juan Ignacio Riccardi · Psicólogo General Sanitario
         </p>
         <h1 class="animate-hero-in mt-4 font-serif text-4xl font-semibold tracking-tight sm:text-5xl">
-          Terapia online en español, estés donde estés
+          Psicólogo online para la ansiedad, el estrés y el duelo
         </h1>
         <p class="animate-hero-in mx-auto mt-5 max-w-xl text-lg text-cream-50/85 [animation-delay:80ms]">
           Acompaño a adolescentes, adultos y parejas en procesos de ansiedad, estrés, duelo y
-          depresión. Sesiones de 50 minutos por videollamada, con herramientas basadas en evidencia
-          y EMDR.
+          depresión. Sesiones de 50 minutos por videollamada, con herramientas con aval científico,
+          entre ellas EMDR.
         </p>
         <div class="animate-hero-in mt-8 flex flex-col items-center gap-3 [animation-delay:160ms] sm:flex-row sm:justify-center">
           <a
@@ -270,7 +281,7 @@ const faqJsonLd = {
             rel="noopener noreferrer"
             class="inline-block rounded-md bg-cream-50 px-6 py-3 font-medium text-navy-800 transition-transform duration-150 ease-[var(--ease-out)] hover:scale-[1.02] active:scale-[0.98]"
           >
-            Agendar una sesión por WhatsApp
+            Escríbeme y vemos si encajamos
           </a>
           <a
             href="#como-funciona"
@@ -279,7 +290,27 @@ const faqJsonLd = {
             ¿Cómo funciona una sesión online?
           </a>
         </div>
-        <p class="animate-hero-in mt-6 text-xs text-cream-50/60 [animation-delay:200ms]">
+        <p class="animate-hero-in mx-auto mt-4 max-w-md text-sm text-cream-50/75 [animation-delay:180ms]">
+          Te contesto yo, no un bot, y escribir no te compromete a nada. Si prefieres hablar antes,
+          <a
+            href={llamadaHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="underline decoration-gold-400 underline-offset-4 hover:text-cream-50"
+          >
+            pide una primera llamada gratuita de 15 minutos
+          </a>
+          .
+        </p>
+        <ul class="animate-hero-in mt-8 flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs text-cream-50/70 [animation-delay:200ms]">
+          {confianza.map((item) => (
+            <li class="flex items-center gap-2">
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-gold-400" aria-hidden="true"></span>
+              {item}
+            </li>
+          ))}
+        </ul>
+        <p class="animate-hero-in mt-6 text-xs text-cream-50/60 [animation-delay:220ms]">
           Todo lo que compartas queda protegido por el secreto profesional.
         </p>
       </div>
@@ -314,8 +345,8 @@ const faqJsonLd = {
             en materias de psicología y salud mental.
           </p>
           <p class="mt-4 leading-relaxed text-ink/80">
-            Todo el proceso ocurre online, en un espacio cercano, confidencial y sin juicios, para
-            cualquier persona hispanohablante, viva donde viva.
+            Todo el proceso ocurre online, en un espacio cercano, confidencial y sin juicios, desde
+            donde te resulte más cómodo.
           </p>
         </div>
       </div>
@@ -344,8 +375,7 @@ const faqJsonLd = {
 
         <p data-reveal class="mt-8 max-w-3xl text-sm leading-relaxed text-ink/70">
           Colegiado nº 68849 en Argentina. En España ejerzo como Psicólogo General Sanitario por
-          título homologado, con la colegiación pendiente de tramitar. Puedes consultar mi
-          trayectoria completa en
+          título homologado. Puedes consultar mi trayectoria completa en
           <a
             href={linkedinHref}
             target="_blank"
@@ -484,14 +514,7 @@ const faqJsonLd = {
                   <path d="M12 5v14M5 12h14" />
                 </svg>
               </summary>
-              <p
-                class:list={[
-                  'mt-3 text-sm leading-relaxed',
-                  faq.pendiente ? 'font-medium text-gold-400 italic' : 'text-ink/75',
-                ]}
-              >
-                {faq.respuesta}
-              </p>
+              <p class="mt-3 text-sm leading-relaxed text-ink/75">{faq.respuesta}</p>
             </details>
           ))}
         </div>
@@ -503,7 +526,8 @@ const faqJsonLd = {
       <div data-reveal class="mx-auto max-w-2xl text-center">
         <h2 class="font-serif text-2xl font-semibold sm:text-3xl">Contacto</h2>
         <p class="mt-3 text-cream-50/85">
-          Escríbeme y buscamos el hueco que mejor te encaje para la primera sesión.
+          Escríbeme y buscamos el hueco que mejor te encaje. La primera llamada, de 15 minutos, es
+          gratuita y sin compromiso.
         </p>
 
         <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
@@ -513,7 +537,15 @@ const faqJsonLd = {
             rel="noopener noreferrer"
             class="inline-block rounded-md bg-cream-50 px-6 py-3 font-medium text-navy-800 transition-transform duration-150 ease-[var(--ease-out)] hover:scale-[1.02] active:scale-[0.98]"
           >
-            Escribir por WhatsApp
+            Empezar por WhatsApp
+          </a>
+          <a
+            href={llamadaHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm text-cream-50/80 underline decoration-gold-400 underline-offset-4 hover:text-cream-50"
+          >
+            Pedir la llamada gratuita de 15 minutos
           </a>
           <a
             href={mailtoHref}
