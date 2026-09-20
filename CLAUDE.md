@@ -71,8 +71,10 @@ considere terminado. Cada propuesta:
   comparativas internas, no páginas públicas todavía.
 - Tiene su propia imagen OG (`public/og-image-v2.png`, `public/og-image-v3.png`) y su propio
   bloque `jsonLd` en el frontmatter de la página.
-- Reutiliza sin cambios `Base.astro`, `WhatsAppFloat.astro`, `withBase.ts` y el mecanismo de
-  reveal-al-scroll de `global.css` (`.js`, `[data-reveal]`, `[data-reveal-group]`).
+- Reutiliza sin cambios `Base.astro`, `withBase.ts` y el mecanismo de reveal-al-scroll de
+  `global.css` (`.js`, `[data-reveal]`, `[data-reveal-group]`). También reutiliza
+  `WhatsAppFloat.astro`: `/v2/` y `/v4/` le pasan la prop opcional `etiqueta="Hablemos"`, que
+  añade la burbuja de texto junto al círculo; sin ella (home y `/v3/`) es solo el círculo.
 
 `/v4/` no es una dirección visual nueva sino una composición de las otras tres: menú de la home
 (con relevo crema→azul al salir del hero), hero con la maquetación de `/v2/`, Servicios de `/v2/`,
