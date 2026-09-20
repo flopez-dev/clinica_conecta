@@ -32,10 +32,20 @@ alternativas para que el cliente elija (ver [Propuestas de diseño](#propuestas-
   `public/`, para que Vite reescriba sus URLs con el base path del despliegue.
 - `public/brand/` — logo real del cliente (SVG, variantes claro/oscuro/icono/horizontal/apilado),
   usado hoy solo en `/v3/`.
+- `public/_headers` — cabeceras de seguridad y caché para Cloudflare Workers (GitHub Pages lo
+  ignora). `public/.well-known/security.txt` — contacto de seguridad (RFC 9116); su `Expires`
+  caduca el 2027-09-20 y hay que renovarlo antes.
 - `tests/` — smoke tests de Playwright.
 
 ## Reglas no obvias
 
+- **CSP en `public/_headers`: solo `'self'`.** Es lo que hace cumplir la afirmación de
+  `/privacidad/` de que no hay peticiones a terceros. Si se añade un recurso externo (fuentes,
+  analítica, mapas, vídeo incrustado), ampliar la CSP y actualizar `/privacidad/`.
+  `script-src` lleva `'unsafe-inline'` porque Astro incrusta scripts con hash cambiante.
+- **`robots.txt.ts` bloquea a los rastreadores de entrenamiento de IA** (GPTBot, ClaudeBot,
+  CCBot, Google-Extended…) pero deja pasar a los de búsqueda con IA (OAI-SearchBot,
+  ChatGPT-User, PerplexityBot) para que la web pueda citarse. Decisión tomada al preparar el despliegue en Cloudflare.
 - **`withBase()` en todo `href`/`src` interno escrito a mano** (`src/lib/withBase.ts`).
   Astro solo antepone `base` a los assets que él mismo empaqueta, no a rutas literales —
   un `href="/contacto/"` a pelo se rompe en uno de los dos destinos de despliegue (ver
@@ -113,9 +123,10 @@ pasa las suyas.
   no hay apartado propio: Tarifas está fundida en Sesiones (`#como-funciona`), donde el botón
   "Consultar tarifa" (con el icono de WhatsApp) remite a WhatsApp para el importe.
 - El dominio del cliente es `juanriccardiconecta.com` y ya está escrito en `wrangler.jsonc`
-  (ruta con `custom_domain`) y en `SITE_URL` de `.github/workflows/deploy-cloudflare.yml`. El
-  deploy a Cloudflare falla mientras la zona no exista en la misma cuenta de Cloudflare: es
-  configuración pendiente fuera del repo, no código que arreglar.
+  (ruta con `custom_domain`) y en `SITE_URL` de `.github/workflows/deploy-cloudflare.yml`. La
+  zona ya existe en la cuenta de Cloudflare del cliente; lo único que impide el despliegue son
+  los secretos de GitHub de arriba, que son configuración fuera del repo, no código que arreglar.
+  Bot Fight Mode y AI Labyrinth también se activan desde el panel de Cloudflare, no desde el repo.
 
 ## Antes de dar algo por terminado
 

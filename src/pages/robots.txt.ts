@@ -1,6 +1,21 @@
 import type { APIRoute } from 'astro';
 import { withBase } from '../lib/withBase';
 
+// Rastreadores que recopilan contenido para entrenar modelos de IA. Los de búsqueda
+// con IA (OAI-SearchBot, ChatGPT-User, PerplexityBot) quedan fuera a propósito, para
+// que la web pueda citarse como fuente. robots.txt es voluntario: a quien no lo
+// respete se le corta desde el panel de Cloudflare (Bot Fight Mode, AI Labyrinth).
+const rastreadoresEntrenamientoIA = [
+  'GPTBot',
+  'ClaudeBot',
+  'anthropic-ai',
+  'CCBot',
+  'Google-Extended',
+  'Applebot-Extended',
+  'Bytespider',
+  'meta-externalagent',
+];
+
 /**
  * Generado en build en vez de vivir en public/ porque la URL del sitemap
  * depende de SITE_URL/BASE_PATH, que cambian entre GitHub Pages y
@@ -10,7 +25,9 @@ import { withBase } from '../lib/withBase';
 export const GET: APIRoute = ({ site }) => {
   const sitemapUrl = new URL(withBase('/sitemap-index.xml'), site);
 
-  const body = `User-agent: *\nAllow: /\n\nSitemap: ${sitemapUrl}\n`;
+  const bloqueoIA = rastreadoresEntrenamientoIA.map((bot) => `User-agent: ${bot}`).join('\n');
+
+  const body = `User-agent: *\nAllow: /\n\n${bloqueoIA}\nDisallow: /\n\nSitemap: ${sitemapUrl}\n`;
 
   return new Response(body, {
     headers: { 'Content-Type': 'text/plain; charset=utf-8' },
