@@ -382,9 +382,14 @@ const faqJsonLd = {
     <section id="inicio" class="bg-navy-800 px-6 pt-14 pb-20 text-cream-50 sm:pt-20 sm:pb-28">
       <div class="mx-auto grid max-w-5xl items-center gap-12 md:grid-cols-2">
         <div>
-          <p class="animate-hero-in font-serif text-base tracking-[0.16em] text-gold-400 uppercase">
-            Juan Ignacio Riccardi · Psicólogo General Sanitario · Colegiado nº 68849 (Argentina)
-          </p>
+          <!-- Tamaño en cqw: escala con el ancho de la columna para que la primera línea (nombre y título) quepa entera; tope en 14px -->
+          <div class="@container">
+            <p class="animate-hero-in font-serif text-[length:min(0.875rem,2.8cqw)] tracking-[0.1em] text-gold-400 uppercase">
+              Juan Ignacio Riccardi · Psicólogo General Sanitario
+              <br />
+              Colegiado nº 68849
+            </p>
+          </div>
           <h1 class="animate-hero-in mt-4 font-serif text-4xl leading-tight font-semibold tracking-tight sm:text-5xl">
             Psicólogo online para la ansiedad, el estrés y el duelo
           </h1>
