@@ -85,7 +85,8 @@ considere terminado. Cada propuesta:
 - Reutiliza sin cambios `Base.astro`, `withBase.ts` y el mecanismo de reveal-al-scroll de
   `global.css` (`.js`, `[data-reveal]`, `[data-reveal-group]`). También reutiliza
   `WhatsAppFloat.astro`: `/v2/` y `/v4/` le pasan la prop opcional `etiqueta="Hablemos"`, que
-  añade la burbuja de texto junto al círculo; sin ella (home y `/v3/`) es solo el círculo.
+  añade la burbuja de texto junto al círculo solo desde `sm` (640 px): en móvil es siempre solo
+  el círculo, porque la burbuja tapaba el CTA del hero. Sin la prop (home y `/v3/`) es solo el círculo.
 
 `/v4/` no es una dirección visual nueva sino una composición de las otras tres: menú de la home
 (con relevo crema→azul al salir del hero), hero con la maquetación de `/v2/`, Servicios de `/v2/`,
