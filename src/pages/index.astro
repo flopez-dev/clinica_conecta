@@ -70,39 +70,57 @@ const jsonLd = {
   '@graph': [persona, servicio],
 };
 
-// Cada tarjeta: una frase de reconocimiento (cómo se vive) + una de método (qué hacemos).
+// Servicios: contenido e iconos de V2. Cada tarjeta: una frase de reconocimiento
+// (cómo se vive) + una de método (qué hacemos).
 const servicios = [
   {
     titulo: 'Ansiedad',
     texto:
-      'Para dejar de repasar el día entero a las tres de la mañana. Trabajamos la preocupación que no para y lo que el cuerpo hace con ella.',
+      'Para cuando la mente no para y el cuerpo lo nota: el nudo en el estómago, la cabeza repasando el día a las tres de la mañana. Trabajamos herramientas concretas para bajar la intensidad.',
   },
   {
     titulo: 'Estrés',
     texto:
-      'Cuando el día a día te desborda y no encuentras el botón de pausa. Vemos qué lo alimenta y practicamos recursos concretos para recuperar el equilibrio.',
+      'Para cuando el día a día pesa más de la cuenta y ya no queda hueco para ti. Buscamos juntos formas realistas de recuperar el equilibrio.',
   },
   {
     titulo: 'Duelo',
     texto:
-      'Cuando la vida sigue y tú todavía no. Te acompaño a tu ritmo, con espacio para todo lo que sientas.',
+      'Para cuando la vida sigue y tú todavía no. Un espacio para atravesar la pérdida a tu propio ritmo, sin exigencias.',
   },
   {
     titulo: 'Depresión',
     texto:
-      'Cuando levantarse ya es la tarea difícil del día. Empezamos por lo pequeño y recuperamos margen desde ahí.',
+      'Para cuando levantarte ya es la tarea difícil del día. Empezamos por lo pequeño y entendemos juntos qué hay detrás del malestar.',
   },
   {
     titulo: 'Adolescentes',
     texto:
-      'Cuando en casa ya no se habla y hay más silencios que respuestas. Un espacio propio para el adolescente, con la experiencia de años en equipos de orientación escolar.',
+      'Para cuando en casa ya no se habla y hay más silencios que respuestas. Un lugar propio donde hablar sin sentirse juzgado, con la experiencia de años en orientación escolar.',
   },
   {
-    titulo: 'Terapia de pareja',
+    titulo: 'Parejas',
     texto:
-      'Cuando hablar se ha convertido en discutir, o en no decir nada. Sesiones conjuntas para revisar cómo os comunicáis y lo que cada uno necesita.',
+      'Para cuando hablar acaba en discusión o en silencio. Sesiones para los dos, con espacio para lo que cuesta decirse y para volver a entenderse.',
   },
 ];
+
+const iconos: Record<string, string[]> = {
+  Ansiedad: ['M2.5 13h3.5l2-7 3.5 13 2.5-9 1.5 3h6'],
+  Estrés: ['M4 8.5c4-2.5 8-2.5 12 0', 'M4 12.5c5-3 10-3 15 0', 'M4 16.5c3.5-2 7-2 10.5 0'],
+  Duelo: ['M12 3.5C8 6.5 5 10.3 5 14a7 7 0 0 0 14 0c0-3.7-3-7.5-7-10.5Z', 'M12 7v13'],
+  Depresión: ['M4.5 17h15', 'M7 17a5 5 0 0 1 10 0', 'M12 8.5V6', 'M8 9.5 6.8 8', 'M16 9.5 17.2 8'],
+  Adolescentes: [
+    'M12 3.4a2.7 2.7 0 1 1 0 5.4 2.7 2.7 0 0 1 0-5.4Z',
+    'M5.5 20.5a6.5 6.5 0 0 1 13 0',
+  ],
+  Parejas: [
+    'M9.2 4.2a2.4 2.4 0 1 1 0 4.8 2.4 2.4 0 0 1 0-4.8Z',
+    'M16.4 6.4a2.1 2.1 0 1 1 0 4.2 2.1 2.1 0 0 1 0-4.2Z',
+    'M3.6 19.5a5.6 5.6 0 0 1 11.2 0',
+    'M16.6 14a4.8 4.8 0 0 1 3.8 5.5',
+  ],
+};
 
 const confianza = [
   'Psicólogo General Sanitario',
@@ -403,33 +421,56 @@ const faqJsonLd = {
       </div>
     </section>
 
-    <!-- Servicios -->
+    <!-- Servicios (de V4) -->
     <section id="servicios" class="px-6 py-16 sm:py-20">
       <div class="mx-auto max-w-5xl">
-        <div data-reveal class="max-w-2xl">
-          <h2 class="font-serif text-2xl font-semibold text-navy-800 sm:text-3xl">Servicios</h2>
+        <div data-reveal class="max-w-xl">
+          <h2 class="font-serif text-2xl font-semibold text-navy-800 sm:text-3xl">
+            Cómo puedo ayudarte
+          </h2>
           <p class="mt-3 text-ink/80">
-            Sesiones online para adolescentes, adultos y parejas. Sea cual sea tu proceso,
-            trabajamos con herramientas con base científica, como la TCC y el EMDR.
+            Sesiones online para adolescentes, adultos y parejas. Cada proceso es distinto, así que
+            buscamos juntos lo que a ti te funciona.
           </p>
         </div>
 
         <div data-reveal-group class="mt-10 grid gap-6 sm:grid-cols-2">
-          {servicios.map((servicio) => (
-            <div class="rounded-lg border border-navy-100 bg-white p-6">
-              <h3 class="font-serif text-lg font-semibold text-navy-800">{servicio.titulo}</h3>
+          {servicios.map((servicio, i) => (
+            <div
+              class:list={[
+                'rounded-3xl border border-navy-100 bg-white p-7 shadow-[0_16px_40px_-24px_rgba(42,63,106,0.35)]',
+                { 'sm:mt-6': i % 2 === 1 },
+              ]}
+            >
+              <div class="flex h-12 w-12 items-center justify-center rounded-full bg-navy-100">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-6 w-6 text-navy-800"
+                  aria-hidden="true"
+                >
+                  {iconos[servicio.titulo].map((d) => (
+                    <path d={d} />
+                  ))}
+                </svg>
+              </div>
+              <h3 class="mt-4 font-serif text-lg font-semibold text-navy-800">{servicio.titulo}</h3>
               <p class="mt-2 text-sm leading-relaxed text-ink/70">{servicio.texto}</p>
             </div>
           ))}
         </div>
 
-        <h3 data-reveal class="mt-14 font-serif text-xl font-semibold text-navy-800">
+        <h3 data-reveal class="mt-16 font-serif text-xl font-semibold text-navy-800 sm:text-2xl">
           ¿Bajo qué enfoque trabajo?
         </h3>
 
-        <div data-reveal-group class="mt-6 grid gap-6 sm:grid-cols-2">
+        <div data-reveal-group class="mt-8 grid gap-6 sm:grid-cols-2">
           {enfoques.map((enfoque) => (
-            <div class="rounded-lg border border-navy-100 bg-white p-6">
+            <div class="rounded-3xl border border-navy-100 bg-white p-7 shadow-[0_16px_40px_-24px_rgba(42,63,106,0.35)]">
               <h4 class="font-serif text-lg font-semibold text-navy-800">{enfoque.titulo}</h4>
               <p class="mt-2 text-sm leading-relaxed text-ink/70">{enfoque.texto}</p>
             </div>
