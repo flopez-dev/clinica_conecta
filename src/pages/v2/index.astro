@@ -1,7 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Header from '../../components/v2/Header.astro';
-import Footer from '../../components/v2/Footer.astro';
 import WhatsAppFloat from '../../components/WhatsAppFloat.astro';
 import { withBase } from '../../lib/withBase';
 
@@ -18,6 +17,8 @@ const llamadaMessage = encodeURIComponent(
 const llamadaHref = `https://wa.me/34644751041?text=${llamadaMessage}`;
 const mailtoHref = 'mailto:riccardi.juanpsi@gmail.com?subject=Consulta%20desde%20la%20web';
 const linkedinHref = 'https://www.linkedin.com/in/juaniriccardi';
+const instagramHref = 'https://www.instagram.com/juanriccardi.conecta/';
+const facebookHref = 'https://www.facebook.com/profile.php?id=61577424099534';
 const fotoCuadrada = withBase('/foto/juan-ignacio-cuadrada.webp');
 
 // Juan es la entidad principal, no un negocio local. `ProfessionalService`
@@ -109,6 +110,44 @@ const confianza = [
   'Ejerciendo desde 2017',
   'Formación en EMDR, Instituto Español de EMDR',
   'Primera llamada gratuita de 15 minutos',
+];
+
+// Contacto: curva con masa (skill /landing-page-design) y anillo de foco visible.
+const curva = 'ease-[cubic-bezier(0.32,0.72,0,1)]';
+const foco =
+  'focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-400';
+
+// Icono de sobre (Phosphor) del correo: va entre las redes y en el enlace de la tarjeta.
+const iconoEmail =
+  'M224 48H32a8 8 0 0 0-8 8v136a16 16 0 0 0 16 16h176a16 16 0 0 0 16-16V56a8 8 0 0 0-8-8m-20.57 16L128 133.15L52.57 64ZM216 192H40V74.19l82.59 75.71a8 8 0 0 0 10.82 0L216 74.19z';
+
+// Iconos Phosphor (viewBox 256), en línea para no añadir dependencias.
+const redes = [
+  {
+    nombre: 'WhatsApp',
+    href: whatsappHref,
+    d: 'm187.58 144.84l-32-16a8 8 0 0 0-8 .5l-14.69 9.8a40.55 40.55 0 0 1-16-16l9.8-14.69a8 8 0 0 0 .5-8l-16-32A8 8 0 0 0 104 64a40 40 0 0 0-40 40a88.1 88.1 0 0 0 88 88a40 40 0 0 0 40-40a8 8 0 0 0-4.42-7.16M152 176a72.08 72.08 0 0 1-72-72a24 24 0 0 1 19.29-23.54l11.48 23L101 118a8 8 0 0 0-.73 7.51a56.47 56.47 0 0 0 30.15 30.15A8 8 0 0 0 138 155l14.61-9.74l23 11.48A24 24 0 0 1 152 176M128 24a104 104 0 0 0-91.82 152.88l-11.35 34.05a16 16 0 0 0 20.24 20.24l34.05-11.35A104 104 0 1 0 128 24m0 192a87.87 87.87 0 0 1-44.06-11.81a8 8 0 0 0-6.54-.67L40 216l12.47-37.4a8 8 0 0 0-.66-6.54A88 88 0 1 1 128 216',
+  },
+  {
+    nombre: 'Instagram',
+    href: instagramHref,
+    d: 'M128 80a48 48 0 1 0 48 48a48.05 48.05 0 0 0-48-48m0 80a32 32 0 1 1 32-32a32 32 0 0 1-32 32m48-136H80a56.06 56.06 0 0 0-56 56v96a56.06 56.06 0 0 0 56 56h96a56.06 56.06 0 0 0 56-56V80a56.06 56.06 0 0 0-56-56m40 152a40 40 0 0 1-40 40H80a40 40 0 0 1-40-40V80a40 40 0 0 1 40-40h96a40 40 0 0 1 40 40ZM192 76a12 12 0 1 1-12-12a12 12 0 0 1 12 12',
+  },
+  {
+    nombre: 'Facebook',
+    href: facebookHref,
+    d: 'M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24m8 191.63V152h24a8 8 0 0 0 0-16h-24v-24a16 16 0 0 1 16-16h16a8 8 0 0 0 0-16h-16a32 32 0 0 0-32 32v24H96a8 8 0 0 0 0 16h24v63.63a88 88 0 1 1 16 0',
+  },
+  {
+    nombre: 'LinkedIn',
+    href: linkedinHref,
+    d: 'M216 24H40a16 16 0 0 0-16 16v176a16 16 0 0 0 16 16h176a16 16 0 0 0 16-16V40a16 16 0 0 0-16-16m0 192H40V40h176zM96 112v64a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0m88 28v36a8 8 0 0 1-16 0v-36a20 20 0 0 0-40 0v36a8 8 0 0 1-16 0v-64a8 8 0 0 1 15.79-1.78A36 36 0 0 1 184 140m-84-56a12 12 0 1 1-12-12a12 12 0 0 1 12 12',
+  },
+  {
+    nombre: 'Correo electrónico',
+    href: mailtoHref,
+    d: iconoEmail,
+  },
 ];
 
 const iconos: Record<string, string[]> = {
@@ -635,47 +674,103 @@ const faqJsonLd = {
       </div>
     </section>
 
-    <!-- Contacto -->
-    <section id="contacto" class="bg-cream-50 px-6 py-20 sm:py-24">
-      <div
-        data-reveal
-        class="mx-auto max-w-2xl rounded-3xl border border-navy-100 bg-white p-10 text-center shadow-[0_20px_60px_-30px_rgba(42,63,106,0.4)] sm:p-14"
-      >
-        <h2 class="font-v2-serif text-3xl text-navy-800">Hablemos</h2>
-        <p class="mt-3 text-ink/75">
-          Cuéntame qué te gustaría trabajar y buscamos juntos el mejor momento para empezar. La
-          primera llamada, de 15 minutos, es gratuita y sin compromiso.
-        </p>
+    <!-- Contacto y pie en una sola sección azul. A la derecha, "Hablemos" (V3) como única tarjeta; a la izquierda, redes y texto legal sin cajas -->
+    <section id="contacto" class="bg-navy-900 px-6 pt-16 pb-24 text-cream-50 sm:py-16">
+      <div class="mx-auto grid max-w-5xl gap-12 md:grid-cols-2">
+        <div
+          data-v4-reveal
+          class="order-2 flex flex-col justify-between gap-6 rounded-2xl border border-navy-600/40 p-6 md:order-1 md:p-8"
+        >
+          <nav aria-label="Redes sociales">
+            <ul class="flex flex-wrap justify-between gap-y-3">
+              {redes.map((red) => (
+                <li>
+                  <a
+                    href={red.href}
+                    target={red.href.startsWith('mailto:') ? undefined : '_blank'}
+                    rel={red.href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
+                    aria-label={red.nombre}
+                    title={red.nombre}
+                    class={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-navy-800 sm:h-12 sm:w-12 text-cream-50/85 transition-colors duration-300 ${curva} hover:text-gold-400 ${foco}`}
+                  >
+                    <svg
+                      viewBox="0 0 256 256"
+                      fill="currentColor"
+                      class="h-6 w-6"
+                      aria-hidden="true"
+                    >
+                      <path d={red.d} />
+                    </svg>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-        <div class="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-          <a
-            href={whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-block rounded-full bg-navy-800 px-6 py-3 font-medium text-cream-50 transition-transform duration-150 ease-[var(--ease-out)] hover:scale-[1.02] active:scale-[0.98]"
-          >
-            Empezar por WhatsApp
-          </a>
-          <a
-            href={llamadaHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-sm text-navy-800 underline decoration-gold-400 underline-offset-4 hover:text-navy-600"
-          >
-            Pedir la llamada gratuita de 15 minutos
-          </a>
-          <a
-            href={mailtoHref}
-            class="text-sm text-navy-800 underline decoration-gold-400 underline-offset-4 hover:text-navy-600"
-          >
-            riccardi.juanpsi@gmail.com
-          </a>
+          <div class="text-sm text-navy-200">
+            <p class="text-pretty">
+              Juan Ignacio Riccardi, Psicólogo General Sanitario en España por título homologado.
+              Colegiado nº 68849 en Argentina. Los contenidos de esta web tienen carácter
+              informativo y no sustituyen una valoración clínica individual.
+            </p>
+            <nav aria-label="Legal" class="mt-4 flex flex-wrap gap-x-6 gap-y-1">
+              <a
+                href={withBase('/aviso-legal/')}
+                class={`rounded-sm underline decoration-gold-400 underline-offset-4 transition-colors duration-300 ${curva} hover:text-cream-50 ${foco}`}
+              >
+                Aviso legal
+              </a>
+              <a
+                href={withBase('/privacidad/')}
+                class={`rounded-sm underline decoration-gold-400 underline-offset-4 transition-colors duration-300 ${curva} hover:text-cream-50 ${foco}`}
+              >
+                Política de privacidad
+              </a>
+            </nav>
+            <p class="mt-4 text-navy-300">
+              &copy; {new Date().getFullYear()} Clínica Conecta. Todos los derechos reservados.
+            </p>
+          </div>
+        </div>
+
+        <div
+          data-v4-reveal
+          class="order-1 flex flex-col rounded-2xl border border-navy-600/40 bg-navy-800 p-8 md:order-2"
+        >
+          <h2 class="font-v2-serif text-3xl text-balance">Hablemos</h2>
+          <p class="mt-3 text-base text-pretty text-navy-200">
+            Cuéntame qué te gustaría trabajar. El primer paso también puede ser pequeño, y la
+            primera llamada, de 15 minutos, es gratuita y sin compromiso.
+          </p>
+
+          <div class="mt-auto flex flex-col items-start gap-4 pt-8">
+            <a
+              href={llamadaHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              class={`inline-block rounded-md bg-cream-50 px-3 py-2 text-center text-base font-semibold text-balance text-navy-900 transition-transform duration-300 ${curva} hover:scale-[1.02] active:scale-[0.98] ${foco}`}
+            >
+              Pedir llamada gratuita de 15 minutos
+            </a>
+            <a
+              href={mailtoHref}
+              class={`inline-flex items-center gap-2 rounded-sm text-sm text-navy-200 underline decoration-gold-400 underline-offset-4 transition-colors duration-300 ${curva} hover:text-cream-50 ${foco}`}
+            >
+              <svg
+                viewBox="0 0 256 256"
+                fill="currentColor"
+                class="h-4 w-4 shrink-0"
+                aria-hidden="true"
+              >
+                <path d={iconoEmail} />
+              </svg>
+              riccardi.juanpsi@gmail.com
+            </a>
+          </div>
         </div>
       </div>
     </section>
   </main>
-
-  <Footer />
 
   <WhatsAppFloat href={whatsappHref} etiqueta="Hablemos" />
 
@@ -693,7 +788,7 @@ const faqJsonLd = {
       );
 
       document
-        .querySelectorAll('[data-reveal], [data-reveal-group]')
+        .querySelectorAll('[data-reveal], [data-reveal-group], [data-v4-reveal]')
         .forEach((el) => io.observe(el));
     }
   </script>

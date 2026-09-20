@@ -24,6 +24,7 @@ alternativas para que el cliente elija (ver [Propuestas de diseño](#propuestas-
 - `src/layouts/Base.astro` — layout único; toda página lo envuelve.
 - `src/components/` — `Header.astro`/`Footer.astro`/`WhatsAppFloat.astro` (usados por la home);
   `v2/`, `v3/`, `v4/` — Header/Footer propios de cada propuesta, no compartidos con la home a propósito
+  (`/v2/` y `/v4/` ya no usan Footer: su sección `#contacto` hace de pie; `v2/Footer.astro` queda huérfano)
   (ver [Propuestas de diseño](#propuestas-de-diseño-v2-v3)).
 - `src/lib/withBase.ts` — helper obligatorio para enlaces internos (ver abajo).
 - `src/styles/global.css` — `@font-face` de las tipografías autoalojadas, tokens de Tailwind v4
