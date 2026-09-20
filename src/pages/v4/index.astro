@@ -15,6 +15,8 @@ const llamadaMessage = encodeURIComponent(
   'Hola, me gustaría pedir la primera llamada gratuita de 15 minutos',
 );
 const llamadaHref = `https://wa.me/34644751041?text=${llamadaMessage}`;
+const tarifaMessage = encodeURIComponent('Hola, me gustaría conocer la tarifa de las sesiones');
+const tarifaHref = `https://wa.me/34644751041?text=${tarifaMessage}`;
 const mailtoHref = 'mailto:riccardi.juanpsi@gmail.com?subject=Consulta%20desde%20la%20web';
 const linkedinHref = 'https://www.linkedin.com/in/juaniriccardi';
 const instagramHref = 'https://www.instagram.com/juanriccardi.conecta/';
@@ -155,37 +157,54 @@ const iconos: Record<string, string[]> = {
   ],
 };
 
-// Formación: la de V3.
-const formacion = [
+// Iconos Phosphor (viewBox 256) de Sobre mí, Tarifas y Formación, en línea como
+// `redes` para no añadir dependencias.
+const iconosPh: Record<string, string> = {
+  graduationCap:
+    'm251.76 88.94l-120-64a8 8 0 0 0-7.52 0l-120 64a8 8 0 0 0 0 14.12L32 117.87v48.42a15.9 15.9 0 0 0 4.06 10.65C49.16 191.53 78.51 216 128 216a130 130 0 0 0 48-8.76V240a8 8 0 0 0 16 0v-40.49a115.6 115.6 0 0 0 27.94-22.57a15.9 15.9 0 0 0 4.06-10.65v-48.42l27.76-14.81a8 8 0 0 0 0-14.12M128 200c-43.27 0-68.72-21.14-80-33.71V126.4l76.24 40.66a8 8 0 0 0 7.52 0L176 143.47v46.34c-12.6 5.88-28.48 10.19-48 10.19m80-33.75a97.8 97.8 0 0 1-16 14.25v-45.57l16-8.53Zm-20-47.31l-.22-.13l-56-29.87a8 8 0 0 0-7.52 14.12L171 128l-43 22.93L25 96l103-54.93L231 96Z',
+  certificate:
+    'M128 136a8 8 0 0 1-8 8H72a8 8 0 0 1 0-16h48a8 8 0 0 1 8 8m-8-40H72a8 8 0 0 0 0 16h48a8 8 0 0 0 0-16m112 65.47V224a8 8 0 0 1-12 7l-24-13.74L172 231a8 8 0 0 1-12-7v-24H40a16 16 0 0 1-16-16V56a16 16 0 0 1 16-16h176a16 16 0 0 1 16 16v30.53a51.88 51.88 0 0 1 0 74.94M160 184v-22.53A52 52 0 0 1 216 76V56H40v128Zm56-12a51.88 51.88 0 0 1-40 0v38.22l16-9.16a8 8 0 0 1 7.94 0l16 9.16Zm16-48a36 36 0 1 0-36 36a36 36 0 0 0 36-36',
+  eye: 'M247.31 124.76c-.35-.79-8.82-19.58-27.65-38.41C194.57 61.26 162.88 48 128 48S61.43 61.26 36.34 86.35C17.51 105.18 9 124 8.69 124.76a8 8 0 0 0 0 6.5c.35.79 8.82 19.57 27.65 38.4C61.43 194.74 93.12 208 128 208s66.57-13.26 91.66-38.34c18.83-18.83 27.3-37.61 27.65-38.4a8 8 0 0 0 0-6.5M128 192c-30.78 0-57.67-11.19-79.93-33.25A133.5 133.5 0 0 1 25 128a133.3 133.3 0 0 1 23.07-30.75C70.33 75.19 97.22 64 128 64s57.67 11.19 79.93 33.25A133.5 133.5 0 0 1 231.05 128c-7.21 13.46-38.62 64-103.05 64m0-112a48 48 0 1 0 48 48a48.05 48.05 0 0 0-48-48m0 80a32 32 0 1 1 32-32a32 32 0 0 1-32 32',
+  brain:
+    'M248 124a56.11 56.11 0 0 0-32-50.61V72a48 48 0 0 0-88-26.49A48 48 0 0 0 40 72v1.39a56 56 0 0 0 0 101.2V176a48 48 0 0 0 88 26.49A48 48 0 0 0 216 176v-1.41A56.09 56.09 0 0 0 248 124M88 208a32 32 0 0 1-31.81-28.56A56 56 0 0 0 64 180h8a8 8 0 0 0 0-16h-8a40 40 0 0 1-13.33-77.73A8 8 0 0 0 56 78.73V72a32 32 0 0 1 64 0v68.26A47.8 47.8 0 0 0 88 128a8 8 0 0 0 0 16a32 32 0 0 1 0 64m104-44h-8a8 8 0 0 0 0 16h8a56 56 0 0 0 7.81-.56A32 32 0 1 1 168 144a8 8 0 0 0 0-16a47.8 47.8 0 0 0-32 12.26V72a32 32 0 0 1 64 0v6.73a8 8 0 0 0 5.33 7.54A40 40 0 0 1 192 164m16-52a8 8 0 0 1-8 8h-4a36 36 0 0 1-36-36v-4a8 8 0 0 1 16 0v4a20 20 0 0 0 20 20h4a8 8 0 0 1 8 8m-148 8h-4a8 8 0 0 1 0-16h4a20 20 0 0 0 20-20v-4a8 8 0 0 1 16 0v4a36 36 0 0 1-36 36',
+  yinYang:
+    'M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24M40 128a88.1 88.1 0 0 1 88-88a40 40 0 0 1 0 80a56 56 0 0 0-50.61 80A88 88 0 0 1 40 128m88 88a40 40 0 0 1 0-80a56 56 0 0 0 50.61-79.95A88 88 0 0 1 128 216m12-40a12 12 0 1 1-12-12a12 12 0 0 1 12 12m-24-96a12 12 0 1 1 12 12a12 12 0 0 1-12-12',
+  chalkboardTeacher:
+    'M216 40H40a16 16 0 0 0-16 16v144a16 16 0 0 0 16 16h13.39a8 8 0 0 0 7.23-4.57a48 48 0 0 1 86.76 0a8 8 0 0 0 7.23 4.57H216a16 16 0 0 0 16-16V56a16 16 0 0 0-16-16M80 144a24 24 0 1 1 24 24a24 24 0 0 1-24-24m136 56h-56.57a64.4 64.4 0 0 0-28.83-26.16a40 40 0 1 0-53.2 0A64.4 64.4 0 0 0 48.57 200H40V56h176ZM56 96V80a8 8 0 0 1 8-8h128a8 8 0 0 1 8 8v96a8 8 0 0 1-8 8h-16a8 8 0 0 1 0-16h8V88H72v8a8 8 0 0 1-16 0',
+  user: 'M230.92 212c-15.23-26.33-38.7-45.21-66.09-54.16a72 72 0 1 0-73.66 0c-27.39 8.94-50.86 27.82-66.09 54.16a8 8 0 1 0 13.85 8c18.84-32.56 52.14-52 89.07-52s70.23 19.44 89.07 52a8 8 0 1 0 13.85-8M72 96a56 56 0 1 1 56 56a56.06 56.06 0 0 1-56-56',
+  users:
+    'M117.25 157.92a60 60 0 1 0-66.5 0a95.83 95.83 0 0 0-47.22 37.71a8 8 0 1 0 13.4 8.74a80 80 0 0 1 134.14 0a8 8 0 0 0 13.4-8.74a95.83 95.83 0 0 0-47.22-37.71M40 108a44 44 0 1 1 44 44a44.05 44.05 0 0 1-44-44m210.14 98.7a8 8 0 0 1-11.07-2.33A79.83 79.83 0 0 0 172 168a8 8 0 0 1 0-16a44 44 0 1 0-16.34-84.87a8 8 0 1 1-5.94-14.85a60 60 0 0 1 55.53 105.64a95.83 95.83 0 0 1 47.22 37.71a8 8 0 0 1-2.33 11.07',
+  creditCard:
+    'M224 48H32a16 16 0 0 0-16 16v128a16 16 0 0 0 16 16h192a16 16 0 0 0 16-16V64a16 16 0 0 0-16-16m0 16v24H32V64Zm0 128H32v-88h192zm-16-24a8 8 0 0 1-8 8h-32a8 8 0 0 1 0-16h32a8 8 0 0 1 8 8m-64 0a8 8 0 0 1-8 8h-16a8 8 0 0 1 0-16h16a8 8 0 0 1 8 8',
+  calendarX:
+    'M208 32h-24v-8a8 8 0 0 0-16 0v8H88v-8a8 8 0 0 0-16 0v8H48a16 16 0 0 0-16 16v160a16 16 0 0 0 16 16h160a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16M72 48v8a8 8 0 0 0 16 0v-8h80v8a8 8 0 0 0 16 0v-8h24v32H48V48Zm136 160H48V96h160zm-50.34-74.34L139.31 152l18.35 18.34a8 8 0 0 1-11.32 11.32L128 163.31l-18.34 18.35a8 8 0 0 1-11.32-11.32L116.69 152l-18.35-18.34a8 8 0 0 1 11.32-11.32L128 140.69l18.34-18.35a8 8 0 0 1 11.32 11.32',
+  clock:
+    'M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24m0 192a88 88 0 1 1 88-88a88.1 88.1 0 0 1-88 88m64-88a8 8 0 0 1-8 8h-56a8 8 0 0 1-8-8V72a8 8 0 0 1 16 0v48h48a8 8 0 0 1 8 8',
+  videoCamera:
+    'M251.77 73a8 8 0 0 0-8.21.39L208 97.05V72a16 16 0 0 0-16-16H32a16 16 0 0 0-16 16v112a16 16 0 0 0 16 16h160a16 16 0 0 0 16-16v-25l35.56 23.71A8 8 0 0 0 248 184a8 8 0 0 0 8-8V80a8 8 0 0 0-4.23-7M192 184H32V72h160zm48-22.95l-32-21.33v-23.44L240 95Z',
+};
+
+// Formación agrupada. Solo icono y título: fechas, universidades y demás detalle
+// viven en la FAQ, en LinkedIn y en los datos estructurados (`alumniOf`).
+const formacionGrupos = [
   {
-    anio: '2013 a 2017',
-    titulo: 'Licenciatura en Psicología',
-    detalle: 'Universidad del Salvador, Argentina.',
+    titulo: 'Educación',
+    items: [
+      { icono: 'graduationCap', titulo: 'Licenciatura en Psicología' },
+      { icono: 'certificate', titulo: 'Máster en Psicología General Sanitaria' },
+    ],
   },
   {
-    anio: '2024',
-    titulo: 'Máster en Psicología General Sanitaria',
-    detalle: 'Título homologado en España.',
+    titulo: 'Formación clínica',
+    items: [
+      { icono: 'eye', titulo: 'EMDR Nivel 1' },
+      { icono: 'brain', titulo: 'Terapia Cognitivo Conductual' },
+      { icono: 'yinYang', titulo: 'Terapia Dialéctico Conductual' },
+    ],
   },
   {
-    anio: 'Formación clínica',
-    titulo: 'EMDR Nivel 1',
-    detalle: 'Instituto Español de EMDR, Barcelona.',
-  },
-  {
-    anio: 'Posgrado',
-    titulo: 'Terapia Cognitivo Conductual',
-    detalle: 'Universidad de Belgrano, Argentina.',
-  },
-  {
-    anio: 'Posgrado',
-    titulo: 'Terapia Dialéctico Conductual',
-    detalle: 'Universidad Aconcagua, Argentina.',
-  },
-  {
-    anio: 'En paralelo',
     titulo: 'Docencia',
-    detalle: 'Psicología y salud mental en nivel secundario y superior.',
+    items: [{ icono: 'chalkboardTeacher', titulo: 'Psicología y salud mental' }],
   },
 ];
 
@@ -220,25 +239,38 @@ const pasos = [
   },
 ];
 
-// Tarifas y FAQ: de V3. Los enfoques son idénticos en las tres versiones.
+// Tarifas y condiciones: mismo contenido que V3, con cada dato en su fila. No se
+// muestran importes por decisión del cliente (ver CLAUDE.md).
 const tarifas = [
   {
+    icono: 'user',
     titulo: 'Sesión individual',
-    publico: 'Adolescentes y adultos',
-    duracion: '50 minutos por videollamada',
+    dirigidoA: 'Adolescentes y adultos',
+    duracion: '50 minutos',
+    formato: 'Videollamada',
   },
   {
+    icono: 'users',
     titulo: 'Sesión de pareja',
-    publico: 'Los dos, en la misma llamada',
-    duracion: '50 minutos por videollamada',
+    dirigidoA: 'Ambos miembros de la pareja, en una misma videollamada',
+    duracion: '50 minutos',
+    formato: 'Videollamada',
   },
 ];
 
 const condiciones = [
-  { clave: 'Formas de pago', valor: 'Bizum o transferencia bancaria.' },
-  { clave: 'Cancelaciones', valor: 'Con 48 horas de antelación.' },
-  { clave: 'Plataformas', valor: 'Google Meet, Zoom o WhatsApp.' },
-  { clave: 'Horarios', valor: 'Amplia disponibilidad horaria.' },
+  { icono: 'creditCard', clave: 'Forma de pago', valor: 'Bizum o transferencia bancaria.' },
+  {
+    icono: 'calendarX',
+    clave: 'Cancelaciones',
+    valor: 'Deben comunicarse con 48 horas de antelación.',
+  },
+  {
+    icono: 'videoCamera',
+    clave: 'Plataformas',
+    valor: 'Google Meet, Zoom o WhatsApp, a tu elección.',
+  },
+  { icono: 'clock', clave: 'Horarios', valor: 'Amplia disponibilidad horaria.' },
 ];
 
 const enfoques = [
@@ -284,6 +316,11 @@ const faqs = [
     pregunta: '¿Qué pasa si tengo que cancelar una sesión?',
     respuesta: 'Avísame con 48 horas de antelación.',
   },
+  {
+    pregunta: '¿Qué titulación tienes y estás colegiado?',
+    respuesta:
+      'Soy Licenciado en Psicología por la Universidad del Salvador (Argentina) y Psicólogo General Sanitario en España por título homologado en 2024. Estoy colegiado con el número 68849 en Argentina.',
+  },
 ];
 
 const faqJsonLd = {
@@ -317,8 +354,8 @@ const faqJsonLd = {
     <section id="inicio" class="bg-navy-800 px-6 pt-14 pb-20 text-cream-50 sm:pt-20 sm:pb-28">
       <div class="mx-auto grid max-w-5xl items-center gap-12 md:grid-cols-2">
         <div>
-          <p class="animate-hero-in font-serif text-sm tracking-[0.2em] text-gold-400 uppercase">
-            Juan Ignacio Riccardi · Psicólogo General Sanitario
+          <p class="animate-hero-in font-serif text-base tracking-[0.16em] text-gold-400 uppercase">
+            Juan Ignacio Riccardi · Psicólogo General Sanitario · Colegiado nº 68849 (Argentina)
           </p>
           <h1 class="animate-hero-in mt-4 font-serif text-4xl leading-tight font-semibold tracking-tight sm:text-5xl">
             Psicólogo online para la ansiedad, el estrés y el duelo
@@ -344,19 +381,6 @@ const faqJsonLd = {
               ¿Cómo funciona una sesión online?
             </a>
           </div>
-          <p class="animate-hero-in mt-4 max-w-md text-sm text-cream-50/75 [animation-delay:180ms]">
-            Te contesto yo, no un bot, y escribir no te compromete a nada. Si prefieres hablar
-            antes,
-            <a
-              href={llamadaHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="underline decoration-gold-400 underline-offset-4 hover:text-cream-50"
-            >
-              pide una primera llamada gratuita de 15 minutos
-            </a>
-            .
-          </p>
           <ul class="animate-hero-in mt-8 flex flex-wrap gap-x-5 gap-y-2 text-xs text-cream-50/70 [animation-delay:200ms]">
             {confianza.map((item) => (
               <li class="flex items-center gap-2">
@@ -379,7 +403,7 @@ const faqJsonLd = {
             alt="Juan Ignacio Riccardi, Psicólogo General Sanitario"
             width="900"
             height="900"
-            class="v2-blob-1 mx-auto aspect-square w-full max-w-sm border border-navy-600 object-cover"
+            class="v2-blob-1 mx-auto aspect-square w-full max-w-md border border-navy-600 object-cover"
           />
         </div>
       </div>
@@ -388,54 +412,61 @@ const faqJsonLd = {
     <!-- Sobre mí (texto de V1) con la formación de V3 dentro -->
     <section id="sobre-mi" class="bg-white px-6 py-16 sm:py-20">
       <div class="mx-auto max-w-5xl">
-        <div data-reveal class="max-w-3xl">
-          <h2 class="font-serif text-2xl font-semibold text-navy-800 sm:text-3xl">Sobre mí</h2>
-          <p class="mt-4 leading-relaxed text-ink/80">
-            Soy Juan Ignacio Riccardi, Licenciado en Psicología y Psicólogo General Sanitario.
-            Ejerzo desde 2017 y acompaño a adolescentes, adultos y parejas en procesos de ansiedad,
-            estrés, duelo y depresión.
-          </p>
-          <p class="mt-4 leading-relaxed text-ink/80">
-            Combino dos enfoques con base científica: la Terapia Cognitivo-Conductual (TCC), para
-            trabajar los pensamientos y comportamientos que mantienen el malestar, y EMDR, para
-            procesar traumas y experiencias difíciles.
-          </p>
-          <p class="mt-4 leading-relaxed text-ink/80">
-            Mi trayectoria une la clínica y la educación. Llevo consulta privada, he acompañado a
-            personas con discapacidad a través de obras sociales, he formado parte de equipos de
-            orientación escolar y programas de inclusión, y doy clase en nivel secundario y superior
-            en materias de psicología y salud mental.
-          </p>
-          <p class="mt-4 leading-relaxed text-ink/80">
-            Todo el proceso ocurre online, en un espacio cercano, confidencial y sin juicios, desde
-            donde te resulte más cómodo.
-          </p>
-        </div>
+        <h2 data-reveal class="font-serif text-2xl font-semibold text-navy-800 sm:text-3xl">
+          Sobre mí
+        </h2>
 
-        <div id="formacion" class="mt-16 scroll-mt-24">
-          <div data-reveal class="max-w-xl">
-            <h3 class="font-serif text-xl font-semibold text-navy-800 sm:text-2xl">
-              De dónde vengo
-            </h3>
-            <p class="mt-3 text-ink/80">
-              Grado y posgrado en Argentina, formación clínica en EMDR en España.
+        <div class="mt-6 grid gap-x-12 gap-y-8 md:grid-cols-2">
+          <div data-reveal class="flex flex-col justify-between gap-4">
+            <p class="leading-relaxed text-ink/80">
+              Soy Juan Ignacio Riccardi, Licenciado en Psicología y Psicólogo General Sanitario.
+              Ejerzo desde 2017 y acompaño a adolescentes, adultos y parejas en procesos de
+              ansiedad, estrés, duelo y depresión.
+            </p>
+            <p class="leading-relaxed text-ink/80">
+              Combino dos enfoques con base científica: la Terapia Cognitivo-Conductual (TCC), para
+              trabajar los pensamientos y comportamientos que mantienen el malestar, y EMDR, para
+              procesar traumas y experiencias difíciles.
+            </p>
+            <p class="leading-relaxed text-ink/80">
+              Mi trayectoria une la clínica y la educación. Llevo consulta privada, he acompañado a
+              personas con discapacidad a través de obras sociales, he formado parte de equipos de
+              orientación escolar y programas de inclusión, y doy clase en nivel secundario y
+              superior en materias de psicología y salud mental.
+            </p>
+            <p class="leading-relaxed text-ink/80">
+              Todo el proceso ocurre online, en un espacio cercano, confidencial y sin juicios,
+              desde donde te resulte más cómodo.
             </p>
           </div>
 
-          <ol data-reveal-group class="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {formacion.map((item) => (
-              <li class="border-t border-navy-100 pt-4">
-                <span class="block h-1 w-4 bg-gold-400" aria-hidden="true"></span>
-                <p class="mt-3 text-xs tracking-[0.16em] text-ink/55 uppercase">{item.anio}</p>
-                <h4 class="mt-2 font-serif text-lg font-semibold text-navy-800">{item.titulo}</h4>
-                <p class="mt-1 text-sm text-ink/70">{item.detalle}</p>
-              </li>
+          <div id="formacion" data-reveal-group class="flex scroll-mt-24 flex-col gap-4">
+            {formacionGrupos.map((grupo) => (
+              <div class="flex-auto rounded-2xl border border-navy-100 bg-cream-50 p-4">
+                <h3 class="font-serif text-sm font-semibold tracking-[0.16em] text-navy-800 uppercase">
+                  {grupo.titulo}
+                </h3>
+                <ul class="mt-3 flex flex-wrap gap-2">
+                  {grupo.items.map((item) => (
+                    <li class="flex items-center gap-2 rounded-full border border-navy-100 bg-white px-3 py-2 text-sm font-medium text-navy-800">
+                      <svg
+                        viewBox="0 0 256 256"
+                        fill="currentColor"
+                        class="h-5 w-5 shrink-0 text-navy-600"
+                        aria-hidden="true"
+                      >
+                        <path d={iconosPh[item.icono]} />
+                      </svg>
+                      {item.titulo}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </ol>
+          </div>
 
-          <p data-reveal class="mt-10 max-w-3xl text-sm leading-relaxed text-ink/70">
-            Colegiado nº 68849 en Argentina. En España ejerzo como Psicólogo General Sanitario por
-            título homologado. La trayectoria completa está en
+          <p data-reveal class="text-sm leading-relaxed text-ink/70 md:col-start-2">
+            Puedes consultar mi trayectoria completa en{' '}
             <a
               href={linkedinHref}
               target="_blank"
@@ -542,40 +573,96 @@ const faqJsonLd = {
       </div>
     </section>
 
-    <!-- Tarifas (V3) -->
+    <!-- Tarifas y condiciones -->
     <section id="tarifas" class="bg-cream-50 px-6 py-16 sm:py-20">
       <div class="mx-auto max-w-5xl">
         <div data-reveal class="max-w-xl">
-          <h2 class="font-serif text-2xl font-semibold text-navy-800 sm:text-3xl">Tarifas</h2>
-          <p class="mt-3 text-ink/80">
-            Hay tarifa para sesión individual y para sesión de pareja. Las dos duran 50 minutos y se
-            hacen por videollamada. Escríbeme y te paso el precio antes de reservar.
+          <h2 class="font-serif text-2xl font-semibold text-balance text-navy-800 sm:text-3xl">
+            Tarifas y condiciones
+          </h2>
+          <p class="mt-3 text-pretty text-ink/80">
+            Se ofrecen dos modalidades de sesión, individual y de pareja, ambas de 50&nbsp;minutos
+            por videollamada.
           </p>
         </div>
 
-        <div data-reveal-group class="mt-10 grid gap-8 sm:grid-cols-2">
+        <div data-reveal-group class="mt-10 grid gap-6 sm:grid-cols-2">
           {tarifas.map((tarifa) => (
-            <div class="border-t border-navy-800/20 pt-5">
-              <h3 class="font-serif text-xl font-semibold text-navy-800">{tarifa.titulo}</h3>
-              <p class="mt-2 text-sm text-ink/70">{tarifa.publico}</p>
-              <p class="mt-1 text-sm text-ink/70">{tarifa.duracion}</p>
+            <div class="rounded-2xl border border-navy-100 bg-white p-6">
+              <div class="flex items-center gap-4">
+                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-navy-100">
+                  <svg
+                    viewBox="0 0 256 256"
+                    fill="currentColor"
+                    class="h-6 w-6 text-navy-800"
+                    aria-hidden="true"
+                  >
+                    <path d={iconosPh[tarifa.icono]} />
+                  </svg>
+                </div>
+                <h3 class="font-serif text-xl font-semibold text-balance text-navy-800">
+                  {tarifa.titulo}
+                </h3>
+              </div>
+              <dl class="mt-6 grid gap-3 text-sm">
+                {[
+                  ['Dirigida a', tarifa.dirigidoA],
+                  ['Duración', tarifa.duracion],
+                  ['Formato', tarifa.formato],
+                ].map(([clave, valor]) => (
+                  <div class="flex items-baseline gap-4">
+                    <dt class="w-28 shrink-0 text-xs tracking-[0.12em] text-ink/70 uppercase">
+                      {clave}
+                    </dt>
+                    <dd class="text-pretty text-ink/80">{valor}</dd>
+                  </div>
+                ))}
+              </dl>
             </div>
           ))}
         </div>
 
-        <dl
+        <div
           data-reveal
-          class="mt-12 divide-y divide-navy-100 border-t border-b border-navy-100 text-sm"
+          class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
         >
+          <p class="text-pretty text-ink/80">
+            El importe se comunica por WhatsApp antes de reservar.
+          </p>
+          <a
+            href={tarifaHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            class={`inline-block shrink-0 rounded-md bg-navy-800 px-3 py-2 text-center text-base font-semibold text-cream-50 transition-transform duration-300 ${curva} hover:scale-[1.02] active:scale-[0.98] ${foco}`}
+          >
+            Consultar la tarifa por WhatsApp
+          </a>
+        </div>
+
+        <h3 data-reveal class="mt-12 font-serif text-xl font-semibold text-balance text-navy-800">
+          Condiciones del servicio
+        </h3>
+
+        <ul data-reveal-group class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {condiciones.map((condicion) => (
-            <div class="flex flex-col gap-1 py-4 sm:flex-row sm:gap-8">
-              <dt class="tracking-[0.12em] text-ink/55 uppercase sm:w-48 sm:shrink-0">
-                {condicion.clave}
-              </dt>
-              <dd class="text-ink/75 sm:flex-1">{condicion.valor}</dd>
-            </div>
+            <li class="flex gap-4 rounded-2xl border border-navy-100 bg-white p-6 sm:block">
+              <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-navy-100">
+                <svg
+                  viewBox="0 0 256 256"
+                  fill="currentColor"
+                  class="h-6 w-6 text-navy-800"
+                  aria-hidden="true"
+                >
+                  <path d={iconosPh[condicion.icono]} />
+                </svg>
+              </div>
+              <div class="sm:mt-4">
+                <p class="text-xs tracking-[0.12em] text-ink/70 uppercase">{condicion.clave}</p>
+                <p class="mt-2 text-sm text-pretty text-ink/80">{condicion.valor}</p>
+              </div>
+            </li>
           ))}
-        </dl>
+        </ul>
       </div>
     </section>
 
