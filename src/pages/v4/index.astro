@@ -144,12 +144,12 @@ const servicios = [
   },
 ];
 
-// Franja de confianza bajo el hero.
+// Franja de confianza bajo el hero. La llamada gratuita no va aquí: ya es el
+// enlace secundario del hero, justo encima.
 const confianza = [
   'Psicólogo General Sanitario',
   'Ejerciendo desde 2017',
   'Formación en EMDR, Instituto Español de EMDR',
-  'Primera llamada gratuita de 15 minutos',
 ];
 
 const iconos: Record<string, string[]> = {
@@ -408,10 +408,12 @@ const faqJsonLd = {
               Escríbeme y vemos si encajamos
             </a>
             <a
-              href="#como-funciona"
+              href={llamadaHref}
+              target="_blank"
+              rel="noopener noreferrer"
               class="text-sm text-cream-50/80 underline decoration-gold-400 underline-offset-4 hover:text-cream-50"
             >
-              ¿Cómo funciona una sesión online?
+              O pide una llamada gratuita de 15 minutos
             </a>
           </div>
           <ul class="animate-hero-in mt-8 flex flex-wrap gap-x-6 gap-y-2 text-xs tracking-[0.12em] text-cream-50/70 uppercase [animation-delay:200ms]">
