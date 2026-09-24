@@ -145,7 +145,7 @@ const servicios = [
 ];
 
 // Franja de confianza bajo el hero. La llamada gratuita no va aquí: ya es el
-// enlace secundario del hero, justo encima.
+// botón principal del hero, justo encima.
 const confianza = [
   'Psicólogo General Sanitario',
   'Ejerciendo desde 2017',
@@ -400,20 +400,20 @@ const faqJsonLd = {
           </p>
           <div class="animate-hero-in mt-8 flex flex-wrap items-center gap-4 [animation-delay:160ms]">
             <a
-              href={whatsappHref}
+              href={llamadaHref}
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-block rounded-md bg-cream-50 px-6 py-3 font-medium text-navy-800 transition-transform duration-150 ease-[var(--ease-out)] hover:scale-[1.02] active:scale-[0.98]"
+              class="inline-block rounded-md bg-cream-50 px-6 py-3 text-center font-medium text-balance text-navy-800 transition-transform duration-150 ease-[var(--ease-out)] hover:scale-[1.02] active:scale-[0.98]"
             >
-              Escríbeme y vemos si encajamos
+              Pide tu llamada gratuita de 15 minutos
             </a>
             <a
-              href={llamadaHref}
+              href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
               class="text-sm text-cream-50/80 underline decoration-gold-400 underline-offset-4 hover:text-cream-50"
             >
-              O pide una llamada gratuita de 15 minutos
+              O escríbeme por WhatsApp
             </a>
           </div>
           <ul class="animate-hero-in mt-8 flex flex-wrap gap-x-6 gap-y-2 text-xs tracking-[0.12em] text-cream-50/70 uppercase [animation-delay:200ms]">
