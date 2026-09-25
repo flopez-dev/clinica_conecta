@@ -6,13 +6,17 @@ import Contacto from '../components/Contacto.astro';
 import Revelar from '../components/Revelar.astro';
 import { withBase } from '../lib/withBase';
 import {
+  buscadorProfesionalesHref,
+  correo,
   facebookHref,
   iconoWhatsApp,
   instagramHref,
   linkedinHref,
   llamadaHref,
   tarifaHref,
+  telefono,
   whatsappHref,
+  whatsappPerfilHref,
 } from '../lib/contacto';
 import { curva, foco } from '../lib/estilo';
 
@@ -36,8 +40,8 @@ const persona = {
   description,
   url: canonical,
   image: new URL(withBase('/og-image.png'), Astro.site).toString(),
-  telephone: '+34644751041',
-  email: 'riccardijuanpsi@gmail.com',
+  telephone: telefono,
+  email: correo,
   knowsLanguage: 'es',
   knowsAbout: ['EMDR', 'Ansiedad', 'Estrés', 'Duelo', 'Depresión', 'Terapia de pareja'],
   alumniOf: [
@@ -45,7 +49,7 @@ const persona = {
     { '@type': 'CollegeOrUniversity', name: 'Universidad de Belgrano' },
     { '@type': 'CollegeOrUniversity', name: 'Universidad Aconcagua' },
   ],
-  sameAs: ['https://wa.me/34644751041', instagramHref, facebookHref, linkedinHref],
+  sameAs: [whatsappPerfilHref, instagramHref, facebookHref, linkedinHref],
 };
 
 const servicio = {
@@ -275,7 +279,7 @@ const faqs = [
     // Este tramo de la respuesta se pinta como enlace
     enlace: {
       texto: 'Buscador Nacional de Profesionales de la Salud',
-      href: 'https://www.argentina.gob.ar/salud/buscador-nacional-de-profesionales-de-la-salud',
+      href: buscadorProfesionalesHref,
     },
   },
   {
@@ -710,7 +714,7 @@ const faqJsonLd = {
     <Contacto />
   </main>
 
-  <WhatsAppFloat href={whatsappHref} etiqueta="Hablemos" />
+  <WhatsAppFloat />
 
   <Revelar />
 </Base>

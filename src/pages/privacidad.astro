@@ -5,7 +5,7 @@ import Apartado from '../components/Apartado.astro';
 import ListaDatos from '../components/ListaDatos.astro';
 import { withBase } from '../lib/withBase';
 import { numerar } from '../lib/apartados';
-import { correo } from '../lib/contacto';
+import { correo, telefonoLegible } from '../lib/contacto';
 import { enlace } from '../lib/estilo';
 
 const title = 'Política de privacidad · Clínica Conecta';
@@ -39,7 +39,7 @@ const responsable = [
     valor: 'Argentina. La atención es siempre online, sin consulta física en España.',
   },
   { clave: 'Correo electrónico', valor: correo },
-  { clave: 'Teléfono', valor: '+34 644 751 041' },
+  { clave: 'Teléfono', valor: telefonoLegible },
 ];
 
 const tratamientos = [

@@ -1,19 +1,29 @@
 // Vías de contacto y redes de Clínica Conecta. Fuente única para todas las
 // páginas (la home, y la sección de contacto con la que cierran todas).
 
-const whatsappMessage = encodeURIComponent('Hola, me gustaría agendar una sesión');
-export const whatsappHref = `https://wa.me/34644751041?text=${whatsappMessage}`;
-const llamadaMessage = encodeURIComponent(
+export const telefono = '+34644751041';
+export const telefonoLegible = '+34 644 751 041';
+export const correo = 'riccardijuanpsi@gmail.com';
+
+// WhatsApp: el perfil (para los datos estructurados) y enlaces que abren el chat
+// con un mensaje ya escrito, uno por cada llamada a la acción.
+export const whatsappPerfilHref = `https://wa.me/${telefono.slice(1)}`;
+const whatsappConMensaje = (mensaje: string) =>
+  `${whatsappPerfilHref}?text=${encodeURIComponent(mensaje)}`;
+export const whatsappHref = whatsappConMensaje('Hola, me gustaría agendar una sesión');
+export const llamadaHref = whatsappConMensaje(
   'Hola, me gustaría pedir la primera llamada gratuita de 15 minutos',
 );
-export const llamadaHref = `https://wa.me/34644751041?text=${llamadaMessage}`;
-const tarifaMessage = encodeURIComponent('Hola, me gustaría conocer la tarifa de las sesiones');
-export const tarifaHref = `https://wa.me/34644751041?text=${tarifaMessage}`;
-export const correo = 'riccardijuanpsi@gmail.com';
+export const tarifaHref = whatsappConMensaje('Hola, me gustaría conocer la tarifa de las sesiones');
+
 export const mailtoHref = `mailto:${correo}?subject=Consulta%20desde%20la%20web`;
 export const linkedinHref = 'https://www.linkedin.com/in/juaniriccardi';
 export const instagramHref = 'https://www.instagram.com/juanriccardi.conecta/';
 export const facebookHref = 'https://www.facebook.com/share/1Czzsw5wiS/';
+
+// Registro público donde consta la colegiación; lo enlazan la FAQ y el aviso legal.
+export const buscadorProfesionalesHref =
+  'https://www.argentina.gob.ar/salud/buscador-nacional-de-profesionales-de-la-salud';
 
 // Icono de sobre (Phosphor) del correo: va entre las redes y en el enlace de la tarjeta.
 export const iconoEmail =

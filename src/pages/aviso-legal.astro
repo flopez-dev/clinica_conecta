@@ -5,7 +5,7 @@ import Apartado from '../components/Apartado.astro';
 import ListaDatos from '../components/ListaDatos.astro';
 import { withBase } from '../lib/withBase';
 import { numerar } from '../lib/apartados';
-import { correo } from '../lib/contacto';
+import { buscadorProfesionalesHref, correo, telefonoLegible } from '../lib/contacto';
 import { enlace } from '../lib/estilo';
 
 const title = 'Aviso legal · Clínica Conecta';
@@ -38,7 +38,7 @@ const identificacion = [
     valor: 'Ejerce desde Argentina y atiende exclusivamente online, sin consulta física en España.',
   },
   { clave: 'Correo electrónico', valor: correo },
-  { clave: 'Teléfono', valor: '+34 644 751 041' },
+  { clave: 'Teléfono', valor: telefonoLegible },
   { clave: 'Sitio web', valor: 'juanriccardiconecta.com' },
   {
     clave: 'Título habilitante',
@@ -51,7 +51,7 @@ const identificacion = [
       'Colegiado nº 68849 en Argentina. Consta en el Buscador Nacional de Profesionales de la Salud del Ministerio de Salud de Argentina.',
     enlace: {
       texto: 'Buscador Nacional de Profesionales de la Salud',
-      href: 'https://www.argentina.gob.ar/salud/buscador-nacional-de-profesionales-de-la-salud',
+      href: buscadorProfesionalesHref,
     },
   },
 ];
