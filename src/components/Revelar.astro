@@ -1,0 +1,25 @@
+---
+// Reveal al scroll: marca con `data-visible` los elementos con `data-reveal`,
+// `data-reveal-group` o `data-reveal-contacto` al entrar en pantalla
+// (las transiciones están en global.css). Con movimiento reducido no hace nada:
+// el CSS ya los deja visibles.
+---
+
+<script>
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          entry.target.setAttribute('data-visible', '');
+          io.unobserve(entry.target);
+        }
+      },
+      { rootMargin: '-80px 0px' },
+    );
+
+    document
+      .querySelectorAll('[data-reveal], [data-reveal-group], [data-reveal-contacto]')
+      .forEach((el) => io.observe(el));
+  }
+</script>

@@ -1,0 +1,23 @@
+---
+// Cabecera azul de las páginas interiores (legales y 404): rótulo dorado, h1 y,
+// en el slot, lo que vaya debajo. Lleva `id="inicio"`, como el hero de la home,
+// para que el header haga el mismo relevo de crema a azul al salir de ella.
+interface Props {
+  rotulo: string;
+  titulo: string;
+}
+
+const { rotulo, titulo } = Astro.props;
+---
+
+<section id="inicio" class="bg-navy-800 px-6 pt-14 pb-16 text-cream-50 sm:pt-20 sm:pb-20">
+  <div class="mx-auto max-w-5xl">
+    <p class="animate-hero-in font-serif text-sm tracking-[0.1em] text-gold-400 uppercase">
+      {rotulo}
+    </p>
+    <h1 class="animate-hero-in mt-4 font-serif text-4xl leading-tight font-semibold tracking-tight sm:text-5xl">
+      {titulo}
+    </h1>
+    <slot />
+  </div>
+</section>

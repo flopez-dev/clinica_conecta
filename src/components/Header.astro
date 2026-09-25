@@ -1,17 +1,22 @@
 ---
 import { withBase } from '../lib/withBase';
 
-const home = withBase('/');
-const logoClaro = withBase('/brand/conecta-1b-nodo-horizontal.svg');
-const logoOscuro = withBase('/brand/conecta-1b-nodo-horizontal-oscuro.svg');
+// Los enlaces van a la home con su ancla: desde la home hacen scroll y desde
+// cualquier otra página llevan a la sección.
+const inicio = withBase('/');
+// Logo del kit del cliente (PNG: los SVG del kit venían vacíos). La variante
+// "oscuro" se generó a partir del PNG, con el azul oscuro pasado a crema.
+const logoClaro = withBase('/brand/conecta-logo-300.png');
+const logoClaroSrcset = `${logoClaro} 300w, ${withBase('/brand/conecta-logo-600.png')} 600w`;
+const logoOscuro = withBase('/brand/conecta-logo-oscuro-300.png');
+const logoOscuroSrcset = `${logoOscuro} 300w, ${withBase('/brand/conecta-logo-oscuro-600.png')} 600w`;
 const links = [
-  { href: `${home}#inicio`, label: 'Inicio' },
-  { href: `${home}#sobre-mi`, label: 'Sobre mí' },
-  { href: `${home}#servicios`, label: 'Servicios' },
-  { href: `${home}#como-funciona`, label: 'Sesiones' },
-  { href: `${home}#tarifas`, label: 'Tarifas' },
-  { href: `${home}#faq`, label: 'Preguntas' },
-  { href: `${home}#contacto`, label: 'Contacto', destacado: true },
+  { href: `${inicio}#inicio`, label: 'Inicio' },
+  { href: `${inicio}#sobre-mi`, label: 'Sobre mí' },
+  { href: `${inicio}#servicios`, label: 'Servicios' },
+  { href: `${inicio}#como-funciona`, label: 'Sesiones' },
+  { href: `${inicio}#faq`, label: 'Preguntas' },
+  { href: `${inicio}#contacto`, label: 'Contacto', destacado: true },
 ];
 
 const boton =
@@ -21,30 +26,33 @@ const enlace =
 ---
 
 <!--
-  Sobre el hero (azul) el header es crema. Al salir del hero el script de abajo
-  añade `.is-solid` y todo pasa a azul, para que nunca haya crema sobre secciones
-  claras. En las páginas sin hero (#inicio) se queda siempre crema.
+  Sobre el hero azul (`#inicio`) el header es crema. Al salir del hero el
+  script de abajo añade `.is-solid` y todo pasa a azul, para que nunca haya
+  crema sobre secciones claras. En una página sin `#inicio` se queda crema.
 -->
-
 <header
   id="site-header"
   class="group sticky top-0 z-40 border-b border-navy-100 bg-cream-50/95 backdrop-blur transition-colors duration-300 motion-reduce:transition-none [&.is-solid]:border-navy-600/60 [&.is-solid]:bg-navy-800/95"
 >
   <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-    <a href={home} class="relative block h-9 w-[115px]">
+    <a href={inicio} class="relative block h-10 w-34">
       <img
         src={logoClaro}
+        srcset={logoClaroSrcset}
+        sizes="134px"
         alt="Clínica Conecta"
-        width="153"
-        height="48"
-        class="absolute inset-0 h-9 w-auto transition-opacity duration-300 motion-reduce:transition-none group-[.is-solid]:opacity-0"
+        width="300"
+        height="90"
+        class="absolute inset-0 h-10 w-auto transition-opacity duration-300 motion-reduce:transition-none group-[.is-solid]:opacity-0"
       />
       <img
         src={logoOscuro}
+        srcset={logoOscuroSrcset}
+        sizes="134px"
         alt=""
-        width="153"
-        height="48"
-        class="absolute inset-0 h-9 w-auto opacity-0 transition-opacity duration-300 motion-reduce:transition-none group-[.is-solid]:opacity-100"
+        width="300"
+        height="90"
+        class="absolute inset-0 h-10 w-auto opacity-0 transition-opacity duration-300 motion-reduce:transition-none group-[.is-solid]:opacity-100"
       />
     </a>
 
@@ -72,7 +80,7 @@ const enlace =
         class="h-6 w-6"
         aria-hidden="true"
       >
-        <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round" />
+        <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"></path>
       </svg>
     </button>
   </div>

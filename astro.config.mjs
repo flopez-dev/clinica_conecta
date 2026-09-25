@@ -16,13 +16,7 @@ export default defineConfig({
   trailingSlash: 'always',
   build: { format: 'directory' },
 
-  integrations: [
-    sitemap({
-      // /v2/, /v3/ y /v4/ son propuestas de comparación para el cliente (noindex),
-      // no rutas públicas — fuera del sitemap además de fuera del índice.
-      filter: (page) => !/\/v[234]\/$/.test(page),
-    }),
-  ],
+  integrations: [sitemap()],
 
   vite: { plugins: [tailwindcss()] },
 });

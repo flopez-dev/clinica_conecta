@@ -3,10 +3,6 @@
 Web estática del proyecto Clínica Conecta, construida con [Astro](https://astro.build/)
 y [Tailwind CSS v4](https://tailwindcss.com/).
 
-La home (`/`) es la landing real; `/v2/` y `/v3/` son propuestas de diseño alternativas
-(`noindex`, fuera del sitemap) para que el cliente compare y elija — ver la sección
-["Propuestas de diseño"](./CLAUDE.md#propuestas-de-diseño-v2-v3) de `CLAUDE.md`.
-
 ## Comandos
 
 Todos los comandos se ejecutan desde la raíz del proyecto:
@@ -22,7 +18,7 @@ Todos los comandos se ejecutan desde la raíz del proyecto:
 | `npm run lint`          | ESLint sobre `.astro`/`.ts`                                 |
 | `npm run test:e2e`      | Smoke tests de Playwright                                   |
 
-Convenciones del repo (base path, Tailwind v4, maquetación, propuestas de diseño) están en
+Convenciones del repo (base path, Tailwind v4, maquetación) están en
 [`CLAUDE.md`](./CLAUDE.md).
 
 ## Ramas y despliegue
@@ -31,7 +27,7 @@ Convenciones del repo (base path, Tailwind v4, maquetación, propuestas de dise�
 | :-------- | :----------------------------------------------------------------------- |
 | `develop` | [GitHub Pages](https://flopez-dev.github.io/clinica_conecta/) — preview para el cliente |
 | `main`    | Cloudflare Workers, en [juanriccardiconecta.com](https://juanriccardiconecta.com) — producción |
-| otras / PR | Solo CI: tipos + build                                                   |
+| otras / PR | Solo CI: formato, lint, tipos, build y tests e2e |
 
 `astro.config.mjs` lee `SITE_URL` y `BASE_PATH` de variables de entorno para que el
 mismo build funcione bajo `/clinica_conecta/` (Pages) o bajo `/` (Cloudflare, en el
