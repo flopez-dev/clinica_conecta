@@ -1,11 +1,11 @@
 ---
-// Sección de contacto de V4, que hace también de pie de página: tarjeta
-// «Hablemos», redes, texto legal, enlaces legales y copyright. La usan V4 y
-// las páginas legales. Sus bloques llevan `data-v4-reveal`: la página que la
-// incluya necesita también <Revelar />, o se quedan invisibles con JS.
-import { withBase } from '../../lib/withBase';
-import { correo, iconoEmail, llamadaHref, mailtoHref, redes } from '../../lib/contacto';
-import { curva, foco } from '../../lib/estilo';
+// Sección de contacto, que hace también de pie de página: tarjeta «Hablemos»,
+// redes, texto legal, enlaces legales y copyright. Cierra todas las páginas.
+// Sus bloques llevan `data-reveal-contacto`: la página que la incluya necesita
+// también <Revelar />, o se quedan invisibles con JS.
+import { withBase } from '../lib/withBase';
+import { correo, iconoEmail, llamadaHref, mailtoHref, redes } from '../lib/contacto';
+import { curva, foco } from '../lib/estilo';
 
 // En la propia página legal, su enlace se marca como actual.
 const legales = [
@@ -14,11 +14,11 @@ const legales = [
 ];
 ---
 
-<!-- Contacto y pie en una sola sección azul. A la derecha, "Hablemos" (V3) como única tarjeta; a la izquierda, redes y texto legal sin cajas -->
+<!-- Contacto y pie en una sola sección azul. A la derecha, "Hablemos" como única tarjeta; a la izquierda, redes y texto legal sin cajas -->
 <section id="contacto" class="bg-navy-900 px-6 pt-16 pb-24 text-cream-50 sm:py-16">
   <div class="mx-auto grid max-w-5xl gap-12 md:grid-cols-2">
     <div
-      data-v4-reveal
+      data-reveal-contacto
       class="order-2 flex flex-col justify-between gap-6 rounded-2xl border border-navy-600/40 p-6 md:order-1 md:p-8"
     >
       <nav aria-label="Redes sociales">
@@ -66,7 +66,7 @@ const legales = [
     </div>
 
     <div
-      data-v4-reveal
+      data-reveal-contacto
       class="order-1 flex flex-col rounded-2xl border border-navy-600/40 bg-navy-800 p-8 md:order-2"
     >
       <h2 class="font-serif text-3xl font-semibold text-balance">Hablemos</h2>

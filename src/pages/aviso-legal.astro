@@ -1,8 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
-import Legal from '../components/v4/Legal.astro';
-import Apartado from '../components/v4/Apartado.astro';
-import ListaDatos from '../components/v4/ListaDatos.astro';
+import Legal from '../components/Legal.astro';
+import Apartado from '../components/Apartado.astro';
+import ListaDatos from '../components/ListaDatos.astro';
 import { withBase } from '../lib/withBase';
 import { numerar } from '../lib/apartados';
 import { correo } from '../lib/contacto';
@@ -56,7 +56,7 @@ const identificacion = [
   },
 ];
 
-// Mismas líneas de ayuda que cita la FAQ de V4.
+// Mismas líneas de ayuda que cita la FAQ de la home.
 const urgencias = [
   { numero: '112', texto: 'si hay riesgo para tu vida o la de otra persona.' },
   { numero: '024', texto: 'atención a la conducta suicida, gratuita y a cualquier hora.' },

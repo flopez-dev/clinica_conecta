@@ -1,25 +1,70 @@
 ---
 import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import Cabecera from '../components/Cabecera.astro';
+import Contacto from '../components/Contacto.astro';
+import Revelar from '../components/Revelar.astro';
 import { withBase } from '../lib/withBase';
+import { whatsappHref } from '../lib/contacto';
+import { curva, enlace, foco } from '../lib/estilo';
+
+const inicio = withBase('/');
+
+// Atajos a las secciones de la home y a las páginas legales.
+const atajos = [
+  { href: `${inicio}#sobre-mi`, texto: 'Sobre mí' },
+  { href: `${inicio}#servicios`, texto: 'Servicios' },
+  { href: `${inicio}#como-funciona`, texto: 'Sesiones y condiciones' },
+  { href: `${inicio}#faq`, texto: 'Preguntas frecuentes' },
+  { href: withBase('/aviso-legal/'), texto: 'Aviso legal' },
+  { href: withBase('/privacidad/'), texto: 'Política de privacidad' },
+];
 ---
 
 <Base title="Página no encontrada · Clínica Conecta" description="Página no encontrada." noindex>
   <Header />
 
-  <main class="mx-auto max-w-5xl px-6 py-24 text-center text-ink">
-    <h1 class="font-serif text-3xl font-semibold text-navy-800 sm:text-4xl">
-      Página no encontrada
-    </h1>
-    <p class="mt-4 text-ink/80">La página que buscas no existe o se ha movido.</p>
-    <a
-      href={withBase('/')}
-      class="mt-6 inline-block text-navy-600 underline decoration-gold-400 underline-offset-4 hover:text-navy-800"
-    >
-      Volver al inicio
-    </a>
+  <main class="text-ink">
+    <Cabecera rotulo="Error 404" titulo="Página no encontrada">
+      <p class="animate-hero-in mt-5 max-w-2xl text-lg text-pretty text-cream-50/85 [animation-delay:80ms]">
+        La página que buscas no existe o se ha movido.
+      </p>
+      <div class="animate-hero-in mt-8 flex flex-wrap items-center gap-4 [animation-delay:160ms]">
+        <a
+          href={inicio}
+          class={`inline-block rounded-md bg-cream-50 px-6 py-3 text-center font-medium text-navy-800 transition-transform duration-150 ease-[var(--ease-out)] hover:scale-[1.02] active:scale-[0.98] ${foco}`}
+        >
+          Volver al inicio
+        </a>
+        <a
+          href={whatsappHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          class={`rounded-sm text-sm text-cream-50/80 underline decoration-gold-400 underline-offset-4 transition-colors duration-300 ${curva} hover:text-cream-50 ${foco}`}
+        >
+          O escríbeme por WhatsApp
+        </a>
+      </div>
+    </Cabecera>
+
+    <section class="bg-white px-6 py-16 sm:py-20">
+      <div class="mx-auto max-w-5xl">
+        <h2 class="font-serif text-2xl font-semibold text-navy-800">Quizá buscabas</h2>
+        <ul class="mt-6 grid gap-x-12 gap-y-3 sm:grid-cols-2 md:grid-cols-3">
+          {atajos.map((a) => (
+            <li class="flex items-center gap-3">
+              <span class="h-1 w-4 shrink-0 bg-gold-400" aria-hidden="true" />
+              <a href={a.href} class={`text-navy-800 ${enlace}`}>
+                {a.texto}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <Contacto />
   </main>
 
-  <Footer />
+  <Revelar />
 </Base>

@@ -6,7 +6,7 @@ import { test, expect } from '@playwright/test';
 // '' (no '/') para la home: con baseURL terminando en `/clinica_conecta/`,
 // un path que empiece por '/' resuelve contra el origen y se sale del base
 // path (bug real que se detectó escribiendo este mismo test).
-const PAGES = ['', 'v2/', 'v3/', 'v4/', 'aviso-legal/', 'privacidad/'];
+const PAGES = ['', 'aviso-legal/', 'privacidad/'];
 
 for (const path of PAGES) {
   test.describe(`${path || '/'}`, () => {
@@ -47,10 +47,10 @@ for (const path of PAGES) {
   });
 }
 
-// Las páginas legales llevan el header y el pie de V4: ningún enlace interno
-// puede volver a la home antigua (`/`), el inicio es `/v4/`.
+// Las páginas legales comparten header y cierre con la home: su «Volver al
+// inicio» y el logo llevan a la home.
 for (const path of ['aviso-legal/', 'privacidad/']) {
-  test(`${path} enlaza a V4 y no a la home antigua`, async ({ page }) => {
+  test(`${path} enlaza a la home`, async ({ page }) => {
     await page.goto(path);
 
     const base = new URL(page.url()).pathname.replace(path, '');
@@ -58,7 +58,16 @@ for (const path of ['aviso-legal/', 'privacidad/']) {
       .locator('a[href]')
       .evaluateAll((enlaces) => enlaces.map((a) => a.getAttribute('href') ?? ''));
 
-    expect(hrefs.filter((href) => href === base || href.startsWith(`${base}#`))).toEqual([]);
-    expect(hrefs).toContain(`${base}v4/`);
+    expect(hrefs).toContain(base);
   });
 }
+
+// Una ruta que no existe sirve la 404 (con su estado HTTP) y ofrece volver al
+// inicio. Sin comprobar la consola: el propio 404 se registra como error.
+test('una ruta inexistente muestra la página 404', async ({ page }) => {
+  const response = await page.goto('ruta-que-no-existe/');
+  expect(response?.status()).toBe(404);
+
+  await expect(page.locator('h1')).toHaveText('Página no encontrada');
+  await expect(page.getByRole('link', { name: 'Volver al inicio' })).toBeVisible();
+});

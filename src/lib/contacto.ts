@@ -1,5 +1,5 @@
-// Vías de contacto y redes de Clínica Conecta, compartidas por V4 y por las
-// páginas legales (que cierran con la misma sección de contacto).
+// Vías de contacto y redes de Clínica Conecta. Fuente única para todas las
+// páginas (la home, y la sección de contacto con la que cierran todas).
 
 const whatsappMessage = encodeURIComponent('Hola, me gustaría agendar una sesión');
 export const whatsappHref = `https://wa.me/34644751041?text=${whatsappMessage}`;
