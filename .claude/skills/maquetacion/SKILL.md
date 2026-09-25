@@ -10,11 +10,10 @@ las páginas legales (`src/components/Legal.astro`) y la 404.
 
 ## Paleta
 
-- **Marca real, no provisional**: los tonos `navy-900/800/600/300/200/100`, `cream-50`, `gold-400`
-  e `ink`, definidos en el `@theme` de `src/styles/global.css`. `navy-300`/`navy-200` son tonos
-  claros para texto sobre azul (los usa la sección de contacto). La escala `brand-*` del scaffold
-  inicial ya no existe; no usar tampoco la escala `slate` de Tailwind, que no refleja la marca
-  real.
+- **Paleta de marca**: los tonos `navy-900/800/600/300/200/100`, `cream-50`, `gold-400` e `ink`,
+  definidos en el `@theme` de `src/styles/global.css`. `navy-300`/`navy-200` son tonos claros
+  para texto sobre azul (los usa la sección de contacto). No usar las escalas de color de
+  Tailwind (`slate`, `blue`…), que no reflejan la marca.
 - Nunca un color hexadecimal suelto en una clase o en CSS — si hace falta un tono nuevo, añadirlo
   al `@theme`, no inventarlo inline. Excepción explícita ya existente: el verde de marca de
   WhatsApp (`bg-[#25D366]` en `WhatsAppFloat.astro`) — es el color oficial del servicio, no de

@@ -1,7 +1,6 @@
 // Constantes de estilo que se repiten en varios componentes.
 
-// Curva con masa (skill /landing-page-design) y anillo de foco visible, para
-// enlaces y botones.
+// Curva con masa y anillo de foco visible, para enlaces y botones.
 export const curva = 'ease-[cubic-bezier(0.32,0.72,0,1)]';
 export const foco =
   'focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-400';

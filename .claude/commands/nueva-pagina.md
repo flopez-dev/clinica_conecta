@@ -3,7 +3,7 @@ description: Crea una página nueva en src/pages/ siguiendo el patrón del sitio
 argument-hint: <ruta> <título>
 ---
 
-Argumentos: `$ARGUMENTS` — el primero es la ruta (p. ej. `contacto` o `servicios/dental`),
+Argumentos: `$ARGUMENTS` — el primero es la ruta (p. ej. `contacto` o `recursos/ansiedad`),
 el resto es el título de la página (puede tener espacios).
 
 Crea `src/pages/<ruta>.astro` siguiendo el patrón de las páginas interiores
@@ -11,7 +11,9 @@ Crea `src/pages/<ruta>.astro` siguiendo el patrón de las páginas interiores
 
 - Envuelve todo en `<Base>` (`src/layouts/Base.astro`) con un `title` (el título dado, sufijado
   con " · Clínica Conecta" si no lo lleva ya, como las páginas legales) y una `description`
-  breve y real en español — no un placeholder vacío.
+  breve y real en español — no un placeholder vacío. Sin `noindex`: solo lo lleva la 404.
+- Los imports son relativos a la ruta: una página anidada (`recursos/ansiedad`) sube un nivel
+  más (`../../components/…`).
 - Dentro: `<Header />` (`src/components/Header.astro`) y un `<main class="text-ink">` que abre
   con `<Cabecera rotulo="…" titulo="…">` (`src/components/Cabecera.astro`; el slot lleva lo que
   va bajo el título, p. ej. una entradilla), sigue con el contenido de la página en un

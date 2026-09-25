@@ -22,7 +22,7 @@ La home (`/`) es la landing del negocio; además hay dos páginas legales (`/avi
 - `src/pages/` — rutas del sitio: `index.astro` (home), `aviso-legal.astro` y `privacidad.astro`
   (páginas legales, ver abajo), `404.astro` y `robots.txt.ts` (dinámico, ver más abajo).
 - `src/layouts/Base.astro` — layout único; toda página lo envuelve.
-- `src/components/` — todos al mismo nivel, sin subcarpetas:
+- `src/components/`:
   - `Header.astro` — menú del sitio. Crema sobre el hero azul `#inicio`; cuando el hero sale de
     pantalla, un script le añade `.is-solid` y pasa a azul (`navy-800`). En una página sin
     `#inicio` se queda crema. Sus enlaces son `withBase('/')` + `#apartado`: desde la home hacen
@@ -62,11 +62,11 @@ La home (`/`) es la landing del negocio; además hay dos páginas legales (`/avi
 - `src/fonts/` — `playfair-display.woff2`, la única familia autoalojada (subconjunto latino).
   Vive en `src/`, no en `public/`, para que Vite reescriba su URL con el base path del
   despliegue.
-- `public/brand/` — logo definitivo del cliente, en PNG: `conecta-logo-300/600.png` (del kit del
+- `public/brand/` — logo del cliente, en PNG: `conecta-logo-300/600.png` (del kit del
   cliente; sus SVG venían vacíos, por eso PNG) y `conecta-logo-oscuro-300/600.png`, variante para
   fondo azul generada a partir de ese PNG (azul oscuro → crema), porque el kit no la trae.
 - `public/foto/juan-ignacio-cuadrada.webp` — retrato del hero. `public/og-image.png` — la imagen
-  OG del sitio (la que `Base.astro` pone por defecto).
+  OG de todas las páginas (la pone `Base.astro`).
 - `public/favicon.ico`, `favicon-16/32.png`, `apple-touch-icon.png`, `android-chrome-*.png`,
   `site.webmanifest` — iconos del kit del cliente, para todo el sitio (enlazados en `Base.astro`).
   El manifest usa rutas relativas para que funcione con el base path de GitHub Pages.
@@ -92,7 +92,7 @@ La home (`/`) es la landing del negocio; además hay dos páginas legales (`/avi
   más abajo). Patrón de uso en `src/components/Header.astro` y `src/components/Legal.astro`.
 - Toda página se envuelve en `<Base title="…" description="…">` — ambas props son
   obligatorias. `noindex` solo lo lleva `404.astro`. El sitemap (`sitemap()` en
-  `astro.config.mjs`, sin filtro) ya deja fuera la 404 por su cuenta.
+  `astro.config.mjs`) deja fuera la 404 por su cuenta.
 - Tailwind v4 **sin** `tailwind.config.js`: los tokens viven en `@theme` de `src/styles/global.css`.
   No crear un config JS. Paleta de marca real: `navy-900/800/600/300/200/100`, `cream-50`,
   `gold-400`, `ink`; `navy-300`/`navy-200` son tonos claros para texto sobre azul (los usa la
@@ -132,10 +132,10 @@ pasa las suyas.
   registro sanitario, y en su lugar declaran el lugar de ejercicio. No son huecos por rellenar,
   no los repongas. La política de privacidad se apoya en el art. 3.2 del RGPD (aplica por
   dirigirse a personas en la UE) y en la decisión de adecuación de Argentina (2003/490/CE).
-- **En la web no se muestran precios**, por decisión del cliente. La home no tiene apartado
-  `#tarifas` propio: las tarifas están fundidas en Sesiones (`#como-funciona`), donde el botón
-  "Consultar tarifa" (con el icono de WhatsApp) remite a WhatsApp para el importe. No es un hueco
-  por rellenar, no añadas cifras.
+- **En la web no se muestran precios**, por decisión del cliente. El bloque «Condiciones del
+  servicio» de Sesiones (`#como-funciona`) lleva el botón "Consultar tarifa" (con el icono de
+  WhatsApp), que remite a WhatsApp para el importe. No es un hueco por rellenar, no añadas
+  cifras.
 - El dominio del cliente es `juanriccardiconecta.com` y ya está escrito en `wrangler.jsonc`
   (ruta con `custom_domain`) y en `SITE_URL` de `.github/workflows/deploy-cloudflare.yml`. La
   zona ya existe en la cuenta de Cloudflare del cliente; lo único que impide el despliegue son
