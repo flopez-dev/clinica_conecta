@@ -23,12 +23,23 @@ alternativas para que el cliente elija (ver [Propuestas de diseño](#propuestas-
   `robots.txt.ts` (dinámico, ver más abajo).
 - `src/layouts/Base.astro` — layout único; toda página lo envuelve.
 - `src/components/` — `Header.astro`/`Footer.astro`/`WhatsAppFloat.astro` (usados por la home; el
-  `Header` pasa de crema a azul al salir del hero `#inicio`, y se queda crema en las páginas sin hero:
-  aviso legal, privacidad y 404);
+  `Header` pasa de crema a azul al salir del hero `#inicio`, y se queda crema en las páginas sin hero,
+  hoy solo la 404);
   `v2/`, `v3/`, `v4/` — Header/Footer propios de cada propuesta, no compartidos con la home a propósito
   (`/v2/` y `/v4/` ya no usan Footer: su sección `#contacto` hace de pie; `v2/Footer.astro` queda huérfano)
   (ver [Propuestas de diseño](#propuestas-de-diseño-v2-v3)).
+  En `v4/`: `Contacto.astro` (la sección `#contacto`, que hace de pie) y `Revelar.astro` (el script
+  de reveal-al-scroll; toda página que use `Contacto` lo necesita, o sus bloques `data-v4-reveal` se
+  quedan invisibles). `Legal.astro`, `Apartado.astro` y `ListaDatos.astro` montan las páginas legales.
+- **Páginas legales** (`aviso-legal.astro`, `privacidad.astro`): llevan la estética de V4 — header de
+  V4, cabecera azul con `id="inicio"` (para el relevo crema→azul del header), índice de apartados con
+  el apartado en curso marcado y cierre con `v4/Contacto.astro`. Todos sus enlaces de «inicio» van a
+  `/v4/`; el destino está en una constante de `v4/Legal.astro`, a cambiar cuando V4 pase a `/`. Cada
+  página declara sus apartados con `numerar()` (`src/lib/apartados.ts`): de esa lista salen el índice
+  y los títulos. Si cambia el texto, actualizar su constante `actualizado`.
 - `src/lib/withBase.ts` — helper obligatorio para enlaces internos (ver abajo).
+- `src/lib/contacto.ts` — WhatsApp (con sus mensajes), correo y redes con sus iconos; lo comparten
+  V4 y las páginas legales. `src/lib/estilo.ts` — `curva`, `foco` y la clase `enlace` de V4.
 - `src/styles/global.css` — `@font-face` de las tipografías autoalojadas, tokens de Tailwind v4
   (`@theme`) y reglas de animación, todo en un único fichero (no crear otros `.css`).
 - `src/fonts/` — WOFF2 de las cinco familias (subconjunto latino). Viven en `src/`, no en

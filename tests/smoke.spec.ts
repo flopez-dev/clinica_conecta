@@ -6,7 +6,7 @@ import { test, expect } from '@playwright/test';
 // '' (no '/') para la home: con baseURL terminando en `/clinica_conecta/`,
 // un path que empiece por '/' resuelve contra el origen y se sale del base
 // path (bug real que se detectó escribiendo este mismo test).
-const PAGES = ['', 'v2/', 'v3/', 'v4/'];
+const PAGES = ['', 'v2/', 'v3/', 'v4/', 'aviso-legal/', 'privacidad/'];
 
 for (const path of PAGES) {
   test.describe(`${path || '/'}`, () => {
@@ -44,5 +44,21 @@ for (const path of PAGES) {
       await toggle.click();
       await expect(menu).not.toHaveAttribute('data-open');
     });
+  });
+}
+
+// Las páginas legales llevan el header y el pie de V4: ningún enlace interno
+// puede volver a la home antigua (`/`), el inicio es `/v4/`.
+for (const path of ['aviso-legal/', 'privacidad/']) {
+  test(`${path} enlaza a V4 y no a la home antigua`, async ({ page }) => {
+    await page.goto(path);
+
+    const base = new URL(page.url()).pathname.replace(path, '');
+    const hrefs = await page
+      .locator('a[href]')
+      .evaluateAll((enlaces) => enlaces.map((a) => a.getAttribute('href') ?? ''));
+
+    expect(hrefs.filter((href) => href === base || href.startsWith(`${base}#`))).toEqual([]);
+    expect(hrefs).toContain(`${base}v4/`);
   });
 }

@@ -1,0 +1,37 @@
+---
+// Lista clave/valor de las páginas legales, con los separadores de la FAQ de V4.
+// `enlace` pinta como enlace un tramo de `valor` (mismo patrón que la FAQ).
+import { enlace as claseEnlace } from '../../lib/estilo';
+
+interface Props {
+  datos: { clave: string; valor: string; enlace?: { texto: string; href: string } }[];
+}
+
+const { datos } = Astro.props;
+---
+
+<dl class="mt-6 divide-y divide-navy-100 border-y border-navy-100 text-sm">
+  {datos.map((dato) => (
+    <div class="grid gap-1 py-4 sm:grid-cols-[11rem_minmax(0,1fr)] sm:gap-6">
+      <dt class="font-medium text-navy-600">{dato.clave}</dt>
+      <dd class="leading-relaxed text-pretty text-ink/80">
+        {dato.enlace ? (
+          <>
+            {dato.valor.split(dato.enlace.texto)[0]}
+            <a
+              href={dato.enlace.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class={claseEnlace}
+            >
+              {dato.enlace.texto}
+            </a>
+            {dato.valor.split(dato.enlace.texto)[1]}
+          </>
+        ) : (
+          dato.valor
+        )}
+      </dd>
+    </div>
+  ))}
+</dl>

@@ -1,0 +1,19 @@
+---
+// Sección numerada de una página legal. `scroll-mt-28` deja sitio al header
+// fijo cuando se llega por el índice.
+import type { Apartado } from '../../lib/apartados';
+
+type Props = Apartado;
+
+const { id, titulo, numero } = Astro.props;
+---
+
+<section id={id} aria-labelledby={`${id}-titulo`} class="scroll-mt-28">
+  <h2
+    id={`${id}-titulo`}
+    class="font-serif text-xl font-semibold text-balance text-navy-800 sm:text-2xl"
+  >
+    <span class="text-navy-600">{numero}.</span> {titulo}
+  </h2>
+  <slot />
+</section>
