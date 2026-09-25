@@ -15,10 +15,10 @@ const llamadaMessage = encodeURIComponent(
   'Hola, me gustaría pedir la primera llamada gratuita de 15 minutos',
 );
 const llamadaHref = `https://wa.me/34644751041?text=${llamadaMessage}`;
-const mailtoHref = 'mailto:riccardi.juanpsi@gmail.com?subject=Consulta%20desde%20la%20web';
+const mailtoHref = 'mailto:riccardijuanpsi@gmail.com?subject=Consulta%20desde%20la%20web';
 const linkedinHref = 'https://www.linkedin.com/in/juaniriccardi';
 const instagramHref = 'https://www.instagram.com/juanriccardi.conecta/';
-const facebookHref = 'https://www.facebook.com/profile.php?id=61577424099534';
+const facebookHref = 'https://www.facebook.com/share/1Czzsw5wiS/';
 const fotoCuadrada = withBase('/foto/juan-ignacio-cuadrada.webp');
 
 // Juan es la entidad principal, no un negocio local. `ProfessionalService`
@@ -35,7 +35,7 @@ const persona = {
   url: canonical,
   image: new URL(withBase('/og-image-v2.png'), Astro.site).toString(),
   telephone: '+34644751041',
-  email: 'riccardi.juanpsi@gmail.com',
+  email: 'riccardijuanpsi@gmail.com',
   knowsLanguage: 'es',
   knowsAbout: ['EMDR', 'Ansiedad', 'Estrés', 'Duelo', 'Depresión', 'Terapia de pareja'],
   alumniOf: [
@@ -46,7 +46,7 @@ const persona = {
   sameAs: [
     'https://wa.me/34644751041',
     'https://www.instagram.com/juanriccardi.conecta/',
-    'https://www.facebook.com/profile.php?id=61577424099534',
+    'https://www.facebook.com/share/1Czzsw5wiS/',
     linkedinHref,
   ],
 };
@@ -764,7 +764,7 @@ const faqJsonLd = {
               >
                 <path d={iconoEmail} />
               </svg>
-              riccardi.juanpsi@gmail.com
+              riccardijuanpsi@gmail.com
             </a>
           </div>
         </div>

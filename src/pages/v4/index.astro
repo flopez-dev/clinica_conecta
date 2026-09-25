@@ -17,10 +17,10 @@ const llamadaMessage = encodeURIComponent(
 const llamadaHref = `https://wa.me/34644751041?text=${llamadaMessage}`;
 const tarifaMessage = encodeURIComponent('Hola, me gustaría conocer la tarifa de las sesiones');
 const tarifaHref = `https://wa.me/34644751041?text=${tarifaMessage}`;
-const mailtoHref = 'mailto:riccardi.juanpsi@gmail.com?subject=Consulta%20desde%20la%20web';
+const mailtoHref = 'mailto:riccardijuanpsi@gmail.com?subject=Consulta%20desde%20la%20web';
 const linkedinHref = 'https://www.linkedin.com/in/juaniriccardi';
 const instagramHref = 'https://www.instagram.com/juanriccardi.conecta/';
-const facebookHref = 'https://www.facebook.com/profile.php?id=61577424099534';
+const facebookHref = 'https://www.facebook.com/share/1Czzsw5wiS/';
 const fotoCuadrada = withBase('/foto/juan-ignacio-cuadrada-2.webp');
 
 // Juan es la entidad principal, no un negocio local. `ProfessionalService`
@@ -37,7 +37,7 @@ const persona = {
   url: canonical,
   image: new URL(withBase('/og-image.png'), Astro.site).toString(),
   telephone: '+34644751041',
-  email: 'riccardi.juanpsi@gmail.com',
+  email: 'riccardijuanpsi@gmail.com',
   knowsLanguage: 'es',
   knowsAbout: ['EMDR', 'Ansiedad', 'Estrés', 'Duelo', 'Depresión', 'Terapia de pareja'],
   alumniOf: [
@@ -144,12 +144,12 @@ const servicios = [
   },
 ];
 
-// Franja de confianza bajo el hero.
+// Franja de confianza bajo el hero. La llamada gratuita no va aquí: ya es el
+// botón principal del hero, justo encima.
 const confianza = [
   'Psicólogo General Sanitario',
   'Ejerciendo desde 2017',
   'Formación en EMDR, Instituto Español de EMDR',
-  'Primera llamada gratuita de 15 minutos',
 ];
 
 const iconos: Record<string, string[]> = {
@@ -400,18 +400,20 @@ const faqJsonLd = {
           </p>
           <div class="animate-hero-in mt-8 flex flex-wrap items-center gap-4 [animation-delay:160ms]">
             <a
+              href={llamadaHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-block rounded-md bg-cream-50 px-6 py-3 text-center font-medium text-balance text-navy-800 transition-transform duration-150 ease-[var(--ease-out)] hover:scale-[1.02] active:scale-[0.98]"
+            >
+              Pide tu llamada gratuita de 15 minutos
+            </a>
+            <a
               href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-block rounded-md bg-cream-50 px-6 py-3 font-medium text-navy-800 transition-transform duration-150 ease-[var(--ease-out)] hover:scale-[1.02] active:scale-[0.98]"
-            >
-              Escríbeme y vemos si encajamos
-            </a>
-            <a
-              href="#como-funciona"
               class="text-sm text-cream-50/80 underline decoration-gold-400 underline-offset-4 hover:text-cream-50"
             >
-              ¿Cómo funciona una sesión online?
+              O escríbeme por WhatsApp
             </a>
           </div>
           <ul class="animate-hero-in mt-8 flex flex-wrap gap-x-6 gap-y-2 text-xs tracking-[0.12em] text-cream-50/70 uppercase [animation-delay:200ms]">
@@ -583,7 +585,7 @@ const faqJsonLd = {
             Sesiones
           </h2>
           <p class="mt-3 text-pretty text-ink/80">
-            Ofrecemos dos modalidades de sesión, individual y de pareja, con una duración de
+            Ofrezco dos modalidades de sesión, individual y de pareja, con una duración de
             50&nbsp;minutos y en formato de videollamada.
           </p>
         </div>
@@ -814,7 +816,7 @@ const faqJsonLd = {
               >
                 <path d={iconoEmail} />
               </svg>
-              riccardi.juanpsi@gmail.com
+              riccardijuanpsi@gmail.com
             </a>
           </div>
         </div>

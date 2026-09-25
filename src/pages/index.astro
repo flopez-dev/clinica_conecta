@@ -16,7 +16,7 @@ const llamadaMessage = encodeURIComponent(
   'Hola, me gustaría pedir la primera llamada gratuita de 15 minutos',
 );
 const llamadaHref = `https://wa.me/34644751041?text=${llamadaMessage}`;
-const mailtoHref = 'mailto:riccardi.juanpsi@gmail.com?subject=Consulta%20desde%20la%20web';
+const mailtoHref = 'mailto:riccardijuanpsi@gmail.com?subject=Consulta%20desde%20la%20web';
 const linkedinHref = 'https://www.linkedin.com/in/juaniriccardi';
 const fotoVertical = withBase('/foto/juan-ignacio-vertical.webp');
 
@@ -34,7 +34,7 @@ const persona = {
   url: canonical,
   image: new URL(withBase('/og-image.png'), Astro.site).toString(),
   telephone: '+34644751041',
-  email: 'riccardi.juanpsi@gmail.com',
+  email: 'riccardijuanpsi@gmail.com',
   knowsLanguage: 'es',
   knowsAbout: ['EMDR', 'Ansiedad', 'Estrés', 'Duelo', 'Depresión', 'Terapia de pareja'],
   alumniOf: [
@@ -45,7 +45,7 @@ const persona = {
   sameAs: [
     'https://wa.me/34644751041',
     'https://www.instagram.com/juanriccardi.conecta/',
-    'https://www.facebook.com/profile.php?id=61577424099534',
+    'https://www.facebook.com/share/1Czzsw5wiS/',
     linkedinHref,
   ],
 };
@@ -606,7 +606,7 @@ const faqJsonLd = {
             href={mailtoHref}
             class="text-sm text-cream-50/80 underline decoration-gold-400 underline-offset-4 hover:text-cream-50"
           >
-            riccardi.juanpsi@gmail.com
+            riccardijuanpsi@gmail.com
           </a>
         </div>
       </div>
