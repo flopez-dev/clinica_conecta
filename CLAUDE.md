@@ -33,8 +33,13 @@ alternativas para que el cliente elija (ver [Propuestas de diseño](#propuestas-
   (`@theme`) y reglas de animación, todo en un único fichero (no crear otros `.css`).
 - `src/fonts/` — WOFF2 de las cinco familias (subconjunto latino). Viven en `src/`, no en
   `public/`, para que Vite reescriba sus URLs con el base path del despliegue.
-- `public/brand/` — logo real del cliente (SVG, variantes claro/oscuro/icono/horizontal/apilado),
-  usado hoy solo en `/v3/`.
+- `public/brand/` — logos del cliente. `conecta-logo-300/600.png` es el logo definitivo (kit del
+  cliente; sus SVG venían vacíos, por eso PNG), usado en el menú de `/v4/`; `conecta-logo-oscuro-*`
+  es una variante para fondo azul generada a partir de ese PNG (azul oscuro → crema), porque el kit
+  no la trae. Los `conecta-1b-nodo-*.svg` son el logo anterior, que siguen usando home, `/v2/` y `/v3/`.
+- `public/favicon.ico`, `favicon-16/32.png`, `apple-touch-icon.png`, `android-chrome-*.png`,
+  `site.webmanifest` — iconos del kit del cliente, para todo el sitio (enlazados en `Base.astro`).
+  El manifest usa rutas relativas para que funcione con el base path de GitHub Pages.
 - `public/_headers` — cabeceras de seguridad y caché para Cloudflare Workers (GitHub Pages lo
   ignora). `public/.well-known/security.txt` — contacto de seguridad (RFC 9116); su `Expires`
   caduca el 2027-09-20 y hay que renovarlo antes.

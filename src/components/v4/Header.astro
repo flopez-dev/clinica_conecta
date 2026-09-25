@@ -2,8 +2,12 @@
 import { withBase } from '../../lib/withBase';
 
 const home = withBase('/v4/');
-const logoClaro = withBase('/brand/conecta-1b-nodo-horizontal.svg');
-const logoOscuro = withBase('/brand/conecta-1b-nodo-horizontal-oscuro.svg');
+// Logo del kit del cliente (PNG: los SVG del kit venían vacíos). La variante
+// "oscuro" se generó a partir del PNG, con el azul oscuro pasado a crema.
+const logoClaro = withBase('/brand/conecta-logo-300.png');
+const logoClaroSrcset = `${logoClaro} 300w, ${withBase('/brand/conecta-logo-600.png')} 600w`;
+const logoOscuro = withBase('/brand/conecta-logo-oscuro-300.png');
+const logoOscuroSrcset = `${logoOscuro} 300w, ${withBase('/brand/conecta-logo-oscuro-600.png')} 600w`;
 const links = [
   { href: `${home}#inicio`, label: 'Inicio' },
   { href: `${home}#sobre-mi`, label: 'Sobre mí' },
@@ -29,19 +33,23 @@ const enlace =
   class="group sticky top-0 z-40 border-b border-navy-100 bg-cream-50/95 backdrop-blur transition-colors duration-300 motion-reduce:transition-none [&.is-solid]:border-navy-600/60 [&.is-solid]:bg-navy-800/95"
 >
   <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-    <a href={home} class="relative block h-10 w-32">
+    <a href={home} class="relative block h-10 w-34">
       <img
         src={logoClaro}
+        srcset={logoClaroSrcset}
+        sizes="134px"
         alt="Clínica Conecta"
-        width="153"
-        height="48"
+        width="300"
+        height="90"
         class="absolute inset-0 h-10 w-auto transition-opacity duration-300 motion-reduce:transition-none group-[.is-solid]:opacity-0"
       />
       <img
         src={logoOscuro}
+        srcset={logoOscuroSrcset}
+        sizes="134px"
         alt=""
-        width="153"
-        height="48"
+        width="300"
+        height="90"
         class="absolute inset-0 h-10 w-auto opacity-0 transition-opacity duration-300 motion-reduce:transition-none group-[.is-solid]:opacity-100"
       />
     </a>
