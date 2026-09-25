@@ -247,12 +247,22 @@ const faqs = [
   {
     pregunta: '¿Estás colegiado y tienes habilitación sanitaria?',
     respuesta:
-      'Soy Licenciado en Psicología por la Universidad del Salvador (Argentina) y Psicólogo General Sanitario en España, por título homologado en 2024. Estoy colegiado con el número 68849 en Argentina.',
+      'Soy Licenciado en Psicología por la Universidad del Salvador y Psicólogo General Sanitario en España, por título homologado en 2024. Estoy colegiado con el número 68849 en Argentina. Puedes encontrarme en el Buscador Nacional de Profesionales de la Salud.',
+    // Este tramo de la respuesta se pinta como enlace
+    enlace: {
+      texto: 'Buscador Nacional de Profesionales de la Salud',
+      href: 'https://www.argentina.gob.ar/salud/buscador-nacional-de-profesionales-de-la-salud',
+    },
   },
   {
     pregunta: '¿Cómo reservo la primera cita?',
     respuesta:
       'Escríbeme por WhatsApp desde el botón de esta página o desde la sección de contacto, y cuéntame en pocas palabras qué te trae. Si prefieres hablar antes, empezamos con una primera llamada gratuita de 15 minutos, sin compromiso. Después acordamos juntos el día y la hora.',
+  },
+  {
+    pregunta: '¿Es confidencial? ¿Se graban las sesiones?',
+    respuesta:
+      'Sí, todo lo que hablemos es confidencial. Estoy sujeto al secreto profesional y al código deontológico de la psicología, y trato tus datos conforme al RGPD. Las sesiones no se graban.',
   },
   {
     pregunta: '¿Cuánto duran las sesiones y con qué frecuencia?',
@@ -278,11 +288,6 @@ const faqs = [
     pregunta: '¿Cuál es la política de cancelación?',
     respuesta:
       'Entiendo que a veces surgen imprevistos: solo te pido que me avises con 48 horas de antelación.',
-  },
-  {
-    pregunta: '¿Es confidencial? ¿Se graban las sesiones?',
-    respuesta:
-      'Sí, todo lo que hablemos es confidencial. Estoy sujeto al secreto profesional y al código deontológico de la psicología, y trato tus datos conforme al RGPD. Las sesiones no se graban.',
   },
 ];
 
@@ -635,7 +640,24 @@ const faqJsonLd = {
                   <path d="M12 5v14M5 12h14" />
                 </svg>
               </summary>
-              <p class="mt-3 text-sm leading-relaxed text-navy-900/70">{faq.respuesta}</p>
+              <p class="mt-3 text-sm leading-relaxed text-navy-900/70">
+                {faq.enlace ? (
+                  <>
+                    {faq.respuesta.split(faq.enlace.texto)[0]}
+                    <a
+                      href={faq.enlace.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="underline underline-offset-4 hover:text-navy-600"
+                    >
+                      {faq.enlace.texto}
+                    </a>
+                    {faq.respuesta.split(faq.enlace.texto)[1]}
+                  </>
+                ) : (
+                  faq.respuesta
+                )}
+              </p>
             </details>
           ))}
         </div>
