@@ -21,7 +21,12 @@ const ogImage = new URL(withBase(image), Astro.site);
     </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <!-- Iconos del kit del cliente. El manifest usa rutas relativas por el base path -->
+    <link rel="icon" href={withBase('/favicon.ico')} sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href={withBase('/favicon-32.png')} />
+    <link rel="icon" type="image/png" sizes="16x16" href={withBase('/favicon-16.png')} />
+    <link rel="apple-touch-icon" href={withBase('/apple-touch-icon.png')} />
+    <link rel="manifest" href={withBase('/site.webmanifest')} />
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#2a3f6a" />
 
