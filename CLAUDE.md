@@ -19,7 +19,8 @@ La home (`/`) es la landing del negocio; además hay dos páginas legales (`/avi
 
 ## Estructura
 
-- `src/pages/` — rutas del sitio: `index.astro` (home), `aviso-legal.astro` y `privacidad.astro`
+- `src/pages/` — rutas del sitio: `index.astro` (home), `terapia-cognitivo-conductual.astro` y
+  `terapia-emdr.astro` (páginas explicativas, ver abajo), `aviso-legal.astro` y `privacidad.astro`
   (páginas legales, ver abajo), `404.astro` y `robots.txt.ts` (dinámico, ver más abajo).
 - `src/layouts/Base.astro` — layout único; toda página lo envuelve.
 - `src/components/`:
@@ -28,10 +29,11 @@ La home (`/`) es la landing del negocio; además hay dos páginas legales (`/avi
     `#inicio` se queda crema. Sus enlaces son `withBase('/')` + `#apartado`: desde la home hacen
     scroll y desde las demás páginas llevan a la home. Logo con `srcset`: `conecta-logo-*.png` en
     el estado crema y `conecta-logo-oscuro-*.png` en el azul.
-  - `Cabecera.astro` — bloque azul de cabecera de las páginas interiores (legales y 404). Lleva
-    `id="inicio"` para que el `Header` haga el relevo crema→azul; pinta un rótulo dorado en
-    mayúsculas (prop `rotulo`), el `h1` (prop `titulo`) y un slot para lo que va debajo. La usan
-    `Legal.astro` y `404.astro`.
+  - `Cabecera.astro` — bloque azul de cabecera de las páginas interiores (explicativas, legales
+    y 404). Lleva `id="inicio"` para que el `Header` haga el relevo crema→azul; pinta un rótulo
+    dorado en mayúsculas (prop `rotulo`), el `h1` (prop `titulo`) y un slot para lo que va debajo.
+    Con el slot opcional `lateral` (el sello de EMDR, la ficha de la TCC) pasa a dos columnas desde
+    `md`; sin él, el marcado es el de siempre.
   - `Contacto.astro` — la sección `#contacto`, que hace de pie del sitio (tarjeta «Hablemos»,
     redes, texto legal, enlaces a aviso legal y privacidad, copyright). Sus bloques llevan
     `data-reveal-contacto`: toda página que la incluya necesita también `<Revelar />`, o esos
@@ -39,21 +41,40 @@ La home (`/`) es la landing del negocio; además hay dos páginas legales (`/avi
   - `Revelar.astro` — script de reveal-al-scroll: marca con `data-visible` los `[data-reveal]`,
     `[data-reveal-group]` y `[data-reveal-contacto]` al entrar en pantalla. Con movimiento
     reducido no hace nada y el CSS los deja visibles.
-  - `Legal.astro`, `Apartado.astro` y `ListaDatos.astro` — montan las páginas legales.
+  - `Documento.astro` — cuerpo de las páginas de lectura larga (explicativas y legales): índice
+    «En esta página» (tarjeta en móvil; columna fija desde `md` que marca el apartado en curso),
+    columna de texto con los `Apartado` en el slot y «Volver al inicio».
+  - `Apartado.astro` — cada sección de un `Documento`; numerada solo si su apartado trae número.
+  - `Legal.astro` y `ListaDatos.astro` — montan las páginas legales (ver abajo).
+  - `Pasos.astro` — pasos numerados unidos por una línea: «Qué esperar de una sesión online» en la
+    home y las fases de las páginas explicativas. Prop `nivel` (`h4` por defecto, `h3` bajo un
+    `h2`) para no saltar jerarquía de encabezados.
+  - `IdeasErroneas.astro` (tarjetas «Se suele pensar / En realidad»), `Fuentes.astro`
+    (bibliografía citada por nombre, sin enlaces externos) y `OtroEnfoque.astro` (tarjeta que
+    enlaza al otro enfoque) — piezas de las páginas explicativas.
   - `WhatsAppFloat.astro` — botón flotante de WhatsApp, sin props (toma `whatsappHref` de
     `src/lib/contacto.ts`). La burbuja «Hablemos» junto al círculo solo aparece desde `sm`
     (640 px): en móvil tapaba el CTA del hero. Solo lo usa la home.
+- **Páginas explicativas** (`terapia-cognitivo-conductual.astro`, `terapia-emdr.astro`): explican
+  cada enfoque en profundidad para resolver dudas; **no buscan la conversión**, así que no llevan
+  llamadas a la acción, FAQ ni `WhatsAppFloat` (solo el cierre común de `Contacto`). Se montan con
+  `Header`, `Cabecera`, `Documento` y apartados declarados con `indexar()` (sin números). Se llega
+  desde las tarjetas de «¿Bajo qué enfoque trabajo?» de la home y desde «Sobre mí». Las
+  afirmaciones sobre la evidencia van atribuidas (OMS, NICE…) en su apartado «Fuentes» y sin
+  prometer resultados, por la normativa de publicidad sanitaria.
 - **Páginas legales** (`aviso-legal.astro`, `privacidad.astro`): las monta `Legal.astro` —
-  `Header`, `Cabecera`, índice de apartados (fijo en escritorio, con el apartado en curso
-  marcado), el contenido, «Volver al inicio», `Contacto` y `Revelar`. Cada página declara sus
-  apartados con `numerar()` (`src/lib/apartados.ts`): de esa lista salen el índice y los títulos.
-  Si cambia el texto, actualizar su constante `actualizado`.
+  `Header`, `Cabecera`, `Documento` (con apartados numerados), `Contacto` y `Revelar`. Cada página
+  declara sus apartados con `numerar()` (`src/lib/apartados.ts`): de esa lista salen el índice y
+  los títulos. Si cambia el texto, actualizar su constante `actualizado`.
 - `src/lib/withBase.ts` — helper obligatorio para enlaces internos (ver abajo).
 - `src/lib/contacto.ts` — fuente única de los datos de contacto: `telefono`, `telefonoLegible`,
   `correo`, las URL de WhatsApp con sus mensajes precargados (`whatsappHref`, `llamadaHref`,
   `tarifaHref`, `whatsappPerfilHref`), `mailtoHref`, las redes con los trazados de sus iconos de
   Phosphor (`redes`) y `buscadorProfesionalesHref`. `src/lib/estilo.ts` — `curva`, `foco` y la
-  clase `enlace` para enlaces dentro de un texto. `src/lib/apartados.ts` — `numerar()`.
+  clase `enlace` para enlaces dentro de un texto, más `parrafo`, `subtitulo` y `tarjeta` para el
+  texto de las páginas explicativas. `src/lib/apartados.ts` — `numerar()` e `indexar()`.
+  `src/lib/iconos.ts` — trazados Phosphor de los enfoques (tarjetas de la home y páginas
+  explicativas).
 - `src/styles/global.css` — `@font-face` de la tipografía autoalojada, tokens de Tailwind v4
   (`@theme`), la entrada del hero (`.animate-hero-in`), las reglas de reveal (`[data-reveal]`,
   `[data-reveal-group]`, `[data-reveal-contacto]`), `.retrato-organico` (el radio asimétrico del
@@ -65,6 +86,11 @@ La home (`/`) es la landing del negocio; además hay dos páginas legales (`/avi
 - `public/brand/` — logo del cliente, en PNG: `conecta-logo-300/600.png` (del kit del
   cliente; sus SVG venían vacíos, por eso PNG) y `conecta-logo-oscuro-300/600.png`, variante para
   fondo azul generada a partir de ese PNG (azul oscuro → crema), porque el kit no la trae.
+- `public/acreditaciones/emdr-europe-formacion-acreditada.webp` — sello «Training accredited by
+  EMDR Europe Association» (recortado en círculo con transparencia). Se muestra en la cabecera de
+  `/terapia-emdr/` y en la tarjeta EMDR de la home. **Su texto de acompañamiento debe ser
+  literal:** «Formación en EMDR (Nivel 1) acreditada por EMDR Europe», del Instituto Español de
+  EMDR. Acredita la formación, no al profesional: no escribir «terapeuta acreditado» ni similar.
 - `public/foto/juan-ignacio-cuadrada.webp` — retrato del hero. `public/og-image.png` — la imagen
   OG de todas las páginas (la pone `Base.astro`).
 - `public/favicon.ico`, `favicon-16/32.png`, `apple-touch-icon.png`, `android-chrome-*.png`,
@@ -73,9 +99,10 @@ La home (`/`) es la landing del negocio; además hay dos páginas legales (`/avi
 - `public/_headers` — cabeceras de seguridad y caché para Cloudflare Workers (GitHub Pages lo
   ignora). `public/.well-known/security.txt` — contacto de seguridad (RFC 9116); su `Expires`
   caduca el 2027-09-20 y hay que renovarlo antes.
-- `tests/smoke.spec.ts` — smoke tests de Playwright: en `/`, `/aviso-legal/` y `/privacidad/`
-  comprueban un único `h1`, que no haya errores de consola ni desbordamiento horizontal, y el
-  menú móvil; además, que las páginas legales enlazan a la home, y la 404.
+- `tests/smoke.spec.ts` — smoke tests de Playwright: en `/`, las dos páginas explicativas y las
+  dos legales comprueban un único `h1`, que no haya errores de consola ni desbordamiento
+  horizontal, y el menú móvil; además, que la home enlaza a las páginas de TCC y EMDR, que las
+  legales enlazan a la home, y la 404.
 
 ## Reglas no obvias
 
