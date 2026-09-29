@@ -6,7 +6,7 @@ import { test, expect } from '@playwright/test';
 // '' (no '/') para la home: con baseURL terminando en `/clinica_conecta/`,
 // un path que empiece por '/' resuelve contra el origen y se sale del base
 // path (bug real que se detectó escribiendo este mismo test).
-const PAGES = ['', 'aviso-legal/', 'privacidad/'];
+const PAGES = ['', 'terapia-cognitivo-conductual/', 'terapia-emdr/', 'aviso-legal/', 'privacidad/'];
 
 for (const path of PAGES) {
   test.describe(`${path || '/'}`, () => {
@@ -46,6 +46,19 @@ for (const path of PAGES) {
     });
   });
 }
+
+// La home enlaza desde las tarjetas de enfoques a sus páginas explicativas.
+test('la home enlaza a las páginas de TCC y EMDR', async ({ page }) => {
+  await page.goto('');
+  await expect(page.getByRole('link', { name: /Conoce la TCC/ })).toHaveAttribute(
+    'href',
+    /\/terapia-cognitivo-conductual\/$/,
+  );
+  await expect(page.getByRole('link', { name: /Conoce EMDR/ })).toHaveAttribute(
+    'href',
+    /\/terapia-emdr\/$/,
+  );
+});
 
 // Las páginas legales comparten header y cierre con la home: su «Volver al
 // inicio» y el logo llevan a la home.

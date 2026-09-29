@@ -1,0 +1,740 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Cabecera from '../components/Cabecera.astro';
+import Documento from '../components/Documento.astro';
+import Apartado from '../components/Apartado.astro';
+import Pasos from '../components/Pasos.astro';
+import IdeasErroneas from '../components/IdeasErroneas.astro';
+import Fuentes from '../components/Fuentes.astro';
+import OtroEnfoque from '../components/OtroEnfoque.astro';
+import Contacto from '../components/Contacto.astro';
+import Revelar from '../components/Revelar.astro';
+import { withBase } from '../lib/withBase';
+import { indexar } from '../lib/apartados';
+import { iconos } from '../lib/iconos';
+import { parrafo, subtitulo, tarjeta } from '../lib/estilo';
+
+// Página explicativa: informa sobre el enfoque, no busca la conversión (sin
+// llamadas a la acción ni botón flotante). Las afirmaciones sobre la evidencia
+// van atribuidas y sin prometer resultados (publicidad sanitaria).
+const title = 'Terapia Cognitivo-Conductual (TCC): qué es y cómo funciona · Clínica Conecta';
+const description =
+  'Qué es la Terapia Cognitivo-Conductual, de dónde viene, cómo entiende el malestar, cómo es un proceso y una sesión, qué herramientas usa y qué dice la investigación.';
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'MedicalWebPage',
+  name: 'Terapia Cognitivo-Conductual (TCC)',
+  description,
+  url: canonical,
+  inLanguage: 'es',
+  about: {
+    '@type': 'MedicalTherapy',
+    name: 'Terapia Cognitivo-Conductual',
+    alternateName: ['TCC', 'Cognitive Behavioral Therapy'],
+  },
+};
+
+const { lista, porId: a } = indexar([
+  { id: 'que-es', titulo: 'Qué es la TCC' },
+  { id: 'origen', titulo: 'De dónde viene' },
+  { id: 'modelo', titulo: 'Pensamiento, emoción y conducta' },
+  { id: 'pensamientos', titulo: 'Pensamientos automáticos y trampas mentales' },
+  { id: 'para-que', titulo: 'Para qué se utiliza' },
+  { id: 'proceso', titulo: 'Cómo es un proceso' },
+  { id: 'sesion', titulo: 'Cómo es una sesión' },
+  { id: 'herramientas', titulo: 'Herramientas principales' },
+  { id: 'tercera-generacion', titulo: 'Las terapias de tercera generación' },
+  { id: 'online', titulo: 'TCC por videollamada' },
+  { id: 'ideas-erroneas', titulo: 'Ideas erróneas frecuentes' },
+  { id: 'investigacion', titulo: 'Qué dice la investigación' },
+  { id: 'fuentes', titulo: 'Fuentes' },
+]);
+
+const enPocasPalabras = [
+  'Práctica y estructurada',
+  'Centrada en el presente',
+  'Colaborativa: se trabaja en equipo',
+  'Con objetivos concretos',
+  'De duración limitada',
+];
+
+const rasgos = [
+  {
+    titulo: 'Centrada en el presente',
+    texto:
+      'Mira sobre todo a lo que hoy mantiene el malestar: qué piensas, qué sientes y qué haces ahora. El pasado importa para entender, pero el trabajo se hace en el aquí y ahora.',
+  },
+  {
+    titulo: 'Estructurada y con objetivos',
+    texto:
+      'Al principio se acuerda qué quieres cambiar y cómo sabremos que ha cambiado. Las sesiones tienen un orden y el proceso se revisa con esos objetivos a la vista.',
+  },
+  {
+    titulo: 'Colaborativa',
+    texto:
+      'Terapeuta y paciente trabajan como un equipo: tú aportas lo que conoces de tu vida y el terapeuta, el método. Nada se impone; se prueba y se comprueba.',
+  },
+  {
+    titulo: 'Activa',
+    texto:
+      'Parte del cambio ocurre fuera de la consulta. Entre sesiones se practica lo aprendido con pequeñas tareas pactadas.',
+  },
+];
+
+// Ejemplo del ciclo, en el orden en que se recorre.
+const ciclo = [
+  {
+    fase: 'Situación',
+    ejemplo: 'El lunes a primera hora, tu jefa te escribe: «¿Tienes cinco minutos luego?».',
+  },
+  { fase: 'Pensamiento', ejemplo: '«Seguro que he hecho algo mal. Me va a echar la bronca».' },
+  { fase: 'Emoción', ejemplo: 'Ansiedad, un nudo en el estómago, inquietud.' },
+  {
+    fase: 'Conducta',
+    ejemplo: 'Le das vueltas toda la mañana, no te concentras y evitas cruzarte con ella.',
+  },
+];
+
+// Flechas del ciclo. En móvil las tarjetas van en columna y basta una flecha
+// hacia abajo; desde sm forman un cuadrado que se recorre en el sentido de las
+// agujas del reloj (1 arriba izquierda, 2 arriba derecha, 3 abajo derecha, 4
+// abajo izquierda), así que cada tarjeta apunta a la siguiente desde un lado.
+// Cada círculo (24 px) queda centrado en el hueco de 12 px entre tarjetas.
+const flecha =
+  'absolute z-10 h-6 w-6 items-center justify-center rounded-full bg-gold-400 text-xs font-semibold text-navy-900';
+const flechasCiclo = [
+  { signo: '→', clase: 'sm:flex top-1/2 right-[-18px] -translate-y-1/2' },
+  { signo: '↓', clase: 'sm:flex bottom-[-18px] left-1/2 -translate-x-1/2' },
+  { signo: '←', clase: 'sm:flex top-1/2 left-[-18px] -translate-y-1/2' },
+  { signo: '↑', clase: 'sm:flex top-[-18px] left-1/2 -translate-x-1/2' },
+];
+
+const trampas = [
+  {
+    nombre: 'Catastrofismo',
+    texto: 'Dar por hecho que va a pasar lo peor.',
+    ejemplo: 'Si me pongo nervioso en la reunión, será un desastre y todos lo notarán.',
+  },
+  {
+    nombre: 'Todo o nada',
+    texto: 'Ver las cosas en blanco o negro, sin términos medios.',
+    ejemplo: 'O lo hago perfecto o no sirvo para esto.',
+  },
+  {
+    nombre: 'Leer la mente',
+    texto: 'Suponer lo que piensan los demás sin tener datos.',
+    ejemplo: 'No me ha contestado: seguro que está enfadada conmigo.',
+  },
+  {
+    nombre: 'Sobregeneralizar',
+    texto: 'Sacar una conclusión general de un solo hecho.',
+    ejemplo: 'Me ha salido mal esta entrevista; siempre me sale todo mal.',
+  },
+  {
+    nombre: 'Personalizar',
+    texto: 'Atribuirse la causa de todo lo que sale mal.',
+    ejemplo: 'Si mi hijo ha suspendido, es porque soy un mal padre.',
+  },
+  {
+    nombre: 'Los «debería»',
+    texto: 'Exigencias rígidas hacia uno mismo o hacia los demás.',
+    ejemplo: 'Debería poder con todo sin pedir ayuda.',
+  },
+];
+
+const preguntasRevision = [
+  '¿Qué datos tengo a favor de este pensamiento? ¿Y en contra?',
+  '¿Hay otras explicaciones posibles?',
+  'Si le pasara a un amigo, ¿qué le diría?',
+  'Si fuera verdad, ¿qué podría hacer?',
+];
+
+const usos = [
+  {
+    titulo: 'Ansiedad',
+    texto:
+      'Preocupación constante, ataques de pánico, miedos y fobias o ansiedad en situaciones sociales. Se trabaja con la forma de interpretar las señales de amenaza y con la evitación, que alivia a corto plazo pero mantiene el miedo. Es, junto con la depresión, donde la TCC acumula más investigación.',
+  },
+  {
+    titulo: 'Depresión',
+    texto:
+      'Se combina la recuperación gradual de actividades (activación conductual) con el trabajo sobre la autocrítica, la desesperanza y la tendencia a darle vueltas a las cosas.',
+  },
+  {
+    titulo: 'Estrés',
+    texto:
+      'Se identifican las fuentes de estrés y lo que está en tu mano, se ordenan prioridades, se practican formas de bajar la activación y de poner límites.',
+  },
+  {
+    titulo: 'Duelo',
+    texto:
+      'El duelo no es una enfermedad y no hay que «tratarlo». La TCC puede ayudar cuando se atasca: cuando hay culpa, se evita todo lo que recuerda a la pérdida o la vida se ha detenido.',
+  },
+  {
+    titulo: 'Adolescencia',
+    texto:
+      'Se adapta el lenguaje y los ejemplos a su edad, se trabaja de forma muy concreta y, cuando ayuda, se cuenta con la familia.',
+  },
+  {
+    titulo: 'Pareja',
+    texto:
+      'La TCC de pareja trabaja la comunicación, los patrones de discusión que se repiten y las interpretaciones que cada uno hace de lo que dice o hace el otro.',
+  },
+];
+
+const fases = [
+  {
+    titulo: 'Evaluación',
+    texto:
+      'Las primeras sesiones sirven para entender qué te pasa, desde cuándo, en qué situaciones aparece, qué lo empeora y qué lo alivia. A veces se usan cuestionarios breves para tener un punto de partida.',
+  },
+  {
+    titulo: 'Formulación y objetivos',
+    texto:
+      'Con esa información se construye, juntos, una explicación de cómo se mantiene el problema: el ciclo de arriba aplicado a tu caso. A partir de ahí se acuerdan objetivos concretos y un plan.',
+  },
+  {
+    titulo: 'Intervención',
+    texto:
+      'Es la fase más larga. Se trabaja con las herramientas que encajan con tus objetivos, en sesión y entre sesiones, y se va comprobando qué funciona y qué hay que ajustar.',
+  },
+  {
+    titulo: 'Consolidación y prevención de recaídas',
+    texto:
+      'Las sesiones se espacian, se repasa lo aprendido y se prepara un plan para reconocer señales de alerta y saber qué hacer si reaparecen. La idea es que acabes siendo tu propio terapeuta.',
+  },
+];
+
+const momentosSesion = [
+  {
+    titulo: 'Repaso',
+    texto: 'Cómo ha ido la semana y qué tal ha salido la tarea pactada en la sesión anterior.',
+  },
+  {
+    titulo: 'Agenda compartida',
+    texto: 'Se decide entre los dos qué se va a trabajar ese día, según lo que más pese ahora.',
+  },
+  {
+    titulo: 'Trabajo del tema del día',
+    texto: 'Se analiza una situación concreta, se practica una técnica o se prepara un paso nuevo.',
+  },
+  {
+    titulo: 'Resumen y tarea',
+    texto: 'Qué te llevas de la sesión y qué vas a practicar hasta la siguiente.',
+  },
+];
+
+const herramientas = [
+  {
+    icono: iconos.reestructurar,
+    titulo: 'Reestructuración cognitiva',
+    texto:
+      'Detectar, examinar y reformular los pensamientos que alimentan el malestar. Por ejemplo, revisar las pruebas a favor y en contra de «voy a quedar en ridículo».',
+  },
+  {
+    icono: iconos.activarse,
+    titulo: 'Activación conductual',
+    texto:
+      'Recuperar poco a poco actividades que dan sentido o disfrute, empezando por pasos muy pequeños. Es una de las herramientas centrales en la depresión.',
+  },
+  {
+    icono: iconos.exposicion,
+    titulo: 'Exposición gradual',
+    texto:
+      'Acercarse de forma planificada y escalonada a lo que se evita por miedo, para comprobar que se puede afrontar y que el miedo baja. Se hace a tu ritmo, nunca por sorpresa.',
+  },
+  {
+    icono: iconos.respirar,
+    titulo: 'Respiración y relajación',
+    texto:
+      'Técnicas para bajar la activación física, como la respiración diafragmática o la relajación muscular progresiva. Útiles para manejar la ansiedad en el momento.',
+  },
+  {
+    icono: iconos.resolverProblemas,
+    titulo: 'Resolución de problemas',
+    texto:
+      'Un método paso a paso para problemas concretos: definirlo bien, pensar alternativas, elegir una, probarla y revisar cómo ha ido.',
+  },
+  {
+    icono: iconos.registros,
+    titulo: 'Registros y tareas',
+    texto:
+      'Anotar situaciones, pensamientos y emociones ayuda a ver patrones que en el día a día pasan desapercibidos. Entre sesiones es donde se consolida lo aprendido.',
+  },
+];
+
+const terceraGeneracion = [
+  {
+    titulo: 'Mindfulness',
+    texto:
+      'Entrenar la atención al momento presente, observando pensamientos y sensaciones sin engancharse a ellos.',
+  },
+  {
+    titulo: 'Terapia de Aceptación y Compromiso (ACT)',
+    texto:
+      'Cambiar la relación con los pensamientos difíciles en lugar de discutir con ellos, y orientar lo que haces hacia lo que de verdad te importa.',
+  },
+  {
+    titulo: 'Terapia Dialéctico Conductual (DBT)',
+    texto:
+      'Desarrollada por Marsha Linehan, enseña habilidades de regulación emocional, tolerancia al malestar y relaciones interpersonales.',
+  },
+];
+
+const ideas = [
+  {
+    creencia: 'Es pensar en positivo',
+    realidad:
+      'No se trata de sustituir un pensamiento negativo por uno positivo, sino de pensar de forma más ajustada a los hechos. A veces eso incluye reconocer que una situación es difícil de verdad y buscar cómo afrontarla.',
+  },
+  {
+    creencia: 'Es fría y mecánica',
+    realidad:
+      'La estructura está al servicio de la persona, no al revés. La relación terapéutica, la escucha y la confianza son tan importantes en la TCC como en cualquier otro enfoque.',
+  },
+  {
+    creencia: 'No le importa el pasado',
+    realidad:
+      'Se centra en lo que mantiene el problema hoy, pero entender cómo se formaron ciertas creencias y patrones a lo largo de tu historia forma parte del trabajo.',
+  },
+  {
+    creencia: 'Solo sirve para problemas leves',
+    realidad:
+      'Se utiliza también en problemas intensos o de larga duración, a veces junto con otros tratamientos. Lo que cambia es el ritmo y la intensidad del proceso.',
+  },
+  {
+    creencia: 'El terapeuta te dice lo que tienes que pensar',
+    realidad:
+      'Se trabaja con preguntas y pequeños experimentos para poner a prueba las ideas. Las conclusiones las sacas tú: el objetivo es que aprendas a hacerlo por tu cuenta.',
+  },
+];
+
+const fuentes = [
+  {
+    autoria: 'Beck, A. T., Rush, A. J., Shaw, B. F. y Emery, G. (1979).',
+    titulo: 'Cognitive Therapy of Depression',
+    detalle: 'Guilford Press',
+  },
+  {
+    autoria: 'Ellis, A. (1962).',
+    titulo: 'Reason and Emotion in Psychotherapy',
+    detalle: 'Lyle Stuart',
+  },
+  {
+    autoria: 'Linehan, M. M. (1993).',
+    titulo: 'Cognitive-Behavioral Treatment of Borderline Personality Disorder',
+    detalle: 'Guilford Press',
+  },
+  {
+    autoria: 'Hayes, S. C., Strosahl, K. D. y Wilson, K. G. (1999).',
+    titulo: 'Acceptance and Commitment Therapy',
+    detalle: 'Guilford Press',
+  },
+  {
+    autoria: 'National Institute for Health and Care Excellence (2022).',
+    titulo: 'Depression in adults: treatment and management',
+    detalle: 'Guía NG222',
+  },
+  {
+    autoria: 'National Institute for Health and Care Excellence (2011).',
+    titulo: 'Generalised anxiety disorder and panic disorder in adults: management',
+    detalle: 'Guía CG113',
+  },
+];
+---
+
+<Base title={title} description={description}>
+  <script
+    type="application/ld+json"
+    slot="head"
+    is:inline
+    set:html={JSON.stringify(jsonLd)}
+  ></script>
+  <Header />
+
+  <main class="text-ink">
+    <Cabecera rotulo="Enfoques terapéuticos" titulo="Terapia Cognitivo-Conductual">
+      <p class="animate-hero-in mt-5 max-w-2xl text-lg text-pretty text-cream-50/85 [animation-delay:80ms]">
+        Qué es la TCC, de dónde viene, cómo entiende el malestar y cómo se trabaja en consulta,
+        explicado paso a paso y sin tecnicismos.
+      </p>
+      <div slot="lateral" class="rounded-2xl border border-navy-600/60 bg-navy-900/40 p-6">
+        <p class="font-serif text-sm font-semibold tracking-[0.1em] text-gold-400 uppercase">
+          En pocas palabras
+        </p>
+        <ul class="mt-4 space-y-3 text-sm text-cream-50/90">
+          {enPocasPalabras.map((rasgo) => (
+            <li class="flex items-center gap-3">
+              <span class="h-1 w-4 shrink-0 bg-gold-400" aria-hidden="true" />
+              {rasgo}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Cabecera>
+
+    <Documento apartados={lista}>
+      <Apartado {...a['que-es']}>
+        <p class={parrafo}>
+          La Terapia Cognitivo-Conductual (TCC) parte de una idea sencilla: lo que nos hace sufrir
+          no es solo lo que nos pasa, sino cómo lo interpretamos y lo que hacemos a partir de ahí.
+          Dos personas pueden vivir la misma situación y sentirse de forma muy distinta según lo que
+          piensen de ella.
+        </p>
+        <p class={parrafo}>
+          Por eso la TCC trabaja sobre dos palancas que sí están a nuestro alcance: los pensamientos
+          (la parte «cognitiva») y los comportamientos (la parte «conductual»). No promete que
+          desaparezcan los problemas, sino ayudarte a relacionarte con ellos de otra manera y a
+          salir de los círculos que mantienen el malestar.
+        </p>
+        <ul class="mt-6 grid gap-4 sm:grid-cols-2">
+          {rasgos.map((rasgo) => (
+            <li class={tarjeta}>
+              <h3 class="font-serif text-lg font-semibold text-navy-800">{rasgo.titulo}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-pretty text-ink/75">{rasgo.texto}</p>
+            </li>
+          ))}
+        </ul>
+      </Apartado>
+
+      <Apartado {...a.origen}>
+        <p class={parrafo}>
+          La TCC nace de la unión de dos tradiciones. La primera es la{' '}
+          <strong class="font-semibold text-navy-800">terapia de conducta</strong>, que desde los
+          años cincuenta aplicó lo que se sabía sobre el aprendizaje a problemas como las fobias: si
+          un miedo se ha aprendido, también puede desaprenderse.
+        </p>
+        <p class={parrafo}>
+          La segunda llega en los años sesenta. El psiquiatra{' '}
+          <strong class="font-semibold text-navy-800">Aaron T. Beck</strong> observó que las
+          personas con depresión tenían pensamientos negativos que aparecían de forma automática y
+          que casi nunca se cuestionaban, y desarrolló la terapia cognitiva para trabajar con ellos.
+          En paralelo, <strong class="font-semibold text-navy-800">Albert Ellis</strong> creó la
+          terapia racional emotiva, centrada en las creencias rígidas que hay detrás de muchas
+          emociones intensas.
+        </p>
+        <p class={parrafo}>
+          Durante los años setenta y ochenta ambas corrientes se integraron en lo que hoy conocemos
+          como TCC. Desde entonces no ha dejado de investigarse y de evolucionar, hasta incorporar
+          las llamadas terapias de tercera generación, de las que se habla más abajo.
+        </p>
+      </Apartado>
+
+      <Apartado {...a.modelo}>
+        <p class={parrafo}>
+          La TCC entiende el malestar como un ciclo: ante una situación aparece un pensamiento, ese
+          pensamiento provoca una emoción, y la emoción empuja a actuar de una manera concreta. Lo
+          que hacemos, a su vez, influye en cómo vemos la siguiente situación. Un ejemplo cotidiano:
+        </p>
+
+        <ol class="mt-6 grid gap-3 sm:grid-cols-2">
+          {ciclo.map((paso, i) => (
+            <li
+              class:list={[tarjeta, 'relative', { 'sm:order-4': i === 2, 'sm:order-3': i === 3 }]}
+            >
+              {i < ciclo.length - 1 && (
+                <span
+                  class:list={[flecha, 'bottom-[-18px] left-1/2 flex -translate-x-1/2 sm:hidden']}
+                  aria-hidden="true"
+                >
+                  ↓
+                </span>
+              )}
+              <span class:list={[flecha, 'hidden', flechasCiclo[i].clase]} aria-hidden="true">
+                {flechasCiclo[i].signo}
+              </span>
+              <p class="flex items-center gap-3">
+                <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-navy-800 font-serif text-sm font-semibold text-cream-50 lining-nums">
+                  {i + 1}
+                </span>
+                <span class="font-serif text-lg font-semibold text-navy-800">{paso.fase}</span>
+              </p>
+              <p class="mt-3 text-sm leading-relaxed text-pretty text-ink/75">{paso.ejemplo}</p>
+            </li>
+          ))}
+        </ol>
+        <p class="mt-3 flex items-start gap-3 text-sm leading-relaxed text-ink/70">
+          <svg
+            viewBox="0 0 256 256"
+            fill="currentColor"
+            class="mt-0.5 h-5 w-5 shrink-0 text-gold-400"
+            aria-hidden="true"
+          >
+            <path d={iconos.reestructurar} />
+          </svg>
+          <span class="text-pretty">
+            Y vuelta a empezar: al evitar a tu jefa no llegas a saber qué quería, así que la idea de
+            que algo va mal sigue en pie y la próxima vez aparece antes.
+          </span>
+        </p>
+
+        <h3 class={subtitulo}>Dónde se puede intervenir</h3>
+        <p class={parrafo}>
+          El ciclo se puede cortar por dos puntos. En el{' '}
+          <strong class="font-semibold text-navy-800">pensamiento</strong>, revisando si esa
+          interpretación es la única posible. Y en la{' '}
+          <strong class="font-semibold text-navy-800">conducta</strong>, haciendo algo distinto a lo
+          que el miedo pide (en el ejemplo, preguntar directamente qué quería). Las emociones no se
+          pueden cambiar a voluntad, pero cambian cuando cambian los otros dos elementos.
+        </p>
+      </Apartado>
+
+      <Apartado {...a.pensamientos}>
+        <p class={parrafo}>
+          Los pensamientos automáticos son interpretaciones rápidas que aparecen solas, sin que las
+          busquemos, y que solemos dar por ciertas sin comprobarlas. No son un fallo: son la forma
+          que tiene la mente de ahorrar tiempo. El problema llega cuando siguen siempre el mismo
+          sesgo. Estas son algunas de las «trampas mentales» más frecuentes:
+        </p>
+
+        <ul class="mt-6 grid gap-4 sm:grid-cols-2">
+          {trampas.map((t) => (
+            <li class="rounded-2xl border border-navy-100 bg-white p-5">
+              <h3 class="font-serif text-lg font-semibold text-navy-800">{t.nombre}</h3>
+              <p class="mt-1 text-sm leading-relaxed text-ink/70">{t.texto}</p>
+              <p class="mt-3 border-l-2 border-gold-400 pl-3 text-sm leading-relaxed text-pretty text-ink/80 italic">
+                «{t.ejemplo}»
+              </p>
+            </li>
+          ))}
+        </ul>
+
+        <h3 class={subtitulo}>Del pensamiento automático al alternativo</h3>
+        <p class={parrafo}>
+          En terapia se aprende a detectar estos pensamientos y a examinarlos con preguntas, como se
+          haría con una hipótesis. Volviendo al ejemplo del mensaje de tu jefa:
+        </p>
+        <div class="mt-6 grid overflow-hidden rounded-2xl border border-navy-100 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
+          <div class="bg-navy-100/60 p-5">
+            <p class="text-xs font-medium tracking-[0.12em] text-navy-600 uppercase">
+              Pensamiento automático
+            </p>
+            <p class="mt-2 font-serif text-lg leading-snug font-semibold text-navy-800">
+              «Seguro que he hecho algo mal».
+            </p>
+          </div>
+          <div
+            class="flex items-center justify-center bg-white px-4 py-2 text-2xl text-gold-400"
+            aria-hidden="true"
+          >
+            <span class="rotate-90 sm:rotate-0">→</span>
+          </div>
+          <div class="bg-cream-50 p-5">
+            <p class="text-xs font-medium tracking-[0.12em] text-navy-600 uppercase">
+              Pensamiento alternativo
+            </p>
+            <p class="mt-2 font-serif text-lg leading-snug font-semibold text-navy-800">
+              «No sé para qué me quiere. Puede ser cualquier cosa, y si hay un problema lo
+              hablaremos».
+            </p>
+          </div>
+          <div class="border-t border-navy-100 bg-white p-5 sm:col-span-3">
+            <p class="text-sm font-medium text-navy-800">Preguntas que ayudan a revisarlo</p>
+            <ul class="mt-3 grid gap-2 text-sm text-ink/75 sm:grid-cols-2">
+              {preguntasRevision.map((pregunta) => (
+                <li class="flex items-start gap-3">
+                  <span
+                    class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-400"
+                    aria-hidden="true"
+                  />
+                  <span class="text-pretty">{pregunta}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <p class={parrafo}>
+          El pensamiento alternativo no es más optimista: es más ajustado a los datos que tienes. Y
+          suele bajar la ansiedad lo suficiente como para hacer lo que de verdad resuelve la duda:
+          ir a hablar con ella.
+        </p>
+      </Apartado>
+
+      <Apartado {...a['para-que']}>
+        <p class={parrafo}>
+          La TCC se utiliza en muchos problemas psicológicos. Estos son los motivos de consulta con
+          los que trabajo y lo que aporta el enfoque en cada uno:
+        </p>
+        <ul class="mt-6 grid gap-4 sm:grid-cols-2">
+          {usos.map((uso) => (
+            <li class={tarjeta}>
+              <h3 class="font-serif text-lg font-semibold text-navy-800">{uso.titulo}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-pretty text-ink/75">{uso.texto}</p>
+            </li>
+          ))}
+        </ul>
+      </Apartado>
+
+      <Apartado {...a.proceso}>
+        <p class={parrafo}>
+          Cada proceso es distinto, pero la mayoría recorre estas cuatro fases, que a veces se
+          solapan:
+        </p>
+        <Pasos pasos={fases} nivel="h3" />
+        <h3 class={subtitulo}>¿Cuánto dura?</h3>
+        <p class={parrafo}>
+          Depende del problema, de su intensidad y de cada persona. Como referencia, las guías
+          clínicas describen para la ansiedad y la depresión procesos de alrededor de 12 a 20
+          sesiones, normalmente semanales al principio y más espaciadas al final. No es un plazo
+          cerrado: la evolución se revisa de forma periódica y el proceso se ajusta a lo que vaya
+          haciendo falta.
+        </p>
+      </Apartado>
+
+      <Apartado {...a.sesion}>
+        <p class={parrafo}>
+          Las sesiones de TCC tienen una estructura reconocible, que da orden sin quitar espacio a
+          lo que traigas ese día. Una sesión típica tiene cuatro momentos:
+        </p>
+        <ol class="mt-6 grid gap-4 sm:grid-cols-2">
+          {momentosSesion.map((momento, i) => (
+            <li class="flex gap-4 rounded-2xl border border-navy-100 bg-white p-5">
+              <span class="font-serif text-3xl leading-none font-semibold text-gold-400 lining-nums tabular-nums">
+                {i + 1}
+              </span>
+              <div>
+                <h3 class="font-semibold text-navy-800">{momento.titulo}</h3>
+                <p class="mt-1 text-sm leading-relaxed text-pretty text-ink/70">{momento.texto}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <h3 class={subtitulo}>Tu papel</h3>
+        <p class={parrafo}>
+          En la TCC el paciente tiene un papel activo. Se habla, pero también se analizan
+          situaciones concretas, se prueban formas distintas de actuar y se practica entre sesiones.
+          Las tareas se pactan, no se imponen, y se adaptan a tu momento: si una no ha salido, se
+          analiza qué la dificultó, que también es información útil.
+        </p>
+      </Apartado>
+
+      <Apartado {...a.herramientas}>
+        <p class={parrafo}>
+          La TCC dispone de un repertorio amplio de técnicas. No se usan todas con todo el mundo: se
+          eligen según el problema y los objetivos. Estas son algunas de las más habituales:
+        </p>
+        <ul class="mt-6 grid gap-4 sm:grid-cols-2">
+          {herramientas.map((h) => (
+            <li class="rounded-2xl border border-navy-100 bg-white p-5">
+              <div class="flex items-center gap-3">
+                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-navy-100">
+                  <svg
+                    viewBox="0 0 256 256"
+                    fill="currentColor"
+                    class="h-5 w-5 text-navy-800"
+                    aria-hidden="true"
+                  >
+                    <path d={h.icono} />
+                  </svg>
+                </span>
+                <h3 class="font-serif text-lg leading-snug font-semibold text-navy-800">
+                  {h.titulo}
+                </h3>
+              </div>
+              <p class="mt-3 text-sm leading-relaxed text-pretty text-ink/75">{h.texto}</p>
+            </li>
+          ))}
+        </ul>
+      </Apartado>
+
+      <Apartado {...a['tercera-generacion']}>
+        <p class={parrafo}>
+          Desde los años noventa, la TCC ha incorporado nuevas herramientas que ponen el foco menos
+          en cambiar el contenido de los pensamientos y más en la relación que tenemos con ellos y
+          con nuestras emociones. Se las conoce como terapias de tercera generación:
+        </p>
+        <ul class="mt-6 space-y-4">
+          {terceraGeneracion.map((t) => (
+            <li class="flex items-start gap-4">
+              <span class="mt-2.5 h-1 w-4 shrink-0 bg-gold-400" aria-hidden="true" />
+              <div>
+                <h3 class="font-semibold text-navy-800">{t.titulo}</h3>
+                <p class="mt-1 text-sm leading-relaxed text-pretty text-ink/75">{t.texto}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <p class={parrafo}>
+          Mi formación en Terapia Dialéctico Conductual (Universidad Aconcagua) me permite
+          incorporar, cuando encaja con el proceso, herramientas de regulación emocional que
+          complementan el trabajo cognitivo-conductual.
+        </p>
+      </Apartado>
+
+      <Apartado {...a.online}>
+        <p class={parrafo}>
+          La TCC se adapta bien a la videollamada, porque buena parte del trabajo es conversación,
+          análisis de situaciones y práctica. Los registros y ejercicios se pueden compartir en
+          pantalla o por escrito, y las tareas entre sesiones funcionan igual que en consulta.
+        </p>
+        <p class={parrafo}>
+          Tiene además alguna ventaja propia: se practica en tu propio entorno, que es donde
+          aparecen los problemas, y se evitan desplazamientos que a veces dificultan mantener la
+          regularidad.
+        </p>
+        <h3 class={subtitulo}>Qué hace falta</h3>
+        <ul class="mt-4 space-y-2 text-ink/80">
+          {[
+            'Un dispositivo con cámara y micrófono, y una conexión estable.',
+            'Un espacio tranquilo y privado donde puedas hablar con libertad.',
+            'Auriculares, para ganar privacidad y calidad de sonido.',
+            'Papel y bolígrafo (o el móvil) para registros y tareas.',
+          ].map((item) => (
+            <li class="flex items-start gap-3">
+              <span class="mt-2.5 h-1 w-4 shrink-0 bg-gold-400" aria-hidden="true" />
+              <span class="leading-relaxed text-pretty">{item}</span>
+            </li>
+          ))}
+        </ul>
+      </Apartado>
+
+      <Apartado {...a['ideas-erroneas']}>
+        <p class={parrafo}>
+          Alrededor de la TCC circulan algunas ideas que no se corresponden con cómo se trabaja en
+          realidad:
+        </p>
+        <IdeasErroneas ideas={ideas} />
+      </Apartado>
+
+      <Apartado {...a.investigacion}>
+        <p class={parrafo}>
+          La TCC es uno de los enfoques psicológicos más investigados. Las guías clínicas del
+          Instituto Nacional de Salud y Excelencia Clínica del Reino Unido (NICE) la incluyen entre
+          los tratamientos psicológicos recomendados para la depresión y para trastornos de ansiedad
+          como la ansiedad generalizada o el pánico.
+        </p>
+        <p class={parrafo}>
+          También se ha estudiado en formato online. En muchos problemas frecuentes, la terapia por
+          videollamada obtiene resultados comparables a la presencial.
+        </p>
+        <div class="mt-6 rounded-2xl border-l-4 border-gold-400 bg-cream-50 p-5">
+          <p class="text-sm leading-relaxed text-pretty text-ink/80">
+            <strong class="font-semibold text-navy-800">Una advertencia honesta:</strong> los
+            estudios describen resultados promedio en grupos de personas. Sirven para elegir
+            enfoques con respaldo, pero no garantizan un resultado concreto en un caso particular.
+            Cada proceso es distinto y se revisa sobre la marcha.
+          </p>
+        </div>
+      </Apartado>
+
+      <Apartado {...a.fuentes}>
+        <p class={parrafo}>Obras y guías citadas o en las que se basa esta página:</p>
+        <Fuentes fuentes={fuentes} />
+      </Apartado>
+
+      <OtroEnfoque
+        href={withBase('/terapia-emdr/')}
+        titulo="Terapia EMDR"
+        texto="Un enfoque específico para procesar recuerdos y experiencias difíciles que siguen afectando al presente."
+        icono={iconos.ojo}
+      />
+    </Documento>
+
+    <Contacto />
+  </main>
+
+  <Revelar />
+</Base>
