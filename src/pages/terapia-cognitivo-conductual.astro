@@ -18,10 +18,13 @@ import { parrafo, subtitulo, tarjeta } from '../lib/estilo';
 // Página explicativa: informa sobre el enfoque, no busca la conversión (sin
 // llamadas a la acción ni botón flotante). Las afirmaciones sobre la evidencia
 // van atribuidas y sin prometer resultados (publicidad sanitaria).
-const title = 'Terapia Cognitivo-Conductual (TCC): qué es y cómo funciona · Clínica Conecta';
+const title = 'Terapia Cognitivo-Conductual (TCC): qué es · Clínica Conecta';
 const description =
   'Qué es la Terapia Cognitivo-Conductual, de dónde viene, cómo entiende el malestar, cómo es un proceso y una sesión, qué herramientas usa y qué dice la investigación.';
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+// URL de la home, para el @id del autor (el mismo `persona` de index.astro) y
+// para la migaja de pan: esta página no cuelga de una ruta intermedia real.
+const inicioUrl = new URL(withBase('/'), Astro.site).toString();
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -30,11 +33,28 @@ const jsonLd = {
   description,
   url: canonical,
   inLanguage: 'es',
+  author: { '@id': `${inicioUrl}#juan` },
+  datePublished: '2026-09-29',
+  dateModified: '2026-09-30',
   about: {
     '@type': 'MedicalTherapy',
     name: 'Terapia Cognitivo-Conductual',
     alternateName: ['TCC', 'Cognitive Behavioral Therapy'],
   },
+};
+
+const migasJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Inicio', item: inicioUrl },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Terapia Cognitivo-Conductual (TCC)',
+      item: canonical,
+    },
+  ],
 };
 
 const { lista, porId: a } = indexar([
@@ -312,6 +332,18 @@ const ideas = [
   },
 ];
 
+// Mismo contenido de `ideas` (visible en <IdeasErroneas />, «Se suele pensar
+// / En realidad»), marcado como preguntas frecuentes para buscadores e IA.
+const ideasJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: ideas.map((idea) => ({
+    '@type': 'Question',
+    name: idea.creencia,
+    acceptedAnswer: { '@type': 'Answer', text: idea.realidad },
+  })),
+};
+
 const fuentes = [
   {
     autoria: 'Beck, A. T., Rush, A. J., Shaw, B. F. y Emery, G. (1979).',
@@ -352,6 +384,18 @@ const fuentes = [
     slot="head"
     is:inline
     set:html={JSON.stringify(jsonLd)}
+  ></script>
+  <script
+    type="application/ld+json"
+    slot="head"
+    is:inline
+    set:html={JSON.stringify(migasJsonLd)}
+  ></script>
+  <script
+    type="application/ld+json"
+    slot="head"
+    is:inline
+    set:html={JSON.stringify(ideasJsonLd)}
   ></script>
   <Header />
 

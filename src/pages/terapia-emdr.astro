@@ -25,6 +25,9 @@ const description =
   'Qué es la terapia EMDR, de dónde viene, cómo entiende el malestar, qué es la estimulación bilateral, cómo son sus 8 fases y una sesión, y qué dice la investigación.';
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 const sello = withBase('/acreditaciones/emdr-europe-formacion-acreditada.webp');
+// URL de la home, para el @id del autor (el mismo `persona` de index.astro) y
+// para la migaja de pan: esta página no cuelga de una ruta intermedia real.
+const inicioUrl = new URL(withBase('/'), Astro.site).toString();
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -33,6 +36,9 @@ const jsonLd = {
   description,
   url: canonical,
   inLanguage: 'es',
+  author: { '@id': `${inicioUrl}#juan` },
+  datePublished: '2026-09-29',
+  dateModified: '2026-09-30',
   about: {
     '@type': 'MedicalTherapy',
     name: 'Terapia EMDR',
@@ -42,6 +48,15 @@ const jsonLd = {
       'Eye Movement Desensitization and Reprocessing',
     ],
   },
+};
+
+const migasJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Inicio', item: inicioUrl },
+    { '@type': 'ListItem', position: 2, name: 'Terapia EMDR', item: canonical },
+  ],
 };
 
 const { lista, porId: a } = indexar([
@@ -240,6 +255,18 @@ const ideas = [
   },
 ];
 
+// Mismo contenido de `ideas` (visible en <IdeasErroneas />, «Se suele pensar
+// / En realidad»), marcado como preguntas frecuentes para buscadores e IA.
+const ideasJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: ideas.map((idea) => ({
+    '@type': 'Question',
+    name: idea.creencia,
+    acceptedAnswer: { '@type': 'Answer', text: idea.realidad },
+  })),
+};
+
 const fuentes = [
   {
     autoria: 'Shapiro, F. (1989).',
@@ -276,6 +303,18 @@ const fuentes = [
     slot="head"
     is:inline
     set:html={JSON.stringify(jsonLd)}
+  ></script>
+  <script
+    type="application/ld+json"
+    slot="head"
+    is:inline
+    set:html={JSON.stringify(migasJsonLd)}
+  ></script>
+  <script
+    type="application/ld+json"
+    slot="head"
+    is:inline
+    set:html={JSON.stringify(ideasJsonLd)}
   ></script>
   <Header />
 
@@ -352,11 +391,11 @@ const fuentes = [
           cuando un disgusto duele mucho al principio y, con el tiempo, se puede recordar con calma.
         </p>
         <p class={parrafo}>
-          Cuando una experiencia desborda esa capacidad (por su intensidad, por repetirse o por
-          ocurrir en un momento de especial vulnerabilidad), puede quedar almacenada «sin procesar»:
-          con las imágenes, las emociones, las sensaciones y las creencias del momento en que
-          ocurrió. Por eso algo del presente que se le parece puede activarla y hacer que se
-          reaccione como entonces.
+          Cuando una experiencia desborda esa capacidad, puede quedar almacenada «sin procesar»: con
+          las imágenes, las emociones, las sensaciones y las creencias del momento en que ocurrió.
+          Eso pasa, sobre todo, cuando la experiencia es muy intensa, se repite o llega en un
+          momento de especial vulnerabilidad. Por eso algo del presente que se le parece puede
+          activarla y hacer que se reaccione como entonces.
         </p>
 
         <div class="mt-6 grid overflow-hidden rounded-2xl border border-navy-100 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
@@ -565,6 +604,11 @@ const fuentes = [
             </li>
           ))}
         </ul>
+        <p class={parrafo}>
+          Si se trata de una crisis aguda o de un riesgo para tu vida o la de otra persona, llama al
+          024 (atención a la conducta suicida) o al 112 (emergencias); si sufres violencia de
+          género, al 016.
+        </p>
         <p class={parrafo}>
           Todo esto se valora en las fases de historia y preparación. Además, EMDR puede combinarse
           con otros enfoques dentro del mismo proceso, como la{' '}
