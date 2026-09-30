@@ -7,3 +7,9 @@ export const foco =
 
 // Enlace dentro de un texto sobre fondo claro: subrayado dorado.
 export const enlace = `rounded-sm underline decoration-gold-400 underline-offset-4 transition-colors duration-300 ${curva} hover:text-navy-600 ${foco}`;
+
+// Texto corrido y subtítulos dentro de un <Apartado /> (páginas explicativas).
+export const parrafo = 'mt-4 leading-relaxed text-pretty text-ink/80';
+export const subtitulo = 'mt-8 font-serif text-lg font-semibold text-balance text-navy-800';
+// Tarjeta clara dentro de la columna de texto.
+export const tarjeta = 'rounded-2xl border border-navy-100 bg-cream-50 p-6';

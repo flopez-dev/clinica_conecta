@@ -1,0 +1,81 @@
+---
+// Cuerpo de las páginas de lectura larga (legales y explicativas): índice «En
+// esta página» y columna de texto con los apartados (<Apartado /> en el slot),
+// cerrada con «Volver al inicio». En móvil el índice es una tarjeta al
+// principio; desde md, una columna fija bajo el header que marca el apartado
+// que se está leyendo.
+import { withBase } from '../lib/withBase';
+import type { Apartado } from '../lib/apartados';
+import { curva, enlace, foco } from '../lib/estilo';
+
+interface Props {
+  apartados: Apartado[];
+}
+
+const { apartados } = Astro.props;
+---
+
+<div class="bg-white px-6 py-16 sm:py-20">
+  <div class="mx-auto grid max-w-5xl gap-10 md:grid-cols-[13rem_minmax(0,1fr)] md:gap-16">
+    <nav
+      aria-labelledby="indice-titulo"
+      data-indice
+      class="self-start rounded-2xl bg-cream-50 p-6 md:sticky md:top-28 md:bg-transparent md:p-0"
+    >
+      <p
+        id="indice-titulo"
+        class="font-serif text-sm font-semibold tracking-[0.1em] text-navy-800 uppercase"
+      >
+        En esta página
+      </p>
+      <ol class="mt-4 space-y-1 border-l border-navy-100 text-sm">
+        {apartados.map((a) => (
+          <li>
+            <a
+              href={`#${a.id}`}
+              class={`-ml-px flex gap-2 rounded-sm border-l-2 border-transparent py-1 pl-4 leading-snug text-ink/70 transition-colors duration-300 ${curva} hover:text-navy-600 aria-[current=true]:border-gold-400 aria-[current=true]:font-medium aria-[current=true]:text-navy-800 ${foco}`}
+            >
+              {a.numero !== undefined && (
+                <span class="w-6 shrink-0 text-navy-600 tabular-nums">{a.numero}.</span>
+              )}
+              {a.titulo}
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <div data-documento class="max-w-prose min-w-0 space-y-14">
+      <slot />
+
+      <p class="border-t border-navy-100 pt-8 text-sm">
+        <a href={withBase('/')} class={`inline-flex items-center gap-2 text-navy-800 ${enlace}`}>
+          <svg viewBox="0 0 256 256" fill="currentColor" class="h-4 w-4" aria-hidden="true">
+            <path d="M224 128a8 8 0 0 1-8 8H59.31l58.35 58.34a8 8 0 0 1-11.32 11.32l-72-72a8 8 0 0 1 0-11.32l72-72a8 8 0 0 1 11.32 11.32L59.31 120H216a8 8 0 0 1 8 8"></path>
+          </svg>
+          Volver al inicio
+        </a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Marca en el índice el apartado que se está leyendo. La franja de
+  // observación empieza bajo el header fijo y ocupa el tercio superior.
+  const enlaces = [...document.querySelectorAll<HTMLAnchorElement>('[data-indice] a')];
+  const porId = new Map(enlaces.map((a) => [decodeURIComponent(a.hash.slice(1)), a]));
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        enlaces.forEach((a) => a.removeAttribute('aria-current'));
+        porId.get(entry.target.id)?.setAttribute('aria-current', 'true');
+      }
+    },
+    { rootMargin: '-120px 0px -65% 0px' },
+  );
+
+  document.querySelectorAll('[data-documento] > section[id]').forEach((s) => io.observe(s));
+</script>

@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import WhatsAppFloat from '../components/WhatsAppFloat.astro';
 import Contacto from '../components/Contacto.astro';
 import Revelar from '../components/Revelar.astro';
+import Pasos from '../components/Pasos.astro';
 import { withBase } from '../lib/withBase';
 import {
   buscadorProfesionalesHref,
@@ -18,7 +19,8 @@ import {
   whatsappHref,
   whatsappPerfilHref,
 } from '../lib/contacto';
-import { curva, foco } from '../lib/estilo';
+import { curva, enlace, foco } from '../lib/estilo';
+import { iconos as iconosEnfoques } from '../lib/iconos';
 
 const title = 'Juan Ignacio Riccardi · Psicólogo online en español · Clínica Conecta';
 const description =
@@ -205,19 +207,16 @@ const paraQuienEs = [
 
 const pasos = [
   {
-    numero: '1',
     titulo: 'Escríbeme',
     texto:
       'Cuéntame por WhatsApp, en pocas palabras, qué te trae a terapia. Si prefieres hablar antes, empezamos con una primera llamada gratuita de 15 minutos.',
   },
   {
-    numero: '2',
     titulo: 'Sesión online',
     texto:
       'Videollamada de 50 minutos, en un espacio privado y confidencial, por Google Meet, Zoom o WhatsApp.',
   },
   {
-    numero: '3',
     titulo: 'Seguimiento',
     texto:
       'Avanzamos sesión a sesión, ajustando el enfoque y las herramientas a tu proceso y tu ritmo.',
@@ -243,18 +242,30 @@ const condiciones: { icono: string; clave: string; valor: string; destacado?: st
   { icono: 'clock', clave: 'Horarios', valor: 'Amplia disponibilidad horaria.' },
 ];
 
+// Enfoques: resumen breve; el detalle está en sus páginas explicativas.
 const enfoques = [
   {
     titulo: 'TCC (Terapia Cognitivo-Conductual)',
     texto:
-      'Parte de una idea sencilla: no son los hechos los que nos hacen sufrir, sino cómo los interpretamos y lo que hacemos a partir de ahí. Es un enfoque práctico y estructurado: identificamos juntos esos pensamientos que no te ayudan, como pensar "todo me va a salir mal" tras un solo contratiempo, y los sustituimos por formas de pensar más realistas. También vamos cambiando, poco a poco, los comportamientos que mantienen tu malestar, como evitar situaciones por miedo. Es especialmente eficaz para la ansiedad, la depresión y el estrés, y suele dar resultados visibles en relativamente poco tiempo.',
+      'Un enfoque práctico y estructurado: identificamos juntos los pensamientos y conductas que mantienen el malestar y los cambiamos paso a paso.',
+    utilPara: 'Ansiedad, depresión y estrés',
+    href: withBase('/terapia-cognitivo-conductual/'),
+    enlace: 'Conoce la TCC',
+    icono: iconosEnfoques.cerebro,
+    sello: false,
   },
   {
     titulo: 'EMDR',
     texto:
-      'Es una terapia que ayuda a tu cerebro a "digerir" recuerdos o experiencias difíciles que se han quedado atascados y te siguen afectando en el presente, aunque haya pasado tiempo: ansiedad, pesadillas o reacciones desproporcionadas ante ciertas situaciones. Durante la sesión, mientras recuerdas brevemente esa experiencia, te guío a través de un tipo de estimulación (normalmente con movimientos oculares) que ayuda a tu cerebro a procesar ese recuerdo de una forma más sana. No se trata de olvidar lo ocurrido, sino de que deje de doler y de condicionar tu día a día.',
+      'Ayuda a procesar recuerdos y experiencias difíciles que siguen afectando al presente, para poder recordarlos sin revivirlos.',
+    utilPara: 'Experiencias difíciles y recuerdos que siguen doliendo',
+    href: withBase('/terapia-emdr/'),
+    enlace: 'Conoce EMDR',
+    icono: iconosEnfoques.ojo,
+    sello: true,
   },
 ];
+const selloEmdr = withBase('/acreditaciones/emdr-europe-formacion-acreditada.webp');
 
 const faqs = [
   {
@@ -424,9 +435,15 @@ const faqJsonLd = {
               ansiedad, estrés, duelo y depresión.
             </p>
             <p class="leading-relaxed text-ink/80">
-              Combino dos enfoques con base científica: la Terapia Cognitivo-Conductual (TCC), para
-              trabajar los pensamientos y comportamientos que mantienen el malestar, y EMDR, para
-              procesar traumas y experiencias difíciles.
+              Combino dos enfoques con base científica: la{' '}
+              <a href={withBase('/terapia-cognitivo-conductual/')} class={enlace}>
+                Terapia Cognitivo-Conductual (TCC)
+              </a>
+              , para trabajar los pensamientos y comportamientos que mantienen el malestar, y{' '}
+              <a href={withBase('/terapia-emdr/')} class={enlace}>
+                EMDR
+              </a>
+              , para procesar traumas y experiencias difíciles.
             </p>
             <p class="leading-relaxed text-ink/80">
               Mi trayectoria une la clínica y la educación. Llevo consulta privada, he acompañado a
@@ -536,9 +553,54 @@ const faqJsonLd = {
 
         <div data-reveal-group class="mt-8 grid gap-6 sm:grid-cols-2">
           {enfoques.map((enfoque) => (
-            <div class="rounded-3xl border border-navy-100 bg-white p-7 shadow-[0_16px_40px_-24px_rgba(42,63,106,0.35)]">
-              <h4 class="font-serif text-lg font-semibold text-navy-800">{enfoque.titulo}</h4>
+            <div
+              class={`group relative flex flex-col rounded-3xl border border-navy-100 bg-white p-7 shadow-[0_16px_40px_-24px_rgba(42,63,106,0.35)] transition-colors duration-300 ${curva} hover:border-navy-600/40`}
+            >
+              <div class="flex h-18 items-start justify-between gap-4">
+                <div class="flex h-12 w-12 items-center justify-center rounded-full bg-navy-100">
+                  <svg
+                    viewBox="0 0 256 256"
+                    fill="currentColor"
+                    class="h-6 w-6 text-navy-800"
+                    aria-hidden="true"
+                  >
+                    <path d={enfoque.icono} />
+                  </svg>
+                </div>
+                {enfoque.sello && (
+                  <img
+                    src={selloEmdr}
+                    alt="Sello de formación acreditada por EMDR Europe Association"
+                    title="Formación en EMDR (Nivel 1) acreditada por EMDR Europe"
+                    width="72"
+                    height="72"
+                    loading="lazy"
+                    class="h-18 w-18 rounded-full ring-1 ring-navy-100"
+                  />
+                )}
+              </div>
+              <h4 class="mt-1 font-serif text-lg font-semibold text-navy-800">{enfoque.titulo}</h4>
               <p class="mt-2 text-sm leading-relaxed text-ink/70">{enfoque.texto}</p>
+              <p class="mt-4 text-sm text-ink/80">
+                <span class="text-xs font-medium tracking-[0.12em] text-navy-600 uppercase">
+                  Útil para:
+                </span>{' '}
+                {enfoque.utilPara}
+              </p>
+              <a
+                href={enfoque.href}
+                class={`mt-auto inline-flex items-center gap-2 self-start rounded-sm pt-5 font-medium text-navy-800 after:absolute after:inset-0 after:rounded-3xl ${foco}`}
+              >
+                <span class="underline decoration-gold-400 underline-offset-4">
+                  {enfoque.enlace}
+                </span>
+                <span
+                  class={`inline-block transition-transform duration-300 ${curva} group-hover:translate-x-1`}
+                  aria-hidden="true"
+                >
+                  →
+                </span>
+              </a>
             </div>
           ))}
         </div>
@@ -577,25 +639,7 @@ const faqJsonLd = {
             <h3 class="font-serif text-xl font-semibold text-balance text-navy-800">
               Qué esperar de una sesión online
             </h3>
-            <ol class="mt-6">
-              {pasos.map((paso, i) => (
-                <li class:list={['relative flex gap-4', { 'pb-8': i < pasos.length - 1 }]}>
-                  {i < pasos.length - 1 && (
-                    <span
-                      class="absolute top-10 bottom-0 left-5 w-px bg-navy-100"
-                      aria-hidden="true"
-                    />
-                  )}
-                  <span class="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-navy-800 font-serif text-lg font-semibold text-cream-50">
-                    {paso.numero}
-                  </span>
-                  <div>
-                    <h4 class="font-semibold text-navy-800">{paso.titulo}</h4>
-                    <p class="mt-1 text-sm leading-relaxed text-ink/70">{paso.texto}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
+            <Pasos pasos={pasos} />
           </div>
         </div>
 
