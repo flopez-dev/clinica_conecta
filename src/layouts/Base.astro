@@ -11,6 +11,13 @@ interface Props {
 const { title, description, noindex = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(withBase('/og-image.png'), Astro.site);
+
+// GitHub Pages sirve `develop` como preview antes de promoverlo a `main`
+// (Cloudflare, el dominio real): no debe indexarse, o compite como contenido
+// duplicado con el dominio del cliente. `NOINDEX_SITE` solo lo pone
+// deploy-pages.yml; en Cloudflare y en local queda sin definir. Se combina
+// con el `noindex` de la propia página (la 404 ya lo lleva).
+const sitioNoIndexado = process.env.NOINDEX_SITE === 'true';
 ---
 
 <html lang="es">
@@ -32,7 +39,9 @@ const ogImage = new URL(withBase('/og-image.png'), Astro.site);
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex, follow" />}
+    {(noindex || sitioNoIndexado) && (
+      <meta name="robots" content={sitioNoIndexado ? 'noindex, nofollow' : 'noindex, follow'} />
+    )}
 
     <!-- Open Graph / redes sociales (WhatsApp incluido, al compartir el enlace) -->
     <meta property="og:type" content="website" />

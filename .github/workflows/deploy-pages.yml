@@ -31,11 +31,15 @@ jobs:
       - run: npm ci
 
       # Pages sirve este repositorio desde /clinica_conecta/, así que el
-      # artefacto se construye con un base distinto de raíz.
+      # artefacto se construye con un base distinto de raíz. NOINDEX_SITE
+      # bloquea la indexación de esta copia: es la preview de `develop`
+      # antes de promoverlo a `main` (Cloudflare, el dominio real), no una
+      # segunda web pública — sin esto compite como contenido duplicado.
       - run: npm run build
         env:
           SITE_URL: https://flopez-dev.github.io
           BASE_PATH: /clinica_conecta/
+          NOINDEX_SITE: 'true'
 
       # El deploy por artefacto no ejecuta Jekyll, pero por si acaso: evita
       # que se descarten ficheros que empiecen por "_" (p. ej. _astro/).

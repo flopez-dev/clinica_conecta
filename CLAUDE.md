@@ -120,6 +120,11 @@ La home (`/`) es la landing del negocio; además hay dos páginas legales (`/avi
 - Toda página se envuelve en `<Base title="…" description="…">` — ambas props son
   obligatorias. `noindex` solo lo lleva `404.astro`. El sitemap (`sitemap()` en
   `astro.config.mjs`) deja fuera la 404 por su cuenta.
+- **`NOINDEX_SITE=true` bloquea la indexación de todo el sitio** (`Base.astro` añade
+  `noindex, nofollow` en cada página y `robots.txt.ts` sirve `Disallow: /` para todos). Lo pone
+  `deploy-pages.yml`: GitHub Pages es la preview de `develop` antes de promoverlo a `main`
+  (Cloudflare, el dominio real), no una segunda web pública — sin esto, las dos copias compiten
+  como contenido duplicado. `deploy-cloudflare.yml` lo deja sin definir a propósito.
 - Tailwind v4 **sin** `tailwind.config.js`: los tokens viven en `@theme` de `src/styles/global.css`.
   No crear un config JS. Paleta de marca real: `navy-900/800/600/300/200/100`, `cream-50`,
   `gold-400`, `ink`; `navy-300`/`navy-200` son tonos claros para texto sobre azul (los usa la

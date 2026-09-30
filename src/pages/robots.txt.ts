@@ -23,6 +23,14 @@ const rastreadoresEntrenamientoIA = [
  * apuntar al sitemap correcto en los dos destinos a la vez.
  */
 export const GET: APIRoute = ({ site }) => {
+  // GitHub Pages sirve `develop` como preview: cierra el paso entero, no solo
+  // a los bots de entrenamiento de IA. Ver el mismo flag en Base.astro.
+  if (process.env.NOINDEX_SITE === 'true') {
+    return new Response('User-agent: *\nDisallow: /\n', {
+      headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+    });
+  }
+
   const sitemapUrl = new URL(withBase('/sitemap-index.xml'), site);
 
   const bloqueoIA = rastreadoresEntrenamientoIA.map((bot) => `User-agent: ${bot}`).join('\n');

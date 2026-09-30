@@ -27,6 +27,8 @@ jobs:
       # Servido desde la raíz del Worker, sin BASE_PATH. SITE_URL es lo que
       # acaba en canonical, en las etiquetas Open Graph y en el sitemap, así
       # que apunta al dominio propio aunque workers.dev siga respondiendo.
+      # NOINDEX_SITE (ver deploy-pages.yml) se deja sin definir a propósito:
+      # este es el dominio real, tiene que ser indexable.
       - run: npm run build
         env:
           SITE_URL: https://juanriccardiconecta.com
