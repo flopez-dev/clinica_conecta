@@ -39,11 +39,11 @@ cuenta de Cloudflare que recibe el deploy. Wrangler crea el registro DNS por su 
 
 ## Secretos necesarios en GitHub
 
-Para que `deploy-cloudflare.yml` despliegue, hay que añadir en
+Para que `deploy-cloudflare.yml` despliegue, tiene que haber en
 **Settings → Secrets and variables → Actions**:
 
-- `CLOUDFLARE_API_TOKEN`
+- `CLOUDFLARE_API_TOKEN_CLINICA_CONECTA`
 - `CLOUDFLARE_ACCOUNT_ID`
 
-Hasta entonces, ese workflow fallará en el último paso — `deploy-pages.yml` no depende
+Sin ellos, ese workflow falla en el último paso — `deploy-pages.yml` no depende
 de ellos y funciona desde el primer push a `develop`.

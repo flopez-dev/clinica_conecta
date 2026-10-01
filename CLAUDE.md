@@ -156,9 +156,9 @@ pasa las suyas.
 
 ## Estado conocido (no son bugs)
 
-- `deploy-cloudflare.yml` falla en el último paso hasta que se añadan los secretos
-  `CLOUDFLARE_API_TOKEN` y `CLOUDFLARE_ACCOUNT_ID` en GitHub. No lo trates como algo que
-  "arreglar" en el código.
+- `deploy-cloudflare.yml` necesita los secretos `CLOUDFLARE_API_TOKEN_CLINICA_CONECTA` (ojo: no
+  se llama `CLOUDFLARE_API_TOKEN`) y `CLOUDFLARE_ACCOUNT_ID` en GitHub, que ya están
+  configurados. Si el último paso falla, mira primero el token y sus permisos en Cloudflare.
 - El cliente reside y ejerce en Argentina, y atiende solo online: **no hay consulta física en
   España**. Por eso `/aviso-legal/` y `/privacidad/` no llevan NIF, domicilio profesional ni
   registro sanitario, y en su lugar declaran el lugar de ejercicio. No son huecos por rellenar,
