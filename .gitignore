@@ -18,6 +18,12 @@ node_modules/
 # Build output
 dist/
 .astro/
+.wrangler/
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
 
 # Claude Code — personal settings stay local, .claude/settings.json es compartido
 .claude/settings.local.json

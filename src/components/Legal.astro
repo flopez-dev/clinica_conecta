@@ -1,0 +1,53 @@
+---
+// Maqueta de las páginas legales: header, cabecera azul, índice de apartados y
+// cierre con la sección de contacto.
+import Header from './Header.astro';
+import Cabecera from './Cabecera.astro';
+import Contacto from './Contacto.astro';
+import Revelar from './Revelar.astro';
+import Documento from './Documento.astro';
+import type { Apartado } from '../lib/apartados';
+import { curva, foco } from '../lib/estilo';
+
+interface Props {
+  titulo: string;
+  entradilla: string;
+  /** Última revisión del texto (no del despliegue), p. ej. "25 de septiembre de 2026". */
+  actualizado: string;
+  apartados: Apartado[];
+  /** La otra página legal, enlazada desde la cabecera. */
+  otra: { href: string; texto: string };
+}
+
+const { titulo, entradilla, actualizado, apartados, otra } = Astro.props;
+---
+
+<Header />
+
+<main class="text-ink">
+  <Cabecera rotulo="Información legal" titulo={titulo}>
+    <p class="animate-hero-in mt-5 max-w-2xl text-lg text-pretty text-cream-50/85 [animation-delay:80ms]">
+      {entradilla}
+    </p>
+    <div class="animate-hero-in mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 [animation-delay:160ms]">
+      <p class="flex items-center gap-2 text-xs tracking-[0.12em] text-cream-50/70 uppercase">
+        <span class="h-1 w-4 shrink-0 bg-gold-400" aria-hidden="true"></span>
+        Actualizado el {actualizado}
+      </p>
+      <a
+        href={otra.href}
+        class={`rounded-sm text-sm text-cream-50/80 underline decoration-gold-400 underline-offset-4 transition-colors duration-300 ${curva} hover:text-cream-50 ${foco}`}
+      >
+        {otra.texto}
+      </a>
+    </div>
+  </Cabecera>
+
+  <Documento apartados={apartados}>
+    <slot />
+  </Documento>
+
+  <Contacto />
+</main>
+
+<Revelar />

@@ -1,0 +1,182 @@
+---
+import Base from '../layouts/Base.astro';
+import Legal from '../components/Legal.astro';
+import Apartado from '../components/Apartado.astro';
+import ListaDatos from '../components/ListaDatos.astro';
+import { withBase } from '../lib/withBase';
+import { numerar } from '../lib/apartados';
+import { buscadorProfesionalesHref, correo, telefonoLegible } from '../lib/contacto';
+import { enlace } from '../lib/estilo';
+
+const title = 'Aviso legal · Clínica Conecta';
+const description =
+  'Datos identificativos del titular de juanriccardiconecta.com, condiciones de uso del sitio, propiedad intelectual y limitación de responsabilidad.';
+
+// Última revisión del texto. Actualizar la fecha cada vez que cambie el
+// contenido, no en cada despliegue.
+const actualizado = '29 de septiembre de 2026';
+
+const { lista, porId: a } = numerar([
+  { id: 'titular', titulo: 'Titular del sitio web' },
+  { id: 'objeto', titulo: 'Objeto de este sitio' },
+  { id: 'no-sustituye', titulo: 'Los contenidos no sustituyen a una consulta' },
+  { id: 'condiciones', titulo: 'Condiciones de uso' },
+  { id: 'propiedad', titulo: 'Propiedad intelectual e industrial' },
+  { id: 'enlaces', titulo: 'Enlaces a sitios de terceros' },
+  { id: 'responsabilidad', titulo: 'Responsabilidad sobre el funcionamiento' },
+  { id: 'datos', titulo: 'Protección de datos' },
+  { id: 'legislacion', titulo: 'Legislación aplicable' },
+]);
+
+// El titular reside y ejerce en Argentina, así que no hay NIF ni domicilio
+// profesional en España que consignar. La identificación se apoya en el
+// nombre, el lugar de ejercicio, las vías de contacto y las credenciales.
+const identificacion = [
+  { clave: 'Titular', valor: 'Juan Ignacio Riccardi' },
+  {
+    clave: 'Lugar de ejercicio',
+    valor: 'Ejerce desde Argentina y atiende exclusivamente online, sin consulta física en España.',
+  },
+  { clave: 'Correo electrónico', valor: correo },
+  { clave: 'Teléfono', valor: telefonoLegible },
+  { clave: 'Sitio web', valor: 'juanriccardiconecta.com' },
+  {
+    clave: 'Título habilitante',
+    valor:
+      'Licenciado en Psicología por la Universidad del Salvador (Argentina) y Psicólogo General Sanitario en España por título homologado en 2024.',
+  },
+  {
+    clave: 'Colegiación',
+    valor:
+      'Colegiado nº 68849 en Argentina. Consta en el Buscador Nacional de Profesionales de la Salud del Ministerio de Salud de Argentina.',
+    enlace: {
+      texto: 'Buscador Nacional de Profesionales de la Salud',
+      href: buscadorProfesionalesHref,
+    },
+  },
+];
+
+// Mismas líneas de ayuda que cita la FAQ de la home.
+const urgencias = [
+  { numero: '112', texto: 'si hay riesgo para tu vida o la de otra persona.' },
+  { numero: '024', texto: 'atención a la conducta suicida, gratuita y a cualquier hora.' },
+  { numero: '016', texto: 'si sufres violencia de género.' },
+];
+---
+
+<Base title={title} description={description}>
+  <Legal
+    titulo="Aviso legal"
+    entradilla="Condiciones que rigen el acceso y el uso de juanriccardiconecta.com, en cumplimiento del artículo 10 de la Ley 34/2002, de servicios de la sociedad de la información y de comercio electrónico."
+    actualizado={actualizado}
+    apartados={lista}
+    otra={{ href: withBase('/privacidad/'), texto: 'Consulta también la política de privacidad' }}
+  >
+    <Apartado {...a.titular}>
+      <ListaDatos datos={identificacion} />
+    </Apartado>
+
+    <Apartado {...a.objeto}>
+      <p class="mt-4 leading-relaxed text-pretty text-ink/80">
+        Este sitio informa sobre los servicios de psicología online que presta su titular y sirve de
+        vía de contacto para solicitar una sesión. No permite contratar ni pagar en línea, no
+        incorpora formularios y no ofrece diagnóstico ni tratamiento a distancia.
+      </p>
+    </Apartado>
+
+    <Apartado {...a['no-sustituye']}>
+      <p class="mt-4 leading-relaxed text-pretty text-ink/80">
+        La información publicada aquí tiene carácter divulgativo y general. No constituye consejo
+        clínico, no sustituye a una valoración individual y no debe usarse para tomar decisiones
+        sobre la propia salud o la de terceros sin consultar antes con un profesional.
+      </p>
+      <div class="mt-6 rounded-2xl border border-navy-100 bg-cream-50 p-6">
+        <h3 class="flex items-center gap-3 font-serif font-semibold text-navy-800">
+          <span class="h-1 w-4 shrink-0 bg-gold-400" aria-hidden="true"></span>
+          Si estás en una situación de urgencia
+        </h3>
+        <p class="mt-3 text-sm leading-relaxed text-pretty text-ink/80">
+          Este sitio no atiende urgencias ni consultas inmediatas. En España puedes llamar al:
+        </p>
+        <ul class="mt-3 space-y-2 text-sm leading-relaxed text-ink/80">
+          {urgencias.map((u) => (
+            <li>
+              <a href={`tel:${u.numero}`} class={`font-semibold text-navy-800 ${enlace}`}>
+                {u.numero}
+              </a>
+              , {u.texto}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Apartado>
+
+    <Apartado {...a.condiciones}>
+      <p class="mt-4 leading-relaxed text-pretty text-ink/80">
+        Quien accede al sitio se compromete a usarlo conforme a la ley, a este aviso y a la buena
+        fe. Queda prohibido emplearlo con fines ilícitos, dañar el funcionamiento del servicio o
+        intentar acceder a áreas o sistemas no públicos.
+      </p>
+      <p class="mt-4 leading-relaxed text-pretty text-ink/80">
+        El titular puede modificar en cualquier momento los contenidos, la presentación y la
+        configuración del sitio, así como suspender el acceso de forma temporal por razones
+        técnicas.
+      </p>
+    </Apartado>
+
+    <Apartado {...a.propiedad}>
+      <p class="mt-4 leading-relaxed text-pretty text-ink/80">
+        Los textos, el diseño, el logotipo, las imágenes y el código de este sitio pertenecen a su
+        titular o se usan con la autorización de quien tenga los derechos. Su reproducción,
+        distribución o transformación necesita autorización expresa y por escrito, salvo en los
+        casos permitidos por la ley.
+      </p>
+      <p class="mt-4 leading-relaxed text-pretty text-ink/80">
+        Citar el sitio enlazando a la página de origen y sin alterar su contenido está permitido.
+      </p>
+      <p class="mt-4 leading-relaxed text-pretty text-ink/80">
+        El sello «Training accredited by EMDR Europe Association» es una marca registrada de EMDR
+        Europe Association. Se reproduce para indicar que la formación en EMDR (Nivel 1) del titular
+        está acreditada por esa asociación.
+      </p>
+    </Apartado>
+
+    <Apartado {...a.enlaces}>
+      <p class="mt-4 leading-relaxed text-pretty text-ink/80">
+        El sitio enlaza a perfiles y servicios de terceros, como WhatsApp, Instagram, Facebook y
+        LinkedIn, y al Buscador Nacional de Profesionales de la Salud del Ministerio de Salud de
+        Argentina. Esos enlaces se ofrecen solo como vía de contacto o de consulta. El titular no
+        gestiona esos servicios ni responde de sus contenidos, sus condiciones ni sus prácticas de
+        privacidad.
+      </p>
+    </Apartado>
+
+    <Apartado {...a.responsabilidad}>
+      <p class="mt-4 leading-relaxed text-pretty text-ink/80">
+        El titular pone medios razonables para que el sitio funcione de forma continua y sin
+        errores, pero no puede garantizar la disponibilidad permanente ni la ausencia de fallos
+        técnicos, interrupciones del proveedor de alojamiento o problemas ajenos a su control.
+      </p>
+    </Apartado>
+
+    <Apartado {...a.datos}>
+      <p class="mt-4 leading-relaxed text-pretty text-ink/80">
+        El tratamiento de los datos personales de quienes visitan el sitio, escriben o reciben
+        terapia se explica en la{' '}
+        <a href={withBase('/privacidad/')} class={enlace}>
+          política de privacidad
+        </a>
+        .
+      </p>
+    </Apartado>
+
+    <Apartado {...a.legislacion}>
+      <p class="mt-4 leading-relaxed text-pretty text-ink/80">
+        Este aviso se rige por la legislación española. Para cualquier controversia sobre el uso del
+        sitio, las partes se someten a los juzgados y tribunales que correspondan según la normativa
+        aplicable. Si quien accede tiene la condición de persona consumidora, se aplican los fueros
+        que la ley reserva a su favor.
+      </p>
+    </Apartado>
+  </Legal>
+</Base>

@@ -1,0 +1,30 @@
+---
+// Pasos numerados unidos por una línea vertical: «Qué esperar de una sesión
+// online» en la home y las fases de las páginas explicativas. El número sale
+// del orden de la lista. `nivel` es el del título de cada paso, para no saltar
+// jerarquía: h4 bajo un h3 (home), h3 bajo un h2 (páginas explicativas).
+interface Props {
+  pasos: { titulo: string; texto: string }[];
+  nivel?: 'h3' | 'h4';
+}
+
+const { pasos, nivel = 'h4' } = Astro.props;
+const Titulo = nivel;
+---
+
+<ol class="mt-6">
+  {pasos.map((paso, i) => (
+    <li class:list={['relative flex gap-4', { 'pb-8': i < pasos.length - 1 }]}>
+      {i < pasos.length - 1 && (
+        <span class="absolute top-10 bottom-0 left-5 w-px bg-navy-100" aria-hidden="true" />
+      )}
+      <span class="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-navy-800 font-serif text-lg font-semibold text-cream-50 lining-nums">
+        {i + 1}
+      </span>
+      <div>
+        <Titulo class="font-semibold text-navy-800">{paso.titulo}</Titulo>
+        <p class="mt-1 text-sm leading-relaxed text-ink/70">{paso.texto}</p>
+      </div>
+    </li>
+  ))}
+</ol>

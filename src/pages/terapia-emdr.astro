@@ -1,0 +1,676 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Cabecera from '../components/Cabecera.astro';
+import Documento from '../components/Documento.astro';
+import Apartado from '../components/Apartado.astro';
+import Pasos from '../components/Pasos.astro';
+import IdeasErroneas from '../components/IdeasErroneas.astro';
+import Fuentes from '../components/Fuentes.astro';
+import OtroEnfoque from '../components/OtroEnfoque.astro';
+import Contacto from '../components/Contacto.astro';
+import Revelar from '../components/Revelar.astro';
+import { withBase } from '../lib/withBase';
+import { indexar } from '../lib/apartados';
+import { iconos } from '../lib/iconos';
+import { enlace, parrafo, subtitulo, tarjeta } from '../lib/estilo';
+
+// Página explicativa: informa sobre el enfoque, no busca la conversión (sin
+// llamadas a la acción ni botón flotante). Las afirmaciones sobre la evidencia
+// van atribuidas y sin prometer resultados (publicidad sanitaria). El texto que
+// acompaña al sello de EMDR Europe debe ser literal: formación de Nivel 1
+// acreditada, no acreditación del profesional.
+const title = 'Terapia EMDR: qué es, cómo funciona y sus 8 fases · Clínica Conecta';
+const description =
+  'Qué es la terapia EMDR, de dónde viene, cómo entiende el malestar, qué es la estimulación bilateral, cómo son sus 8 fases y una sesión, y qué dice la investigación.';
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const sello = withBase('/acreditaciones/emdr-europe-formacion-acreditada.webp');
+// URL de la home, para el @id del autor (el mismo `persona` de index.astro) y
+// para la migaja de pan: esta página no cuelga de una ruta intermedia real.
+const inicioUrl = new URL(withBase('/'), Astro.site).toString();
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'MedicalWebPage',
+  name: 'Terapia EMDR',
+  description,
+  url: canonical,
+  inLanguage: 'es',
+  author: { '@id': `${inicioUrl}#juan` },
+  datePublished: '2026-09-29',
+  dateModified: '2026-09-30',
+  about: {
+    '@type': 'MedicalTherapy',
+    name: 'Terapia EMDR',
+    alternateName: [
+      'EMDR',
+      'Desensibilización y Reprocesamiento por Movimientos Oculares',
+      'Eye Movement Desensitization and Reprocessing',
+    ],
+  },
+};
+
+const migasJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Inicio', item: inicioUrl },
+    { '@type': 'ListItem', position: 2, name: 'Terapia EMDR', item: canonical },
+  ],
+};
+
+const { lista, porId: a } = indexar([
+  { id: 'que-es', titulo: 'Qué es EMDR' },
+  { id: 'origen', titulo: 'De dónde viene' },
+  { id: 'modelo', titulo: 'Cómo entiende EMDR el malestar' },
+  { id: 'estimulacion', titulo: 'La estimulación bilateral' },
+  { id: 'para-que', titulo: 'Para qué se utiliza' },
+  { id: 'fases', titulo: 'Las 8 fases del protocolo' },
+  { id: 'sesion', titulo: 'Cómo es una sesión de reprocesamiento' },
+  { id: 'online', titulo: 'EMDR por videollamada' },
+  { id: 'cuando-no', titulo: 'Cuándo no es el momento' },
+  { id: 'ideas-erroneas', titulo: 'Ideas erróneas frecuentes' },
+  { id: 'investigacion', titulo: 'Qué dice la investigación' },
+  { id: 'formacion', titulo: 'Formación acreditada' },
+  { id: 'fuentes', titulo: 'Fuentes' },
+]);
+
+const rasgos = [
+  {
+    titulo: 'Centrada en la experiencia',
+    texto:
+      'Trabaja directamente con los recuerdos de lo vivido que siguen pesando hoy, no solo con sus consecuencias.',
+  },
+  {
+    titulo: 'Estructurada en fases',
+    texto:
+      'Sigue un protocolo de ocho fases, con una preparación previa antes de tocar ningún recuerdo difícil.',
+  },
+  {
+    titulo: 'Sin necesidad de contarlo todo',
+    texto:
+      'No hace falta narrar lo ocurrido con detalle: basta con traer el recuerdo a la mente y comentar lo que va apareciendo.',
+  },
+  {
+    titulo: 'Integra cuerpo, emoción y pensamiento',
+    texto:
+      'Tiene en cuenta la imagen del recuerdo, lo que piensas de ti, lo que sientes y dónde lo notas en el cuerpo.',
+  },
+];
+
+const antesDespues = {
+  antes: [
+    'Se vive como si estuviera pasando ahora.',
+    'Llega con una emoción intensa y sensaciones en el cuerpo.',
+    'Arrastra una creencia negativa: «no estoy a salvo», «fue culpa mía».',
+    'Se evita pensar en ello, o aparece sin querer.',
+  ],
+  despues: [
+    'Se recuerda como algo que pasó.',
+    'La emoción que despierta es tolerable.',
+    'Se asocia a una creencia más ajustada: «ya pasó», «hice lo que pude».',
+    'Se puede pensar en ello sin que condicione el día a día.',
+  ],
+};
+
+const estimulaciones = [
+  {
+    icono: iconos.ojo,
+    titulo: 'Movimientos oculares',
+    texto: 'Seguir con la mirada un estímulo que se desplaza de un lado a otro.',
+  },
+  {
+    icono: iconos.toques,
+    titulo: 'Toques alternos',
+    texto: 'Golpecitos suaves alternando ambos lados del cuerpo, por ejemplo en las manos.',
+  },
+  {
+    icono: iconos.sonidos,
+    titulo: 'Sonidos alternos',
+    texto: 'Tonos que suenan alternando el oído izquierdo y el derecho, con auriculares.',
+  },
+];
+
+const usosRespaldados = [
+  'Estrés postraumático tras accidentes, agresiones, catástrofes o situaciones de violencia.',
+  'Consecuencias de pérdidas repentinas o experiencias vividas como una amenaza.',
+];
+
+const otrosUsos = [
+  'Ansiedad, miedos o fobias ligados a una experiencia concreta.',
+  'Duelos que se atascan alrededor de un recuerdo doloroso.',
+  'Recuerdos difíciles de la infancia o la adolescencia.',
+  'Creencias negativas sobre uno mismo con origen en lo vivido: «no valgo», «es culpa mía».',
+  'Experiencias de humillación, rechazo o acoso que siguen doliendo.',
+];
+
+const fases = [
+  {
+    titulo: 'Historia y planificación',
+    texto:
+      'Se recoge tu historia, se identifican los recuerdos relacionados con el malestar actual y se decide por dónde empezar.',
+  },
+  {
+    titulo: 'Preparación',
+    texto:
+      'Se explica el procedimiento, se construye la confianza y se aprenden recursos para regular las emociones, como un «lugar seguro» imaginado. No se avanza hasta que hay estabilidad suficiente.',
+  },
+  {
+    titulo: 'Evaluación',
+    texto:
+      'Se elige el recuerdo y se identifican sus componentes: la imagen, la creencia negativa que lleva asociada, la creencia positiva que te gustaría tener, las emociones y dónde se notan en el cuerpo. Se puntúa su intensidad.',
+  },
+  {
+    titulo: 'Desensibilización',
+    texto:
+      'Con el recuerdo en mente, se hacen series breves de estimulación bilateral. Entre una y otra se comenta en pocas palabras lo que ha aparecido, y se sigue hasta que la intensidad baja.',
+  },
+  {
+    titulo: 'Instalación',
+    texto:
+      'Se refuerza la creencia positiva («ya pasó», «hice lo que pude») hasta que se siente verdadera al pensar en el recuerdo.',
+  },
+  {
+    titulo: 'Examen corporal',
+    texto:
+      'Con el recuerdo en mente, se repasa el cuerpo por si queda alguna tensión o malestar, y se procesa si es así.',
+  },
+  {
+    titulo: 'Cierre',
+    texto:
+      'Cada sesión termina con la persona estable, se haya completado o no el procesamiento, usando los recursos de la preparación si hace falta.',
+  },
+  {
+    titulo: 'Reevaluación',
+    texto:
+      'Al empezar la sesión siguiente se revisa cómo está el recuerdo trabajado y qué ha pasado entre sesiones, para decidir cómo seguir.',
+  },
+];
+
+const garantias = [
+  'Estás despierto, consciente y al mando en todo momento.',
+  'Puedes parar cuando quieras con una señal acordada de antemano.',
+  'El terapeuta marca el ritmo y comprueba cómo estás entre series.',
+  'Cada sesión se cierra con estabilidad, haya terminado o no el recuerdo.',
+];
+
+const estimulacionOnline = [
+  {
+    icono: iconos.pantalla,
+    titulo: 'Estímulo en pantalla',
+    texto: 'Sigues con la mirada un punto que se mueve de un lado a otro de la pantalla.',
+  },
+  {
+    icono: iconos.mariposa,
+    titulo: 'Abrazo de la mariposa',
+    texto:
+      'Con los brazos cruzados sobre el pecho, das tú mismo golpecitos alternos con las manos.',
+  },
+  {
+    icono: iconos.sonidos,
+    titulo: 'Sonidos alternos',
+    texto: 'Escuchas por auriculares tonos que alternan entre un oído y otro.',
+  },
+];
+
+const condicionesOnline = [
+  'Un espacio privado donde nadie te interrumpa durante toda la sesión.',
+  'Una conexión estable y una pantalla de tamaño suficiente: mejor ordenador o tableta que móvil.',
+  'Auriculares.',
+  'Un plan acordado por si la conexión se corta en un momento intenso.',
+];
+
+const cuandoEsperar = [
+  'Una crisis aguda o un riesgo para la propia vida o la de otras personas: primero hay que atender la urgencia.',
+  'Momentos de gran inestabilidad, como una situación de violencia que sigue ocurriendo o un consumo activo de sustancias.',
+  'Una disociación intensa, que requiere una preparación más larga y especializada.',
+  'Problemas oculares o de salud concretos: en ese caso se adapta la forma de estimulación.',
+];
+
+const ideas = [
+  {
+    creencia: 'Es hipnosis',
+    realidad:
+      'No. Durante EMDR estás despierto y consciente, recuerdas lo que ocurre en la sesión y puedes pararla cuando quieras.',
+  },
+  {
+    creencia: 'Borra los recuerdos',
+    realidad:
+      'El recuerdo no desaparece ni se olvida: cambia la forma de vivirlo. Lo que baja es la intensidad, no la memoria.',
+  },
+  {
+    creencia: 'Hay que contarlo todo con detalle',
+    realidad:
+      'No es necesario. Basta con traer el recuerdo a la mente y comentar brevemente lo que aparece; muchas personas valoran precisamente no tener que narrarlo.',
+  },
+  {
+    creencia: 'Basta con mover los ojos',
+    realidad:
+      'La estimulación bilateral es solo una parte. Sin la historia, la preparación y el resto de las fases del protocolo, no es EMDR.',
+  },
+  {
+    creencia: 'Solo sirve para grandes traumas',
+    realidad:
+      'También se trabaja con experiencias que, sin ser catastróficas, dejaron huella: humillaciones, rechazos, pérdidas o situaciones en las que te sentiste sin protección.',
+  },
+];
+
+// Mismo contenido de `ideas` (visible en <IdeasErroneas />, «Se suele pensar
+// / En realidad»), marcado como preguntas frecuentes para buscadores e IA.
+const ideasJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: ideas.map((idea) => ({
+    '@type': 'Question',
+    name: idea.creencia,
+    acceptedAnswer: { '@type': 'Answer', text: idea.realidad },
+  })),
+};
+
+const fuentes = [
+  {
+    autoria: 'Shapiro, F. (1989).',
+    titulo:
+      'Efficacy of the eye movement desensitization procedure in the treatment of traumatic memories',
+    detalle: 'Journal of Traumatic Stress, 2(2), 199-223',
+  },
+  {
+    autoria: 'Shapiro, F. (2018).',
+    titulo:
+      'Eye Movement Desensitization and Reprocessing (EMDR) Therapy: Basic Principles, Protocols, and Procedures',
+    detalle: '3.ª ed., Guilford Press',
+  },
+  {
+    autoria: 'Van den Hout, M. A. y Engelhard, I. M. (2012).',
+    titulo: 'How does EMDR work?',
+    detalle: 'Journal of Experimental Psychopathology, 3(5), 724-738',
+  },
+  {
+    autoria: 'Organización Mundial de la Salud (2013).',
+    titulo: 'Guidelines for the management of conditions specifically related to stress',
+  },
+  {
+    autoria: 'National Institute for Health and Care Excellence (2018).',
+    titulo: 'Post-traumatic stress disorder',
+    detalle: 'Guía NG116',
+  },
+];
+---
+
+<Base title={title} description={description}>
+  <script
+    type="application/ld+json"
+    slot="head"
+    is:inline
+    set:html={JSON.stringify(jsonLd)}
+  ></script>
+  <script
+    type="application/ld+json"
+    slot="head"
+    is:inline
+    set:html={JSON.stringify(migasJsonLd)}
+  ></script>
+  <script
+    type="application/ld+json"
+    slot="head"
+    is:inline
+    set:html={JSON.stringify(ideasJsonLd)}
+  ></script>
+  <Header />
+
+  <main class="text-ink">
+    <Cabecera rotulo="Enfoques terapéuticos" titulo="Terapia EMDR">
+      <p class="animate-hero-in mt-5 max-w-2xl text-lg text-pretty text-cream-50/85 [animation-delay:80ms]">
+        EMDR son las siglas en inglés de Desensibilización y Reprocesamiento por Movimientos
+        Oculares. Aquí encontrarás qué es, cómo entiende el malestar, cómo se trabaja paso a paso y
+        qué dice la investigación.
+      </p>
+      <figure slot="lateral" class="flex items-center gap-5 md:flex-col md:text-center">
+        <img
+          src={sello}
+          alt="Sello de formación acreditada por EMDR Europe Association"
+          width="160"
+          height="160"
+          class="h-28 w-28 shrink-0 md:h-40 md:w-40"
+        />
+        <figcaption class="text-sm leading-relaxed text-pretty text-cream-50/85">
+          Formación en EMDR (Nivel 1) acreditada por EMDR Europe
+          <span class="block text-cream-50/60">Instituto Español de EMDR</span>
+        </figcaption>
+      </figure>
+    </Cabecera>
+
+    <Documento apartados={lista}>
+      <Apartado {...a['que-es']}>
+        <p class={parrafo}>
+          EMDR es un enfoque psicoterapéutico pensado para trabajar con recuerdos de experiencias
+          difíciles que, aunque hayan pasado, siguen afectando al presente: se reviven, se evitan o
+          condicionan cómo reaccionas ante situaciones que se les parecen.
+        </p>
+        <p class={parrafo}>
+          Su objetivo no es olvidar lo ocurrido, sino que el recuerdo deje de doler como dolía y
+          pase a ocupar su lugar en el pasado: poder recordarlo sin revivirlo. Para ello combina el
+          trabajo sobre el recuerdo con una estimulación bilateral, normalmente movimientos oculares
+          de un lado a otro.
+        </p>
+        <ul class="mt-6 grid gap-4 sm:grid-cols-2">
+          {rasgos.map((rasgo) => (
+            <li class={tarjeta}>
+              <h3 class="font-serif text-lg font-semibold text-navy-800">{rasgo.titulo}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-pretty text-ink/75">{rasgo.texto}</p>
+            </li>
+          ))}
+        </ul>
+      </Apartado>
+
+      <Apartado {...a.origen}>
+        <p class={parrafo}>
+          En 1987, la psicóloga estadounidense{' '}
+          <strong class="font-semibold text-navy-800">Francine Shapiro</strong> se dio cuenta,
+          durante un paseo, de que algunos pensamientos que le inquietaban perdían intensidad
+          mientras sus ojos se movían de un lado a otro. A partir de esa observación desarrolló un
+          procedimiento, lo puso a prueba y en 1989 publicó el primer estudio controlado con
+          personas que habían vivido experiencias traumáticas.
+        </p>
+        <p class={parrafo}>
+          Con los años, aquel procedimiento se amplió hasta convertirse en un enfoque terapéutico
+          completo, con un protocolo de ocho fases y un modelo teórico propio. Hoy se practica en
+          todo el mundo y cuenta con asociaciones profesionales, como EMDR Europe, que fijan los
+          estándares de formación y acreditan los programas que la imparten.
+        </p>
+      </Apartado>
+
+      <Apartado {...a.modelo}>
+        <p class={parrafo}>
+          EMDR se apoya en el modelo de{' '}
+          <strong class="font-semibold text-navy-800">
+            Procesamiento Adaptativo de la Información
+          </strong>
+          . Según este modelo, el cerebro tiene una capacidad natural para procesar lo que vivimos:
+          integrarlo, darle sentido y guardarlo como parte de nuestra historia. Es lo que pasa
+          cuando un disgusto duele mucho al principio y, con el tiempo, se puede recordar con calma.
+        </p>
+        <p class={parrafo}>
+          Cuando una experiencia desborda esa capacidad, puede quedar almacenada «sin procesar»: con
+          las imágenes, las emociones, las sensaciones y las creencias del momento en que ocurrió.
+          Eso pasa, sobre todo, cuando la experiencia es muy intensa, se repite o llega en un
+          momento de especial vulnerabilidad. Por eso algo del presente que se le parece puede
+          activarla y hacer que se reaccione como entonces.
+        </p>
+
+        <div class="mt-6 grid overflow-hidden rounded-2xl border border-navy-100 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
+          <div class="bg-navy-100/60 p-5">
+            <p class="text-xs font-medium tracking-[0.12em] text-navy-600 uppercase">
+              Antes: un recuerdo sin procesar
+            </p>
+            <ul class="mt-3 space-y-2 text-sm leading-relaxed text-ink/80">
+              {antesDespues.antes.map((item) => (
+                <li class="flex items-start gap-3">
+                  <span
+                    class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-navy-600"
+                    aria-hidden="true"
+                  />
+                  <span class="text-pretty">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div
+            class="flex items-center justify-center bg-white px-4 py-2 text-2xl text-gold-400"
+            aria-hidden="true"
+          >
+            <span class="rotate-90 sm:rotate-0">→</span>
+          </div>
+          <div class="bg-cream-50 p-5">
+            <p class="text-xs font-medium tracking-[0.12em] text-navy-600 uppercase">
+              Después: un recuerdo procesado
+            </p>
+            <ul class="mt-3 space-y-2 text-sm leading-relaxed text-ink/80">
+              {antesDespues.despues.map((item) => (
+                <li class="flex items-start gap-3">
+                  <span
+                    class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-400"
+                    aria-hidden="true"
+                  />
+                  <span class="text-pretty">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <p class={parrafo}>
+          El trabajo con EMDR busca desbloquear ese procesamiento para que el recuerdo pase de un
+          lado al otro. El recuerdo sigue ahí, pero ya no se vive igual.
+        </p>
+      </Apartado>
+
+      <Apartado {...a.estimulacion}>
+        <p class={parrafo}>
+          Es el elemento más conocido de EMDR. Mientras mantienes en mente un aspecto del recuerdo,
+          el terapeuta te guía a través de una estimulación que alterna izquierda y derecha. Puede
+          hacerse de tres formas:
+        </p>
+        <ul class="mt-6 grid gap-4 sm:grid-cols-3">
+          {estimulaciones.map((e) => (
+            <li class="rounded-2xl border border-navy-100 bg-white p-5">
+              <span class="flex h-10 w-10 items-center justify-center rounded-full bg-navy-100">
+                <svg
+                  viewBox="0 0 256 256"
+                  fill="currentColor"
+                  class="h-5 w-5 text-navy-800"
+                  aria-hidden="true"
+                >
+                  <path d={e.icono} />
+                </svg>
+              </span>
+              <h3 class="mt-3 font-serif text-lg leading-snug font-semibold text-navy-800">
+                {e.titulo}
+              </h3>
+              <p class="mt-2 text-sm leading-relaxed text-pretty text-ink/75">{e.texto}</p>
+            </li>
+          ))}
+        </ul>
+        <h3 class={subtitulo}>¿Por qué funciona?</h3>
+        <p class={parrafo}>
+          Todavía se investiga. Una de las explicaciones con más apoyo es la de la memoria de
+          trabajo: mantener el recuerdo en mente mientras se atiende a la estimulación reparte la
+          atención, y eso hace que el recuerdo se vuelva menos vívido y menos intenso. Lo que sí
+          está claro es que la estimulación no actúa sola: forma parte de un protocolo completo.
+        </p>
+      </Apartado>
+
+      <Apartado {...a['para-que']}>
+        <p class={parrafo}>
+          EMDR se desarrolló para el estrés postraumático, y es ahí donde tiene más respaldo
+          científico. Con el tiempo se ha aplicado a otros problemas en los que hay experiencias
+          pasadas en el origen del malestar, con una investigación creciente pero todavía menos
+          sólida. Conviene distinguir ambos casos:
+        </p>
+        <div class="mt-6 grid items-start gap-4 sm:grid-cols-2">
+          <div class={tarjeta}>
+            <h3 class="font-serif text-lg font-semibold text-navy-800">Con más respaldo</h3>
+            <ul class="mt-3 space-y-2 text-sm leading-relaxed text-ink/80">
+              {usosRespaldados.map((uso) => (
+                <li class="flex items-start gap-3">
+                  <span class="mt-2.5 h-1 w-4 shrink-0 bg-gold-400" aria-hidden="true" />
+                  <span class="text-pretty">{uso}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="rounded-2xl border border-navy-100 bg-white p-6">
+            <h3 class="font-serif text-lg font-semibold text-navy-800">Otras aplicaciones</h3>
+            <ul class="mt-3 space-y-2 text-sm leading-relaxed text-ink/80">
+              {otrosUsos.map((uso) => (
+                <li class="flex items-start gap-3">
+                  <span class="mt-2.5 h-1 w-4 shrink-0 bg-navy-600/40" aria-hidden="true" />
+                  <span class="text-pretty">{uso}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <p class={parrafo}>
+          No hace falta haber vivido una catástrofe para que un recuerdo siga pesando. Lo que
+          importa no es lo grave que parezca desde fuera, sino cómo sigue afectando hoy.
+        </p>
+      </Apartado>
+
+      <Apartado {...a.fases}>
+        <p class={parrafo}>
+          EMDR sigue un protocolo de ocho fases. Las dos primeras pueden ocupar varias sesiones; las
+          siguientes se recorren con cada recuerdo que se trabaja.
+        </p>
+        <Pasos pasos={fases} nivel="h3" />
+      </Apartado>
+
+      <Apartado {...a.sesion}>
+        <p class={parrafo}>
+          Durante las series de estimulación no hace falta hablar mucho: basta con traer el recuerdo
+          a la mente y, al terminar cada serie, comentar en pocas palabras qué ha aparecido. Puede
+          ser una imagen, una sensación, un pensamiento o un recuerdo relacionado.
+        </p>
+        <p class={parrafo}>
+          Lo que ocurre varía mucho de una persona a otra: a veces el recuerdo cambia de forma,
+          otras surgen recuerdos conectados y otras, sencillamente, la emoción va bajando. Puede
+          haber momentos intensos, y por eso la preparación previa es tan importante.
+        </p>
+        <div class:list={[tarjeta, 'mt-6']}>
+          <h3 class="font-serif text-lg font-semibold text-navy-800">Lo que puedes esperar</h3>
+          <ul class="mt-3 space-y-2 text-sm leading-relaxed text-ink/80">
+            {garantias.map((g) => (
+              <li class="flex items-start gap-3">
+                <span class="mt-2.5 h-1 w-4 shrink-0 bg-gold-400" aria-hidden="true" />
+                <span class="text-pretty">{g}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <h3 class={subtitulo}>Después de la sesión</h3>
+        <p class={parrafo}>
+          Es normal que el procesamiento siga unos días: sueños más vívidos, recuerdos o ideas
+          nuevas, algo de cansancio. Conviene anotar lo que aparezca para comentarlo en la sesión
+          siguiente y usar los recursos aprendidos en la preparación si hace falta.
+        </p>
+      </Apartado>
+
+      <Apartado {...a.online}>
+        <p class={parrafo}>
+          EMDR puede hacerse por videollamada adaptando la forma de estimulación bilateral. Las más
+          habituales online son:
+        </p>
+        <ul class="mt-6 grid gap-4 sm:grid-cols-3">
+          {estimulacionOnline.map((e) => (
+            <li class="rounded-2xl border border-navy-100 bg-white p-5">
+              <span class="flex h-10 w-10 items-center justify-center rounded-full bg-navy-100">
+                <svg
+                  viewBox="0 0 256 256"
+                  fill="currentColor"
+                  class="h-5 w-5 text-navy-800"
+                  aria-hidden="true"
+                >
+                  <path d={e.icono} />
+                </svg>
+              </span>
+              <h3 class="mt-3 font-serif text-lg leading-snug font-semibold text-navy-800">
+                {e.titulo}
+              </h3>
+              <p class="mt-2 text-sm leading-relaxed text-pretty text-ink/75">{e.texto}</p>
+            </li>
+          ))}
+        </ul>
+        <h3 class={subtitulo}>Qué condiciones hacen falta</h3>
+        <ul class="mt-4 space-y-2 text-ink/80">
+          {condicionesOnline.map((c) => (
+            <li class="flex items-start gap-3">
+              <span class="mt-2.5 h-1 w-4 shrink-0 bg-gold-400" aria-hidden="true" />
+              <span class="leading-relaxed text-pretty">{c}</span>
+            </li>
+          ))}
+        </ul>
+      </Apartado>
+
+      <Apartado {...a['cuando-no']}>
+        <p class={parrafo}>
+          EMDR no siempre es la primera opción, y nunca se empieza por el reprocesamiento. Antes de
+          trabajar recuerdos difíciles hace falta cierta estabilidad, y hay situaciones en las que
+          conviene esperar o combinarlo con otros apoyos:
+        </p>
+        <ul class="mt-4 space-y-2 text-ink/80">
+          {cuandoEsperar.map((c) => (
+            <li class="flex items-start gap-3">
+              <span class="mt-2.5 h-1 w-4 shrink-0 bg-gold-400" aria-hidden="true" />
+              <span class="leading-relaxed text-pretty">{c}</span>
+            </li>
+          ))}
+        </ul>
+        <p class={parrafo}>
+          Si se trata de una crisis aguda o de un riesgo para tu vida o la de otra persona, llama al
+          024 (atención a la conducta suicida) o al 112 (emergencias); si sufres violencia de
+          género, al 016.
+        </p>
+        <p class={parrafo}>
+          Todo esto se valora en las fases de historia y preparación. Además, EMDR puede combinarse
+          con otros enfoques dentro del mismo proceso, como la{' '}
+          <a href={withBase('/terapia-cognitivo-conductual/')} class={enlace}>
+            Terapia Cognitivo-Conductual
+          </a>
+          .
+        </p>
+      </Apartado>
+
+      <Apartado {...a['ideas-erroneas']}>
+        <p class={parrafo}>
+          EMDR despierta curiosidad y también algunos malentendidos. Estos son los más habituales:
+        </p>
+        <IdeasErroneas ideas={ideas} />
+      </Apartado>
+
+      <Apartado {...a.investigacion}>
+        <p class={parrafo}>
+          EMDR es uno de los tratamientos psicológicos con más respaldo para el estrés
+          postraumático. La Organización Mundial de la Salud lo recomienda, junto con la TCC
+          centrada en el trauma, para niños, adolescentes y adultos con estrés postraumático (2013),
+          y la guía del Instituto Nacional de Salud y Excelencia Clínica del Reino Unido (NICE,
+          2018) lo incluye entre los tratamientos para adultos.
+        </p>
+        <p class={parrafo}>
+          En otros problemas la investigación es más reciente y sus resultados son prometedores,
+          pero todavía menos concluyentes.
+        </p>
+        <div class="mt-6 rounded-2xl border-l-4 border-gold-400 bg-cream-50 p-5">
+          <p class="text-sm leading-relaxed text-pretty text-ink/80">
+            <strong class="font-semibold text-navy-800">Una advertencia honesta:</strong> los
+            estudios describen resultados promedio en grupos de personas. Sirven para elegir
+            enfoques con respaldo, pero no garantizan un resultado concreto en un caso particular.
+            Cada proceso es distinto y se revisa sobre la marcha.
+          </p>
+        </div>
+      </Apartado>
+
+      <Apartado {...a.formacion}>
+        <p class={parrafo}>
+          El sello que aparece al principio de esta página indica que mi formación en EMDR (Nivel
+          1), realizada en el Instituto Español de EMDR, está acreditada por EMDR Europe, la
+          asociación que establece los estándares de formación en EMDR en Europa.
+        </p>
+      </Apartado>
+
+      <Apartado {...a.fuentes}>
+        <p class={parrafo}>Obras y guías citadas o en las que se basa esta página:</p>
+        <Fuentes fuentes={fuentes} />
+      </Apartado>
+
+      <OtroEnfoque
+        href={withBase('/terapia-cognitivo-conductual/')}
+        titulo="Terapia Cognitivo-Conductual"
+        texto="Un enfoque práctico para entender y cambiar los pensamientos y conductas que mantienen el malestar."
+        icono={iconos.cerebro}
+      />
+    </Documento>
+
+    <Contacto />
+  </main>
+
+  <Revelar />
+</Base>

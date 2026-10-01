@@ -1,0 +1,38 @@
+---
+// Cabecera azul de las páginas interiores (legales, explicativas y 404): rótulo
+// dorado, h1 y, en el slot, lo que vaya debajo. Lleva `id="inicio"`, como el
+// hero de la home, para que el header haga el mismo relevo de crema a azul al
+// salir de ella. Con el slot `lateral` (un sello, una ficha) pasa a dos
+// columnas desde md.
+interface Props {
+  rotulo: string;
+  titulo: string;
+}
+
+const { rotulo, titulo } = Astro.props;
+const lateral = Astro.slots.has('lateral');
+---
+
+<section id="inicio" class="bg-navy-800 px-6 pt-14 pb-16 text-cream-50 sm:pt-20 sm:pb-20">
+  <div
+    class:list={[
+      'mx-auto max-w-5xl',
+      { 'grid items-center gap-10 md:grid-cols-[minmax(0,1fr)_17rem] md:gap-16': lateral },
+    ]}
+  >
+    <div>
+      <p class="animate-hero-in font-serif text-sm tracking-[0.1em] text-gold-400 uppercase">
+        {rotulo}
+      </p>
+      <h1 class="animate-hero-in mt-4 font-serif text-4xl leading-tight font-semibold tracking-tight sm:text-5xl">
+        {titulo}
+      </h1>
+      <slot />
+    </div>
+    {lateral && (
+      <div class="animate-hero-in [animation-delay:120ms]">
+        <slot name="lateral" />
+      </div>
+    )}
+  </div>
+</section>

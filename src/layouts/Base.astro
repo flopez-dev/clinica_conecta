@@ -10,21 +10,55 @@ interface Props {
 
 const { title, description, noindex = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(withBase('/og-image.png'), Astro.site);
+
+// GitHub Pages sirve `develop` como preview antes de promoverlo a `main`
+// (Cloudflare, el dominio real): no debe indexarse, o compite como contenido
+// duplicado con el dominio del cliente. `NOINDEX_SITE` solo lo pone
+// deploy-pages.yml; en Cloudflare y en local queda sin definir. Se combina
+// con el `noindex` de la propia página (la 404 ya lo lleva).
+const sitioNoIndexado = process.env.NOINDEX_SITE === 'true';
 ---
 
 <html lang="es">
   <head>
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <!-- Iconos del kit del cliente. El manifest usa rutas relativas por el base path -->
+    <link rel="icon" href={withBase('/favicon.ico')} sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href={withBase('/favicon-32.png')} />
+    <link rel="icon" type="image/png" sizes="16x16" href={withBase('/favicon-16.png')} />
+    <link rel="apple-touch-icon" href={withBase('/apple-touch-icon.png')} />
+    <link rel="manifest" href={withBase('/site.webmanifest')} />
     <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#2a3f6a" />
 
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex, follow" />}
+    {(noindex || sitioNoIndexado) && (
+      <meta name="robots" content={sitioNoIndexado ? 'noindex, nofollow' : 'noindex, follow'} />
+    )}
+
+    <!-- Open Graph / redes sociales (WhatsApp incluido, al compartir el enlace) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Clínica Conecta" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <slot name="head" />
   </head>
-  <body class="min-h-screen bg-white text-slate-900">
+  <body class="min-h-screen bg-white text-ink">
     <slot />
   </body>
 </html>

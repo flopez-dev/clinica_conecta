@@ -1,0 +1,19 @@
+---
+// Bibliografía de una página explicativa. Se cita por nombre y sin enlaces
+// externos: así la web no lleva a terceros más allá de los que declara la
+// política de privacidad.
+interface Props {
+  fuentes: { autoria: string; titulo: string; detalle?: string }[];
+}
+
+const { fuentes } = Astro.props;
+---
+
+<ul class="mt-4 space-y-2 border-l border-navy-100 pl-4 text-sm leading-relaxed text-ink/70">
+  {fuentes.map((f) => (
+    <li class="text-pretty">
+      {f.autoria} <cite>{f.titulo}</cite>
+      {f.detalle ? `. ${f.detalle}.` : '.'}
+    </li>
+  ))}
+</ul>
