@@ -24,7 +24,7 @@ const { titulo, entradilla, actualizado, apartados, otra } = Astro.props;
 
 <Header />
 
-<main class="text-ink">
+<main id="contenido" class="text-ink">
   <Cabecera rotulo="Información legal" titulo={titulo}>
     <p class="animate-hero-in mt-5 max-w-2xl text-lg text-pretty text-cream-50/85 [animation-delay:80ms]">
       {entradilla}
@@ -36,7 +36,7 @@ const { titulo, entradilla, actualizado, apartados, otra } = Astro.props;
       </p>
       <a
         href={otra.href}
-        class={`rounded-sm text-sm text-cream-50/80 underline decoration-gold-400 underline-offset-4 transition-colors duration-300 ${curva} hover:text-cream-50 ${foco}`}
+        class={`rounded-sm py-1 text-sm text-cream-50/80 underline decoration-gold-400 underline-offset-4 transition-colors duration-300 ${curva} hover:text-cream-50 ${foco}`}
       >
         {otra.texto}
       </a>
@@ -46,8 +46,8 @@ const { titulo, entradilla, actualizado, apartados, otra } = Astro.props;
   <Documento apartados={apartados}>
     <slot />
   </Documento>
-
-  <Contacto />
 </main>
+
+<Contacto />
 
 <Revelar />

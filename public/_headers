@@ -15,3 +15,25 @@
 # Los ficheros de /_astro/ llevan el hash en el nombre: cambian de URL si cambian.
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
+
+# Imágenes e iconos de public/: no llevan hash, así que no pueden ser `immutable`.
+# Una semana evita revalidarlos en cada visita y limita lo que tarda en verse un
+# cambio si se sustituye el fichero.
+/foto/*
+  Cache-Control: public, max-age=604800
+/brand/*
+  Cache-Control: public, max-age=604800
+/acreditaciones/*
+  Cache-Control: public, max-age=604800
+/favicon.ico
+  Cache-Control: public, max-age=604800
+/favicon-16.png
+  Cache-Control: public, max-age=604800
+/favicon-32.png
+  Cache-Control: public, max-age=604800
+/apple-touch-icon.png
+  Cache-Control: public, max-age=604800
+/android-chrome-*
+  Cache-Control: public, max-age=604800
+/og-image.jpg
+  Cache-Control: public, max-age=604800

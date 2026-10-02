@@ -10,7 +10,7 @@ interface Props {
 
 const { title, description, noindex = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const ogImage = new URL(withBase('/og-image.png'), Astro.site);
+const ogImage = new URL(withBase('/og-image.jpg'), Astro.site);
 
 // GitHub Pages sirve `develop` como preview antes de promoverlo a `main`
 // (Cloudflare, el dominio real): no debe indexarse, o compite como contenido
@@ -51,6 +51,12 @@ const sitioNoIndexado = process.env.NOINDEX_SITE === 'true';
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Juan Ignacio Riccardi, Psicólogo General Sanitario, junto al logotipo de Clínica Conecta"
+    />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -59,6 +65,13 @@ const sitioNoIndexado = process.env.NOINDEX_SITE === 'true';
     <slot name="head" />
   </head>
   <body class="min-h-screen bg-white text-ink">
+    <!-- Primer elemento enfocable: solo se ve al recibir el foco con el teclado. Salta el menú hasta el <main id="contenido"> de cada página -->
+    <a
+      href="#contenido"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-md focus:bg-cream-50 focus:px-4 focus:py-2 focus:font-medium focus:text-navy-900 focus:outline-2 focus:outline-offset-2 focus:outline-gold-400"
+    >
+      Saltar al contenido
+    </a>
     <slot />
   </body>
 </html>

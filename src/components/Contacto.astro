@@ -1,6 +1,8 @@
 ---
 // Sección de contacto, que hace también de pie de página: tarjeta «Hablemos»,
 // redes, texto legal, enlaces legales y copyright. Cierra todas las páginas.
+// Es un <footer> (landmark contentinfo), así que cada página la monta fuera de
+// <main>, justo después.
 // Sus bloques llevan `data-reveal-contacto`: la página que la incluya necesita
 // también <Revelar />, o se quedan invisibles con JS.
 import { withBase } from '../lib/withBase';
@@ -15,7 +17,7 @@ const legales = [
 ---
 
 <!-- Contacto y pie en una sola sección azul. A la derecha, "Hablemos" como única tarjeta; a la izquierda, redes y texto legal sin cajas -->
-<section id="contacto" class="bg-navy-900 px-6 pt-16 pb-24 text-cream-50 sm:py-16">
+<footer id="contacto" class="bg-navy-900 px-6 pt-16 pb-24 text-cream-50 sm:py-16">
   <div class="mx-auto grid max-w-5xl gap-12 md:grid-cols-2">
     <div
       data-reveal-contacto
@@ -53,7 +55,7 @@ const legales = [
             <a
               href={l.href}
               aria-current={Astro.url.pathname === l.href ? 'page' : undefined}
-              class={`rounded-sm underline decoration-gold-400 underline-offset-4 transition-colors duration-300 ${curva} hover:text-cream-50 aria-[current=page]:text-cream-50 ${foco}`}
+              class={`rounded-sm py-1 underline decoration-gold-400 underline-offset-4 transition-colors duration-300 ${curva} hover:text-cream-50 aria-[current=page]:text-cream-50 ${foco}`}
             >
               {l.texto}
             </a>
@@ -86,7 +88,7 @@ const legales = [
         </a>
         <a
           href={mailtoHref}
-          class={`inline-flex items-center gap-2 rounded-sm text-sm text-navy-200 underline decoration-gold-400 underline-offset-4 transition-colors duration-300 ${curva} hover:text-cream-50 ${foco}`}
+          class={`inline-flex items-center gap-2 rounded-sm py-1 text-sm text-navy-200 underline decoration-gold-400 underline-offset-4 transition-colors duration-300 ${curva} hover:text-cream-50 ${foco}`}
         >
           <svg
             viewBox="0 0 256 256"
@@ -101,4 +103,4 @@ const legales = [
       </div>
     </div>
   </div>
-</section>
+</footer>

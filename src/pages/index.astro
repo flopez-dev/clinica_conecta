@@ -41,7 +41,7 @@ const persona = {
   jobTitle: 'Psicólogo General Sanitario',
   description,
   url: canonical,
-  image: new URL(withBase('/og-image.png'), Astro.site).toString(),
+  image: new URL(withBase('/og-image.jpg'), Astro.site).toString(),
   telephone: telefono,
   email: correo,
   knowsLanguage: 'es',
@@ -69,9 +69,30 @@ const servicio = {
   },
 };
 
+// La marca y el sitio, para que el buscador asocie nombre, logotipo y dominio.
+// Las redes de la marca son Instagram y Facebook; LinkedIn es el perfil personal
+// de Juan y ya está en `persona`.
+const organizacion = {
+  '@type': 'Organization',
+  '@id': `${canonical}#organizacion`,
+  name: 'Clínica Conecta',
+  url: canonical,
+  logo: new URL(withBase('/brand/conecta-logo-600.png'), Astro.site).toString(),
+  sameAs: [instagramHref, facebookHref],
+};
+
+const sitio = {
+  '@type': 'WebSite',
+  '@id': `${canonical}#sitio`,
+  url: canonical,
+  name: 'Clínica Conecta',
+  inLanguage: 'es',
+  publisher: { '@id': `${canonical}#organizacion` },
+};
+
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@graph': [persona, servicio],
+  '@graph': [persona, servicio, organizacion, sitio],
 };
 
 // Servicios. Cada tarjeta: una frase de reconocimiento (cómo se vive) + una de
@@ -356,7 +377,7 @@ const faqJsonLd = {
   ></script>
   <Header />
 
-  <main class="text-ink">
+  <main id="contenido" class="text-ink">
     <!-- Hero -->
     <section id="inicio" class="bg-navy-800 px-6 pt-14 pb-20 text-cream-50 sm:pt-20 sm:pb-28">
       <div class="mx-auto grid max-w-5xl items-center gap-12 md:grid-cols-2">
@@ -390,7 +411,7 @@ const faqJsonLd = {
               href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              class="text-sm text-cream-50/80 underline decoration-gold-400 underline-offset-4 hover:text-cream-50"
+              class="py-1 text-sm text-cream-50/80 underline decoration-gold-400 underline-offset-4 hover:text-cream-50"
             >
               O escríbeme por WhatsApp
             </a>
@@ -754,9 +775,9 @@ const faqJsonLd = {
         </div>
       </div>
     </section>
-
-    <Contacto />
   </main>
+
+  <Contacto />
 
   <WhatsAppFloat />
 

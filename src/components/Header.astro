@@ -56,7 +56,7 @@ const enlace =
       />
     </a>
 
-    <nav class="hidden items-center gap-6 text-sm md:flex">
+    <nav aria-label="Principal" class="hidden items-center gap-6 text-sm md:flex">
       {links.map((link) => (
         <a href={link.href} class={link.destacado ? boton : enlace}>
           {link.label}
@@ -69,7 +69,7 @@ const enlace =
       id="menu-toggle"
       aria-expanded="false"
       aria-controls="menu-mobile"
-      class="flex h-9 w-9 items-center justify-center rounded-md text-navy-800 transition-colors duration-300 group-[.is-solid]:text-cream-50 motion-reduce:transition-none md:hidden"
+      class="flex h-11 w-11 items-center justify-center rounded-md text-navy-800 transition-colors duration-300 group-[.is-solid]:text-cream-50 motion-reduce:transition-none md:hidden"
       aria-label="Abrir menú"
     >
       <svg
@@ -87,6 +87,7 @@ const enlace =
 
   <nav
     id="menu-mobile"
+    aria-label="Principal"
     class="invisible absolute inset-x-0 top-full -translate-y-2 border-t border-navy-100 bg-cream-50 px-6 py-4 opacity-0 transition-[opacity,transform,visibility,background-color] duration-200 ease-[var(--ease-out)] group-[.is-solid]:border-navy-600/60 group-[.is-solid]:bg-navy-800 md:hidden data-open:visible data-open:translate-y-0 data-open:opacity-100"
   >
     <ul class="flex flex-col items-start gap-4 text-sm">
@@ -105,17 +106,21 @@ const enlace =
   const toggle = document.getElementById('menu-toggle');
   const menu = document.getElementById('menu-mobile');
 
-  toggle?.addEventListener('click', () => {
-    const isOpen = menu?.hasAttribute('data-open') === true;
-    menu?.toggleAttribute('data-open', !isOpen);
-    toggle.setAttribute('aria-expanded', String(!isOpen));
-  });
+  const abrir = (abierto: boolean) => {
+    menu?.toggleAttribute('data-open', abierto);
+    toggle?.setAttribute('aria-expanded', String(abierto));
+    toggle?.setAttribute('aria-label', abierto ? 'Cerrar menú' : 'Abrir menú');
+  };
 
-  menu?.querySelectorAll('a').forEach((link) => {
-    link.addEventListener('click', () => {
-      menu.removeAttribute('data-open');
-      toggle?.setAttribute('aria-expanded', 'false');
-    });
+  toggle?.addEventListener('click', () => abrir(menu?.hasAttribute('data-open') !== true));
+
+  menu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => abrir(false)));
+
+  // Escape cierra el menú y devuelve el foco al botón que lo abrió.
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape' || menu?.hasAttribute('data-open') !== true) return;
+    abrir(false);
+    toggle?.focus();
   });
 
   // El margen superior negativo es la altura del header: el hero "sale" en el

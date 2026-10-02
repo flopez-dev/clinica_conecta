@@ -318,7 +318,7 @@ const fuentes = [
   ></script>
   <Header />
 
-  <main class="text-ink">
+  <main id="contenido" class="text-ink">
     <Cabecera rotulo="Enfoques terapéuticos" titulo="Terapia EMDR">
       <p class="animate-hero-in mt-5 max-w-2xl text-lg text-pretty text-cream-50/85 [animation-delay:80ms]">
         EMDR son las siglas en inglés de Desensibilización y Reprocesamiento por Movimientos
@@ -605,9 +605,19 @@ const fuentes = [
           ))}
         </ul>
         <p class={parrafo}>
-          Si se trata de una crisis aguda o de un riesgo para tu vida o la de otra persona, llama al
-          024 (atención a la conducta suicida) o al 112 (emergencias); si sufres violencia de
-          género, al 016.
+          Si se trata de una crisis aguda o de un riesgo para tu vida o la de otra persona, llama al{' '}
+          <a href="tel:024" class={`inline-block py-1 font-semibold text-navy-800 ${enlace}`}>
+            024
+          </a>{' '}
+          (atención a la conducta suicida) o al{' '}
+          <a href="tel:112" class={`inline-block py-1 font-semibold text-navy-800 ${enlace}`}>
+            112
+          </a>{' '}
+          (emergencias); si sufres violencia de género, al{' '}
+          <a href="tel:016" class={`inline-block py-1 font-semibold text-navy-800 ${enlace}`}>
+            016
+          </a>
+          .
         </p>
         <p class={parrafo}>
           Todo esto se valora en las fases de historia y preparación. Además, EMDR puede combinarse
@@ -668,9 +678,9 @@ const fuentes = [
         icono={iconos.cerebro}
       />
     </Documento>
-
-    <Contacto />
   </main>
+
+  <Contacto />
 
   <Revelar />
 </Base>

@@ -22,7 +22,9 @@ La home (`/`) es la landing del negocio; además hay dos páginas legales (`/avi
 - `src/pages/` — rutas del sitio: `index.astro` (home), `terapia-cognitivo-conductual.astro` y
   `terapia-emdr.astro` (páginas explicativas, ver abajo), `aviso-legal.astro` y `privacidad.astro`
   (páginas legales, ver abajo), `404.astro` y `robots.txt.ts` (dinámico, ver más abajo).
-- `src/layouts/Base.astro` — layout único; toda página lo envuelve.
+- `src/layouts/Base.astro` — layout único; toda página lo envuelve. Lleva el enlace «Saltar al
+  contenido» (solo visible con foco de teclado), que apunta al `<main id="contenido">`: toda página
+  nueva tiene que poner ese `id` en su `<main>`.
 - `src/components/`:
   - `Header.astro` — menú del sitio. Crema sobre el hero azul `#inicio`; cuando el hero sale de
     pantalla, un script le añade `.is-solid` y pasa a azul (`navy-800`). En una página sin
@@ -34,8 +36,9 @@ La home (`/`) es la landing del negocio; además hay dos páginas legales (`/avi
     dorado en mayúsculas (prop `rotulo`), el `h1` (prop `titulo`) y un slot para lo que va debajo.
     Con el slot opcional `lateral` (el sello de EMDR, la ficha de la TCC) pasa a dos columnas desde
     `md`; sin él, el marcado es el de siempre.
-  - `Contacto.astro` — la sección `#contacto`, que hace de pie del sitio (tarjeta «Hablemos»,
-    redes, texto legal, enlaces a aviso legal y privacidad, copyright). Sus bloques llevan
+  - `Contacto.astro` — el `<footer id="contacto">` del sitio (tarjeta «Hablemos», redes, texto
+    legal, enlaces a aviso legal y privacidad, copyright). **Se monta fuera de `<main>`, justo
+    después**: un `<footer>` dentro de `<main>` no es landmark `contentinfo`. Sus bloques llevan
     `data-reveal-contacto`: toda página que la incluya necesita también `<Revelar />`, o esos
     bloques se quedan invisibles con JS activo.
   - `Revelar.astro` — script de reveal-al-scroll: marca con `data-visible` los `[data-reveal]`,
@@ -91,18 +94,23 @@ La home (`/`) es la landing del negocio; además hay dos páginas legales (`/avi
   `/terapia-emdr/` y en la tarjeta EMDR de la home. **Su texto de acompañamiento debe ser
   literal:** «Formación en EMDR (Nivel 1) acreditada por EMDR Europe», del Instituto Español de
   EMDR. Acredita la formación, no al profesional: no escribir «terapeuta acreditado» ni similar.
-- `public/foto/juan-ignacio-cuadrada.webp` — retrato del hero. `public/og-image.png` — la imagen
+- `public/foto/juan-ignacio-cuadrada.webp` — retrato del hero. `public/og-image.jpg` — la imagen
   OG de todas las páginas (la pone `Base.astro`).
 - `public/favicon.ico`, `favicon-16/32.png`, `apple-touch-icon.png`, `android-chrome-*.png`,
   `site.webmanifest` — iconos del kit del cliente, para todo el sitio (enlazados en `Base.astro`).
   El manifest usa rutas relativas para que funcione con el base path de GitHub Pages.
 - `public/_headers` — cabeceras de seguridad y caché para Cloudflare Workers (GitHub Pages lo
-  ignora). `public/.well-known/security.txt` — contacto de seguridad (RFC 9116); su `Expires`
+  ignora). Caché: `/_astro/*` inmutable (lleva hash); imágenes, logos e iconos de `public/` una
+  semana (no llevan hash, no pueden ser `immutable`). `public/.well-known/security.txt` — contacto de seguridad (RFC 9116); su `Expires`
   caduca el 2027-09-20 y hay que renovarlo antes.
 - `tests/smoke.spec.ts` — smoke tests de Playwright: en `/`, las dos páginas explicativas y las
   dos legales comprueban un único `h1`, que no haya errores de consola ni desbordamiento
-  horizontal, y el menú móvil; además, que la home enlaza a las páginas de TCC y EMDR, que las
-  legales enlazan a la home, y la 404.
+  horizontal, el menú móvil (abre, cierra y se cierra con Escape devolviendo el foco), el enlace
+  «Saltar al contenido», los landmarks (un `<main>`, un `<footer>` fuera de él, `<nav>` con
+  nombre), que el texto no tenga marcadores `[ ]`, «--» ni rayas largas, y los invariantes de SEO
+  (un canonical absoluto, JSON-LD que parsea, sin `noindex` salvo en la 404); además, que la home
+  enlaza a las páginas de TCC y EMDR, que las legales enlazan a la home, el `robots.txt` según
+  `NOINDEX_SITE` y la 404.
 
 ## Reglas no obvias
 
@@ -153,6 +161,10 @@ La home (`/`) es la landing del negocio; además hay dos páginas legales (`/avi
 
 `astro.config.mjs` lee `SITE_URL`/`BASE_PATH` de variables de entorno; cada workflow
 pasa las suyas.
+
+`.github/dependabot.yml` abre cada semana PR de dependencias y de acciones **contra `develop`**
+(no contra `main`, que es la rama por defecto y se despliega directo a producción). `.nvmrc`
+fija Node 22, la misma línea que usa el CI.
 
 ## Estado conocido (no son bugs)
 
