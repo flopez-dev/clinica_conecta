@@ -14,7 +14,7 @@ const description =
 
 // Última revisión del texto. Actualizar la fecha cada vez que cambie el
 // contenido, no en cada despliegue.
-const actualizado = '25 de septiembre de 2026';
+const actualizado = '3 de octubre de 2026';
 
 const { lista, porId: a } = numerar([
   { id: 'responsable', titulo: 'Quién trata tus datos' },
@@ -92,11 +92,12 @@ const destinatarios = [
   {
     clave: 'Cloudflare, Inc.',
     valor:
-      'Alojamiento del sitio web y protección frente a ataques. Recibe la dirección IP de quien visita la web.',
+      'Alojamiento del sitio web, protección frente a ataques y reenvío del correo enviado a la dirección de contacto. Recibe la dirección IP de quien visita la web y los mensajes que pasan por ese reenvío.',
   },
   {
     clave: 'Google Ireland Limited y Google LLC',
-    valor: 'Videollamadas cuando la sesión se hace por Google Meet.',
+    valor:
+      'Videollamadas cuando la sesión se hace por Google Meet, y recepción del correo de contacto en Gmail.',
   },
   {
     clave: 'Zoom Communications, Inc.',
@@ -229,6 +230,11 @@ const derechosHref = `mailto:${correo}?subject=Derechos%20de%20protecci%C3%B3n%2
         La mensajería se usa para cuestiones de organización, como acordar o mover una cita. Para
         contenido clínico el espacio es la sesión. Conviene que sepas que esas plataformas son
         empresas ajenas a la consulta y que tratan datos de conexión con sus propias políticas.
+      </p>
+      <p class="mt-4 leading-relaxed text-pretty text-ink/80">
+        El correo enviado a la dirección de contacto pasa por el servicio de reenvío de Cloudflare y
+        se recibe en una cuenta de Gmail. Igual que con la mensajería, úsalo para organizar la
+        primera cita y no para contar contenido clínico.
       </p>
     </Apartado>
 

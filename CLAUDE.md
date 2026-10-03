@@ -180,6 +180,15 @@ fija Node 22, la misma línea que usa el CI.
   servicio» de Sesiones (`#como-funciona`) lleva el botón "Consultar tarifa" (con el icono de
   WhatsApp), que remite a WhatsApp para el importe. No es un hueco por rellenar, no añadas
   cifras.
+- **Correo de contacto:** `contacto@juanriccardiconecta.com` (`src/lib/contacto.ts`), reenviado a
+  Gmail con Cloudflare Email Routing, que se configura en el panel y no en el repo. `/privacidad/`
+  nombra a Cloudflare (reenvío) y a Google (Gmail) como destinatarios del correo: si cambia el
+  destino del reenvío, hay que actualizar esa política.
+- **Bot Fight Mode / JavaScript Detections de Cloudflare tiene que estar desactivado** (Security >
+  Bots). Si no, Cloudflare inyecta un script y crea la cookie `cf_clearance` (1 año): la frase «no
+  instala cookies» de `/privacidad/` dejaría de ser cierta. Se comprueba con un navegador real, no
+  con `curl`: la cookie la crea el script, no una cabecera.
+- `workers_dev` está en `false`: la web solo se sirve en el dominio propio (apex y `www`).
 - El dominio del cliente es `juanriccardiconecta.com` y ya está escrito en `wrangler.jsonc`
   (ruta con `custom_domain`) y en `SITE_URL` de `.github/workflows/deploy-cloudflare.yml`. La
   zona ya existe en la cuenta de Cloudflare del cliente; lo único que impide el despliegue son

@@ -1,14 +1,12 @@
 {
   // El sitio como Worker, servido en el dominio propio del cliente.
-  // `workers_dev` sigue activo a propósito: el subdominio de workers.dev es
-  // la red de seguridad mientras el DNS de juanriccardiconecta.com no esté
-  // apuntando a Cloudflare. Las páginas llevan `canonical` al dominio real
-  // (SITE_URL en deploy-cloudflare.yml), así que las dos URLs vivas no
-  // compiten en buscadores. Ponerlo a false cuando el dominio lleve un
-  // tiempo sirviendo bien.
+  // `workers_dev` está apagado: el dominio (apex y www, ver `routes`) ya sirve
+  // la web, así que el subdominio de workers.dev solo habría sido una segunda
+  // URL pública con el mismo contenido. Si algún día falla el DNS del dominio y
+  // hace falta una vía de emergencia, ponerlo a true y desplegar.
   "name": "clinica-conecta",
   "compatibility_date": "2026-09-12",
-  "workers_dev": true,
+  "workers_dev": false,
 
   // `custom_domain` hace que Cloudflare cree y gestione el registro DNS, pero
   // la zona juanriccardiconecta.com tiene que existir ya en la misma cuenta

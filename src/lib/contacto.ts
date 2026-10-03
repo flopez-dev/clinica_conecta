@@ -3,7 +3,9 @@
 
 export const telefono = '+34644751041';
 export const telefonoLegible = '+34 644 751 041';
-export const correo = 'riccardijuanpsi@gmail.com';
+// Dirección del dominio: Cloudflare Email Routing la reenvía a la bandeja del profesional
+// (se configura en el panel, no aquí). Si cambia el destino, actualizar /privacidad/.
+export const correo = 'contacto@juanriccardiconecta.com';
 
 // WhatsApp: el perfil (para los datos estructurados) y enlaces que abren el chat
 // con un mensaje ya escrito, uno por cada llamada a la acción.
